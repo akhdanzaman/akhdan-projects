@@ -1611,7 +1611,7 @@
     // CMS Content Override — check localStorage for edited content
     (function() {
       try {
-        const saved = localStorage.getItem('akhdan_cms_content');
+        const saved = localStorage.getItem('akhdan_cms_content_v2');
         if (!saved) return;
         const projects = JSON.parse(saved);
         if (!Array.isArray(projects)) return;
