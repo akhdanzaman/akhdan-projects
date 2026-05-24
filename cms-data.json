@@ -1,0 +1,126 @@
+{
+  "projects": [
+    {
+      "id": "arkaiv",
+      "title": "Arkaiv — AI-Powered Personal Operating System",
+      "subtitle": "React, Gemini, Sheets, OpenClaw",
+      "author": "Akhdan Hanif",
+      "date": "2026",
+      "toolbox": "React 19, Vite, Tailwind CSS 4, Express.js, Google Gemini AI, Google Sheets API, OpenClaw AI Agents (Scrum)",
+      "techniques": "AI multi-model routing, Local-first data architecture, PKM, AI-orchestrated Scrum, PWA",
+      "industries": "Personal Productivity",
+      "results": "A complete personal OS with 8 integrated views backed by Gemini AI ",
+      "heroImage": "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=1280&h=480&fit=crop",
+      "tags": [],
+      "content": "## Arkaiv — Ngarsip Harian, Unpacked\n\n> \"How can I build a single system that actually understands my daily life — and helps me run it better?\"\n\nIn 2026, I built **Arkaiv** (Indonesian for \"archive\"), short for *Ngarsip Harian* — Daily Archiving. It started as a notes dump and evolved into a full personal operating system.\n\nThe app has **8 integrated views**: Money, Notes, Tasks, Shopping, Calendar, Focus, Library, and Summary — all powered by Google Gemini AI, local-first with Google Sheets sync.\n\n**Core Insight**\n- A single unified interface replaces the mental overhead of juggling 5+ separate tools\n- AI works best when it observes passively and surfaces insights\n- Google Sheets as a sync layer is surprisingly powerful: human-readable, versioned, free\n- Multi-model AI routing (Gemini Flash for speed, Pro for depth) keeps the app fast and cheap\n- Orchestrating AI agents with Scrum inside OpenClaw produced production-grade code at solo-founder speed\n\n### Insight #1: Local-First, Sheets-Synced Architecture\nInstead of a traditional database, Arkaiv uses local-first + Google Sheets sync. All data lives in the browser with Google Sheets as the persistent backend.\n- **Zero infra costs:** No database servers\n- **Human-readable backups:** Every entry is a row in Sheets\n- **Batch parsing pipeline:** Custom batchParserCoordinator with canonicalization and validation\n- **Spreadsheet reconciliation:** spreadsheetReconciler diffs local state against Sheets\n\n### Insight #2: Multi-Model AI Routing\nNot every AI task needs Gemini Pro — sometimes Flash is 10x cheaper. A custom parser model router classifies incoming text by complexity:\n- Simple categorization → Flash\n- Complex parsing → Pro\n- Weekly summaries → Pro with structured prompts\n- Chat queries → Context-aware routing\n\n### Insight #3: Behavior Caching and Deep Work Mode\n**Behavior Cache:** Learns recurring patterns — if you always categorize \"kopi kenangan\" as coffee, it stops asking. Cut parsing latency by 40%.\n**Deep Work Transformer:** A Focus view that transforms tasks into timed deep-work blocks, synced with Calendar. Backed by spec NDC-008 with automated ship-gate validation.\n\n### Insight #4: Building with AI Agents — OpenClaw Scrum\nI orchestrated AI agents inside OpenClaw with Scrum: Product Owner (me), Engineering agents, QA agents, Design agents. The docs/ directory has 20+ spec documents, 15+ screenshot validation runs, automated benchmarks.\n\n### Tech Stack\n- **Frontend:** React 19 + Vite 6 + Tailwind CSS 4, Framer Motion, Recharts\n- **Backend:** Express.js 5, TypeScript, Vercel serverless\n- **AI:** Google Gemini (Flash + Pro) with custom model router\n- **Data:** Local-first + Google Sheets sync via API\n- **Integrations:** Google Calendar API, Google OAuth\n- **PWA:** Full offline via vite-plugin-pwa\n\n## Strategic Takeaways\nArkaiv proved that a personal tool built with intention and modern AI can outperform polished SaaS. It demonstrated AI-orchestrated solo development producing production-grade, tested, documented software at team speed.\n\n**Status:** Live & actively maintained. **Stack:** React 19 + Vite + Express + Gemini + Google Sheets. **Repo:** private (akhdanzaman/notes-dump)."
+    },
+    {
+      "id": "olist",
+      "title": "Olist Ecommerce Satisfaction Visualization",
+      "subtitle": "Power BI, Visualization",
+      "author": "Akhdan Hanif",
+      "date": "July 2025",
+      "toolbox": "Power BI",
+      "techniques": "EDA, Visualization, Dashboarding",
+      "industries": "Brazilian Marketplace",
+      "results": "Data-driven strategies",
+      "heroImage": "https://cdn.prod.website-files.com/687117f971cd518b166221a9/6871f67b7972b4b2fbff4287_d4963dd3-20cc-49f2-b0f3-129546ab05d4.png",
+      "tags": [],
+      "content": "## Olist Case Study, Unpacked\n\n> \"What truly separates a satisfied customer from a deeply disappointed one?\"\n\n**Core Insight**\n1. A healthy average can hide operational illness\n2. Products and sellers aren't the real culprits\n3. Delivery delays trigger customer dissatisfaction\n4. The shipping phase is the true bottleneck\n5. Delay hotspots are route-specific\n6. High cost ≠ fast delivery — financial inefficiencies exposed\n\n### Insight #1: Surface-Level Health Can Hide Internal Dysfunction\n![Olist Dashboard](https://cdn.prod.website-files.com/687117f971cd518b166221a9/68727945c3f561671347630c_1.png)\n\nWith a solid 4.09 out of 5, leadership could've easily concluded everything was fine. But averages can lie — they mask extremes that cancel each other out.\n\n### Insight #2: It's Not the Products or the Sellers\n![Product Analysis](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872794533838b79611b3f0d_2.png)\n\nPerformance lines were largely flat — top categories and sellers showed no red flags. The obvious culprits were innocent.\n\n### Insight #3: The Turning Point — Delay Drives Dissatisfaction\n![On-Time vs Late](https://cdn.prod.website-files.com/687117f971cd518b166221a9/68727945750d80a157082fbf_3.png)\n\nOn-time deliveries earned 4s and 5s. Late ones got 1s and 2s. Logistics was the #1 driver of customer experience.\n\n### Insight #4: Diagnosing the Delay — Where's the Time Lost?\n![Logistics Report](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872794581428b13e9127d9a_4.png)\n\nShipping time ballooned from 8 to 27+ days for late orders. The bottleneck was transit — the logistics partners.\n\n### Insight #5: Mapping the Epicenter\n![Delay Matrix](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687279445fe95b0ea228de3e_5.png)\n\nOnly certain routes were severely affected — especially SP to northeastern states.\n\n### Insight #6: High Costs, Slow Deliveries — The Worst Combo\n![Cost vs Time](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687279457d0489bf504f8247_7.png)\n\nOlist was overpaying for subpar service — a double hit: poor experience and wasted budget.\n\n## Strategic Takeaways\n- Audit and renegotiate logistics partners on high-cost, high-delay routes\n- Enforce stricter SLAs\n- Use data as leverage\n\nIn modern e-commerce, delivery isn't just a service — it's part of the product."
+    },
+    {
+      "id": "essential-oils",
+      "title": "Essential Oils Customer Satisfaction Analysis",
+      "subtitle": "Python, Machine Learning",
+      "author": "Akhdan Hanif",
+      "date": "June 2025",
+      "toolbox": "Python, BERTopic, SHAP, XGBoost, GPT-4o",
+      "techniques": "Sentiment analysis, topic modeling, explainable AI, regression, Kano classification",
+      "industries": "Consumer wellness, essential oils, digital marketplaces",
+      "results": "Targeted product insights, data-driven quality improvements, novel review-to-roadmap pipeline.",
+      "heroImage": "https://cdn.prod.website-files.com/687117f971cd518b166221a9/687206b233f1b4adf843fdfa_pexels-mareefe-932587.jpg",
+      "tags": [
+        "PYTHON",
+        "WEB SCRAPING",
+        "DATA ANALYSIS",
+        "MACHINE LEARNING",
+        "CUSTOMER SATISFACTION"
+      ],
+      "content": "## Case Study: Decoding Customer Satisfaction for Essential Oils\n\n> \"Can we extract strategic product insights purely from online reviews?\"\n\nI explored 23,000+ reviews of essential oil products from Tokopedia to identify what truly drives satisfaction.\n\n**Core Insight**\n- Aroma and packaging are key drivers of 5-star reviews\n- Customers are highly price-sensitive, especially mid-tier buyers\n- Diffuser support is a \"must\" for premium consumers\n- The Kano Model + SHAP approach reveals segment-specific strategies\n\n### Insight #1: What People Really Talk About\n![BERTopic](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872210461b8e8a2b3c69f32_Screenshot%202025-07-12%20154556.png)\n\nScraped 23,068 reviews using a custom Python pipeline. BERTopic extracted 11 Customer Satisfaction Dimensions — aroma, price, packaging, delivery, service.\n\n### Insight #2: What Drives Ratings\n![Sentiment](https://cdn.prod.website-files.com/687117f971cd518b166221a9/68721ee0b304a9ed752578c3_Screenshot%202025-07-12%20153724.png)\n\nGPT-4o-mini labeled reviews by dimension. Aroma had the strongest influence on 5-star reviews.\n\n### Insight #3: Which Model Knows Best?\n![MAE](https://cdn.prod.website-files.com/687117f971cd518b166221a9/68722109e8c17297c0014e28_MAE%20Model.png)\n\nXGBoost stood out with MAE of 0.125 and balanced performance across segments.\n\n### Insight #4-5: SHAP + Kano Model\n- **Performance:** Aroma, Packaging, Quality\n- **Must-be:** Price (Mid), Diffuser Support (Premium)\n- **Excitement:** Bonus items, Efficacy\n\n### Segment Insights\n![Low SHAP](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872226bb6ac4d56581cbd77_Screenshot%202025-07-12%20155216.png)\n![Mid SHAP](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872226be740983f6e01f40d_Screenshot%202025-07-12%20155228.png)\n![Premium SHAP](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872226b8df2ae8cbeaf1928_Screenshot%202025-07-12%20155238.png)\n\nCustomer feedback should be seen as a vital compass for product innovation, not noisy data."
+    },
+    {
+      "id": "churn",
+      "title": "Telco Customer Churn Prediction",
+      "subtitle": "Python, EDA, Machine Learning",
+      "author": "Aruci Team (Bilal, Akhdan, Dendy)",
+      "date": "May 2025",
+      "toolbox": "Python, XGBoost, Pandas, Streamlit",
+      "techniques": "EDA, feature engineering, classification modeling",
+      "industries": "Telecommunication, customer analytics",
+      "results": "Lower churn, smarter targeting, service strategies rooted in behavioral data.",
+      "heroImage": "https://cdn.prod.website-files.com/687117f971cd518b166221a9/6871e103d5a705d6ac7b293f_PPT%20DSW%202023%20-%20ARUCI_001.png",
+      "tags": [
+        "PYTHON",
+        "DATA ANALYSIS",
+        "MACHINE LEARNING"
+      ],
+      "content": "## Customer Churn, Unpacked\n\n> \"How can a telecom company turn churn into insight?\"\n\n**Core Insight**\n- Long-tenured customers are more loyal\n- Call center and digital services enhance retention\n- High-end device users are a churn risk\n- Credit-based payment users churn more\n- New customers need nurturing within the first 5 months\n\n7,000+ customer records from Jakarta and Bandung.\n\n### Insight #1: Most Churn Happens Early\n![Churn Early](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227ebb6ac4d56581e585d_Screenshot%202025-07-12%20161413.png)\nNew customers in first 5 months at highest risk.\n\n### Insight #2: Loyalty Lives in Usage\n![Usage](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227eb93dde2a217c84db9_Screenshot%202025-07-12%20161445.png)\nActive service users significantly more likely to stay.\n\n### Insight #3: High-End Device = High Risk\n![Device](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227eb630a6b555231f3d8_Screenshot%202025-07-12%20161504.png)\nPremium device owners churn more — higher expectations, lower switching friction.\n\n### Insight #4: Payment Style Matters\n![Payment](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227ebf48c8590a9a9ee7a_Screenshot%202025-07-12%20161534.png)\nCredit and pulsa users churn at higher rates.\n\n### Insight #5: Call Center Saves Customers\n![Call Center](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227eb290c7dad4c1b09a1_Screenshot%202025-07-12%20161552.png)\nCall center interaction correlates with lower churn.\n\n### Model\n![Model](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687228302a3f1bf28668a00d_Screenshot%202025-07-12%20161729.png)\nXGBoost achieved balanced performance. If I could redo it, I'd make the model the central decision-support engine."
+    },
+    {
+      "id": "usaid",
+      "title": "Health Commodities Supply Chain by USAID Visualization",
+      "subtitle": "Tableau, Visualization",
+      "author": "Akhdan Hanif",
+      "date": "April 2025",
+      "toolbox": "Tableau, Tableau Prep",
+      "techniques": "Operational dashboarding, multi-year KPI trend analysis",
+      "industries": "Public health supply chains",
+      "results": "Disrupted assumptions, data-backed narratives, strategic lessons.",
+      "heroImage": "https://cdn.prod.website-files.com/687117f971cd518b166221a9/68724bfc305c14dd91b39935_pexels-chanaka-318741-906494.jpg",
+      "tags": [
+        "TABLEAU",
+        "SUPPLY CHAIN",
+        "VISUALIZATION"
+      ],
+      "content": "## USAID Supply Chain Analysis, Unpacked\n\n> \"What's really happening inside the health commodities supply chain run by USAID?\"\n\nMy first-ever visualization project using a proper BI tool. Dataset from Kaggle — simulated USAID health commodities supply chain.\n\n**Core Insight**\n- Sudden delivery volume collapse in 2015\n- Air charter was eating the budget disproportionately\n- RDC share shrinking year over year\n- Nigeria dominated distribution\n- Reliability and cost efficiency feed each other\n\n### Insight #1-4: Key Findings\nThe 2015 delivery cliff, air charter costs, RDC decline, and Nigeria's dominance all painted a picture of a supply chain that needed strategic attention.\n\n### Insight #5: The Reliability-Cost Gap\nI realized I was tracking volumes and costs but not answering what matters: reliability (consistency, on-time rate, accuracy) and cost efficiency (shipment count, weight, freight cost). This gap analysis became the foundation for the dashboard redesign.\n\n## Strategic Takeaways\nA first draft dashboard is never the final answer. The real value comes from asking: what question did I not answer? Then going back and answering it."
+    },
+    {
+      "id": "maintenance",
+      "title": "Maintenance Schedule and History Visualization",
+      "subtitle": "Looker, Visualization",
+      "author": "Akhdan Hanif",
+      "date": "March 2025",
+      "toolbox": "Looker Studio, Script App, Google Spreadsheets",
+      "techniques": "Operational dashboarding, multi-year KPI trend analysis",
+      "industries": "Manufacturing",
+      "results": "Visualization of maintenance schedule and report",
+      "heroImage": "https://cdn.prod.website-files.com/687117f971cd518b166221a9/68724c5f761849fb3ee3cacc_pexels-pixabay-257736.jpg",
+      "tags": [
+        "LOOKER STUDIO",
+        "MAINTENANCE",
+        "VISUALIZATION"
+      ],
+      "content": "## First Hands-on Looker Studio\n\nPractice project mocking up a Maintenance dashboard with dummy data based on real machine failure history.\n\n### Dashboard Emphasis\n2 pages: quick overview and detailed report.\n\n#### Page #1: Maintenance Schedule Quick Overview\nColor-coded grids for maintenance status. Google App Scripts integration enables direct spreadsheet manipulation — a fun experiment adding interactivity to an otherwise static dashboard.\n\n#### Page #2: Maintenance Detailed Report\nBar charts of downtime per machine, failure type breakdown, workload distribution by PIC. Tables and location-based charts for tracking issues and spatial patterns."
+    },
+    {
+      "id": "mental-health",
+      "title": "Mental Health Prediction App",
+      "subtitle": "Python, Machine Learning",
+      "author": "Yukai Mojikai Team (Izzan, Akhdan, Bagus, Rafi, Rifqi)",
+      "date": "June 2024",
+      "toolbox": "Python, BERT",
+      "techniques": "EDA, Data Preprocessing, NLP Modeling",
+      "industries": "Startup",
+      "results": "Journaling App with Mental Health Analysis",
+      "heroImage": "https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872829f48edde385bb56b0e_Cover.png",
+      "tags": [
+        "PYTHON",
+        "WEB SCRAPING",
+        "DATA ANALYSIS",
+        "MACHINE LEARNING",
+        "NLP"
+      ],
+      "content": "## Mental State Classification Using BERT\n\nI led development of a machine learning pipeline that classifies user text into five mental sentiment categories using a pre-trained BERT model and TensorFlow. Deployed as a scalable API on Google Cloud Run.\n\n## Data Preprocessing\n- Removed punctuation, numbers, whitespace, special characters, stop words\n- BERT tokenizer with padding to 53 tokens\n- Attention masks for valid tokens vs padding\n\n## Building the Model\nPre-trained BERT from HuggingFace + custom TensorFlow layers: input layers, BERT embeddings, global max pooling, dense layers with ReLU + dropout, sigmoid output. Optimized with Adam. Score: 88.4.\n\n## Deployment\nGoogle Cloud Run for auto-scaling serverless hosting. REST endpoint accepting raw text, returning predicted sentiment classes.\n\n## Final Thoughts\nEnd-to-end NLP pipeline — from preprocessing to scalable deployment. Built not just a model but a complete sentiment classification service for real-world use."
+    }
+  ]
+}
