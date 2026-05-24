@@ -864,9 +864,13 @@
 
   <script>
     // ===== CMS Dynamic Homepage Render =====
-    (function() {
+    (async function() {
       try {
-        const raw = localStorage.getItem('akhdan_cms_data');
+        let raw = localStorage.getItem('akhdan_cms_data');
+        try {
+          const ghr = await fetch('https://raw.githubusercontent.com/akhdanzaman/akhdan-projects/main/cms-data.json',{cache:'no-cache'});
+          if (ghr.ok) { const gj = await ghr.json(); raw = JSON.stringify(gj); localStorage.setItem('akhdan_cms_data', raw); }
+        } catch(e) {}
         if (!raw) return;
         const cms = JSON.parse(raw);
         if (!cms.projects || !Array.isArray(cms.projects) || cms.projects.length === 0) return;

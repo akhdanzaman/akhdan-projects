@@ -6,481 +6,277 @@
   <title>CMS — Akhdan Projects</title>
   <link rel="icon" href="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6875f721617f26cec12608d0_icon.png">
   <style>
-    :root {
-      --bg: #f0f2f5; --bg-card: #fff; --bg-dark: #111827; --text: #111827;
-      --text2: #6b7280; --border: #e5e7eb; --accent: #111827; --danger: #ef4444;
-      --green: #10b981; --radius: 8px; --font: system-ui, -apple-system, sans-serif;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: var(--font); background: var(--bg); color: var(--text); height: 100vh; }
+    :root { --bg:#f0f2f5; --card:#fff; --dark:#111827; --text:#111827; --t2:#6b7280; --br:#e5e7eb; --ac:#111827; --red:#ef4444; --grn:#10b981; --r:8px; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);height:100vh}
+    .login-overlay{position:fixed;inset:0;background:var(--dark);display:flex;align-items:center;justify-content:center;z-index:9999}
+    .login-box{background:#fff;padding:2.5rem;border-radius:12px;width:380px;max-width:90vw;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+    .login-box h1{font-size:1.5rem;margin-bottom:.25rem}
+    .login-box p{color:var(--t2);margin-bottom:1.5rem;font-size:.9rem}
+    .login-box input{width:100%;padding:.75rem 1rem;border:1px solid var(--br);border-radius:var(--r);font-size:.95rem;margin-bottom:.75rem;font-family:inherit}
+    .login-box .btn{width:100%;padding:.75rem;background:var(--ac);color:#fff;border:none;border-radius:var(--r);font-size:.95rem;font-weight:600;cursor:pointer;font-family:inherit}
+    .login-box .btn:hover{background:#1f2937}
+    .login-error{color:var(--red);font-size:.85rem;margin-top:.5rem;display:none}
 
-    /* LOGIN */
-    .login-overlay { position: fixed; inset: 0; background: var(--bg-dark); display: flex; align-items: center; justify-content: center; z-index: 9999; }
-    .login-box { background: #fff; padding: 2.5rem; border-radius: 12px; width: 380px; max-width: 90vw; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-    .login-box h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
-    .login-box p { color: var(--text2); margin-bottom: 1.5rem; font-size: 0.9rem; }
-    .login-box input { width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: var(--radius); font-size: 0.95rem; margin-bottom: 0.75rem; font-family: var(--font); }
-    .login-box input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(17,24,39,0.1); }
-    .login-box .btn { width: 100%; padding: 0.75rem; background: var(--accent); color: #fff; border: none; border-radius: var(--radius); font-size: 0.95rem; font-weight: 600; cursor: pointer; font-family: var(--font); }
-    .login-box .btn:hover { background: #1f2937; }
-    .login-error { color: var(--danger); font-size: 0.85rem; margin-top: 0.5rem; display: none; }
+    .app{display:none;height:100vh}.app.on{display:flex}
+    .sidebar{width:280px;min-width:280px;background:var(--dark);color:#fff;display:flex;flex-direction:column}
+    .sh{padding:1rem 1.25rem;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:space-between}
+    .sh h2{font-size:.95rem;font-weight:600}.sh button{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);padding:.25rem .65rem;border-radius:4px;cursor:pointer;font-size:.75rem;font-family:inherit}
+    .sh button:hover{background:rgba(255,255,255,.1);color:#fff}
+    .sidebar-add{padding:.6rem 1.25rem}
+    .sidebar-add button{width:100%;padding:.5rem;background:rgba(255,255,255,.08);color:rgba(255,255,255,.8);border:1px dashed rgba(255,255,255,.2);border-radius:6px;cursor:pointer;font-family:inherit;font-size:.8rem}
+    .sidebar-add button:hover{background:rgba(255,255,255,.12)}
+    .proj-list{flex:1;overflow-y:auto;padding:.25rem 0}
+    .proj-item{padding:.7rem 1.25rem;cursor:pointer;border-left:3px solid transparent;display:flex;flex-direction:column;gap:.1rem;position:relative}
+    .proj-item:hover{background:rgba(255,255,255,.05)}.proj-item.on{background:rgba(255,255,255,.08);border-left-color:#fff}
+    .proj-item .name{font-size:.82rem;font-weight:600;line-height:1.3;padding-right:24px}
+    .proj-item .meta{font-size:.7rem;color:rgba(255,255,255,.45)}
+    .proj-item .del{position:absolute;top:.6rem;right:.75rem;background:none;border:none;color:rgba(255,255,255,.25);cursor:pointer;font-size:.85rem}
+    .proj-item .del:hover{color:var(--red)}
+    .sidebar-stat{padding:.6rem 1.25rem;border-top:1px solid rgba(255,255,255,.08);font-size:.7rem;color:rgba(255,255,255,.3)}
 
-    /* APP */
-    .app { display: none; height: 100vh; }
-    .app.visible { display: flex; }
+    .main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+    .main-bar{padding:.55rem 1.25rem;background:var(--card);border-bottom:1px solid var(--br);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+    .main-bar h3{font-size:.95rem;font-weight:600;margin-right:auto}
+    .main-bar button{padding:.35rem .75rem;border:1px solid var(--br);background:var(--card);border-radius:4px;cursor:pointer;font-size:.78rem;font-family:inherit;white-space:nowrap}
+    .main-bar button:hover{background:var(--bg)}
+    .btn-pri{background:var(--ac)!important;color:#fff!important;border-color:var(--ac)!important}.btn-pri:hover{background:#1f2937!important}
+    .btn-gh{background:var(--grn)!important;color:#fff!important;border-color:var(--grn)!important}
 
-    /* SIDEBAR */
-    .sidebar { width: 280px; min-width: 280px; background: var(--bg-dark); color: #fff; display: flex; flex-direction: column; }
-    .sidebar-hd { padding: 1rem 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: space-between; }
-    .sidebar-hd h2 { font-size: 0.95rem; font-weight: 600; }
-    .sidebar-hd button { background: none; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); padding: 0.25rem 0.65rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-family: var(--font); }
-    .sidebar-hd button:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .ed-wrap{flex:1;display:flex;overflow:hidden}
+    .ed-pane{flex:1;min-width:0;display:flex;flex-direction:column}.ed-pane:first-child{border-right:1px solid var(--br)}
+    .plabel{padding:.35rem 1rem;background:#f9fafb;font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--t2);font-weight:600;border-bottom:1px solid var(--br);display:flex;justify-content:space-between}
+    .mtabs{display:flex;border-bottom:1px solid var(--br);background:var(--card)}
+    .mtab{padding:.45rem 1rem;cursor:pointer;font-size:.78rem;color:var(--t2);border-bottom:2px solid transparent}.mtab:hover{color:var(--text)}.mtab.on{color:var(--text);border-bottom-color:var(--ac);font-weight:600}
+    .fscroll{flex:1;overflow-y:auto;padding:1.25rem}
+    .fg{margin-bottom:1rem}
+    .fg label{display:block;font-size:.78rem;font-weight:600;margin-bottom:.3rem;color:var(--t2);text-transform:uppercase;letter-spacing:.03em}
+    .fg input,.fg textarea,.fg select{width:100%;padding:.55rem .75rem;border:1px solid var(--br);border-radius:6px;font-size:.85rem;font-family:inherit;background:var(--card)}
+    .fg input:focus,.fg textarea:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 3px rgba(17,24,39,.06)}
+    .fg textarea{min-height:70px;resize:vertical}
+    .tgi{display:flex;flex-wrap:wrap;gap:4px;padding:.4rem;border:1px solid var(--br);border-radius:6px;background:var(--card);min-height:38px;align-items:center}
+    .tgi:focus-within{border-color:var(--ac);box-shadow:0 0 0 3px rgba(17,24,39,.06)}
+    .tchip{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;background:var(--dark);color:#fff;border-radius:999px;font-size:.7rem;font-weight:600}
+    .tchip button{background:none;border:none;color:rgba(255,255,255,.6);cursor:pointer;font-size:.8rem;line-height:1;padding:0;margin-left:2px}
+    .tchip button:hover{color:#fff}
+    .tgi input{border:none!important;outline:none;padding:2px 4px;font-size:.8rem;flex:1;min-width:80px;background:transparent!important;box-shadow:none!important}
+    .mdedit{flex:1;padding:1.25rem;border:none;resize:none;font-family:'SF Mono',Consolas,monospace;font-size:.88rem;line-height:1.6;outline:none;background:var(--card)}
+    .preview{flex:1;padding:1.25rem;overflow-y:auto;background:var(--card);line-height:1.7;font-size:.9rem}
+    .preview h1{font-size:1.6rem;margin:.8rem 0 .4rem}.preview h2{font-size:1.3rem;margin:1.2rem 0 .4rem}.preview h3{font-size:1.1rem;margin:1rem 0 .3rem}
+    .preview p{margin-bottom:.65rem}.preview ul,.preview ol{margin-bottom:.65rem;padding-left:1.5rem}
+    .preview blockquote{border-left:3px solid var(--ac);padding:.4rem 1rem;margin:.8rem 0;color:var(--t2);font-style:italic}
+    .preview img{max-width:100%;border-radius:6px;margin:.5rem 0}.preview code{background:#f1f3f5;padding:2px 6px;border-radius:3px;font-size:.85em}
+    .status-bar{padding:.35rem 1rem;background:var(--dark);color:rgba(255,255,255,.5);font-size:.7rem;display:flex;align-items:center;gap:1rem}
+    .status-bar .ok{color:var(--grn)}
 
-    .sidebar-add { padding: 0.6rem 1.25rem; }
-    .sidebar-add button { width: 100%; padding: 0.5rem; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.8); border: 1px dashed rgba(255,255,255,0.2); border-radius: 6px; cursor: pointer; font-family: var(--font); font-size: 0.8rem; }
-    .sidebar-add button:hover { background: rgba(255,255,255,0.12); }
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;display:none;align-items:center;justify-content:center}
+    .modal-overlay.on{display:flex}
+    .modal{background:#fff;padding:1.5rem;border-radius:12px;width:520px;max-width:90vw;box-shadow:0 20px 60px rgba(0,0,0,.2);max-height:80vh;overflow-y:auto}
+    .modal h3{margin-bottom:1rem}.modal .btns{display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem}
+    .modal button{padding:.45rem 1rem;border:1px solid var(--br);background:#fff;border-radius:4px;cursor:pointer;font-size:.85rem;font-family:inherit}
+    .modal button.danger{background:var(--red);color:#fff;border-color:var(--red)}
+    .modal button.primary{background:var(--ac);color:#fff;border-color:var(--ac)}
+    .modal input,.modal textarea{width:100%;padding:.55rem .75rem;border:1px solid var(--br);border-radius:6px;font-size:.85rem;margin-bottom:.6rem;font-family:inherit}
+    .modal textarea{min-height:60px;resize:vertical}
+    .sync-status{font-size:.75rem;color:var(--t2);margin-top:.5rem;display:flex;align-items:center;gap:.4rem}
+    .sync-status .dot{width:8px;height:8px;border-radius:50%;background:#d1d5db}.sync-status .dot.live{background:var(--grn)}.sync-status .dot.err{background:var(--red)}
 
-    .proj-list { flex: 1; overflow-y: auto; padding: 0.25rem 0; }
-    .proj-item { padding: 0.7rem 1.25rem; cursor: pointer; border-left: 3px solid transparent; display: flex; flex-direction: column; gap: 0.1rem; position: relative; }
-    .proj-item:hover { background: rgba(255,255,255,0.05); }
-    .proj-item.active { background: rgba(255,255,255,0.08); border-left-color: #fff; }
-    .proj-item .name { font-size: 0.82rem; font-weight: 600; line-height: 1.3; padding-right: 24px; }
-    .proj-item .meta { font-size: 0.7rem; color: rgba(255,255,255,0.45); }
-    .proj-item .del-btn { position: absolute; top: 0.6rem; right: 0.75rem; background: none; border: none; color: rgba(255,255,255,0.25); cursor: pointer; font-size: 0.85rem; padding: 2px 6px; border-radius: 3px; }
-    .proj-item .del-btn:hover { color: var(--danger); background: rgba(239,68,68,0.15); }
-    .sidebar-stat { padding: 0.6rem 1.25rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.7rem; color: rgba(255,255,255,0.3); }
-
-    /* MAIN */
-    .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-    .main-bar { padding: 0.55rem 1.25rem; background: var(--bg-card); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
-    .main-bar h3 { font-size: 0.95rem; font-weight: 600; margin-right: auto; }
-    .main-bar button { padding: 0.35rem 0.75rem; border: 1px solid var(--border); background: var(--bg-card); border-radius: 4px; cursor: pointer; font-size: 0.78rem; font-family: var(--font); white-space: nowrap; }
-    .main-bar button:hover { background: var(--bg); }
-    .main-bar .btn-save { background: var(--accent); color: #fff; border-color: var(--accent); }
-    .main-bar .btn-save:hover { background: #1f2937; }
-    .main-bar .btn-export { background: var(--green); color: #fff; border-color: var(--green); }
-
-    .editor-wrap { flex: 1; display: flex; overflow: hidden; }
-    .editor-pane { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-    .editor-pane:first-child { border-right: 1px solid var(--border); }
-    .pane-label { padding: 0.35rem 1rem; background: #f9fafb; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text2); font-weight: 600; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
-
-    /* TABS in metadata pane */
-    .meta-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--bg-card); }
-    .meta-tab { padding: 0.45rem 1rem; cursor: pointer; font-size: 0.78rem; color: var(--text2); border-bottom: 2px solid transparent; transition: all 0.15s; }
-    .meta-tab:hover { color: var(--text); }
-    .meta-tab.active { color: var(--text); border-bottom-color: var(--accent); font-weight: 600; }
-
-    /* FORMS */
-    .form-scroll { flex: 1; overflow-y: auto; padding: 1.25rem; }
-    .form-group { margin-bottom: 1rem; }
-    .form-group label { display: block; font-size: 0.78rem; font-weight: 600; margin-bottom: 0.3rem; color: var(--text2); text-transform: uppercase; letter-spacing: 0.03em; }
-    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.55rem 0.75rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; font-family: var(--font); background: var(--bg-card); }
-    .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(17,24,39,0.06); }
-    .form-group textarea { min-height: 70px; resize: vertical; }
-
-    /* Tag input */
-    .tag-input-wrap { display: flex; flex-wrap: wrap; gap: 4px; padding: 0.4rem; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-card); min-height: 38px; align-items: center; }
-    .tag-input-wrap:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(17,24,39,0.06); }
-    .tag-chip { display: inline-flex; align-items: center; gap: 3px; padding: 2px 8px; background: var(--bg-dark); color: #fff; border-radius: 999px; font-size: 0.7rem; font-weight: 600; }
-    .tag-chip button { background: none; border: none; color: rgba(255,255,255,0.6); cursor: pointer; font-size: 0.8rem; line-height: 1; padding: 0; margin-left: 2px; }
-    .tag-chip button:hover { color: #fff; }
-    .tag-input-wrap input { border: none !important; outline: none; padding: 2px 4px; font-size: 0.8rem; flex: 1; min-width: 80px; background: transparent !important; box-shadow: none !important; }
-
-    /* MARKDOWN EDITOR */
-    textarea.md-editor { flex: 1; padding: 1.25rem; border: none; resize: none; font-family: 'SF Mono', 'Fira Code', Consolas, monospace; font-size: 0.88rem; line-height: 1.6; outline: none; tab-size: 2; background: var(--bg-card); }
-    .preview-pane { flex: 1; padding: 1.25rem; overflow-y: auto; background: var(--bg-card); line-height: 1.7; font-size: 0.9rem; }
-    .preview-pane h1 { font-size: 1.6rem; margin: 0.8rem 0 0.4rem; }
-    .preview-pane h2 { font-size: 1.3rem; margin: 1.2rem 0 0.4rem; }
-    .preview-pane h3 { font-size: 1.1rem; margin: 1rem 0 0.3rem; }
-    .preview-pane p { margin-bottom: 0.65rem; }
-    .preview-pane ul, .preview-pane ol { margin-bottom: 0.65rem; padding-left: 1.5rem; }
-    .preview-pane blockquote { border-left: 3px solid var(--accent); padding: 0.4rem 1rem; margin: 0.8rem 0; color: var(--text2); font-style: italic; }
-    .preview-pane img { max-width: 100%; border-radius: 6px; margin: 0.5rem 0; }
-    .preview-pane code { background: #f1f3f5; padding: 2px 6px; border-radius: 3px; font-size: 0.85em; }
-
-    /* STATUS */
-    .status-bar { padding: 0.35rem 1rem; background: var(--bg-dark); color: rgba(255,255,255,0.5); font-size: 0.7rem; display: flex; align-items: center; gap: 1rem; }
-    .status-bar .ok { color: var(--green); }
-
-    /* MODAL */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; display: none; align-items: center; justify-content: center; }
-    .modal-overlay.on { display: flex; }
-    .modal { background: #fff; padding: 1.5rem; border-radius: 12px; width: 500px; max-width: 90vw; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
-    .modal h3 { margin-bottom: 1rem; }
-    .modal .btn-row { display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 0.5rem; }
-    .modal button { padding: 0.45rem 1rem; border: 1px solid var(--border); background: #fff; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-family: var(--font); }
-    .modal button.danger { background: var(--danger); color: #fff; border-color: var(--danger); }
-    .modal input { width: 100%; padding: 0.55rem 0.75rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; margin-bottom: 0.6rem; font-family: var(--font); }
-
-    @media (max-width: 768px) {
-      .app { flex-direction: column; }
-      .sidebar { width: 100%; min-width: 0; max-height: 170px; }
-      .editor-wrap { flex-direction: column; }
-      .editor-pane:first-child { border-right: none; border-bottom: 1px solid var(--border); }
-      .editor-pane { max-height: 50vh; }
-    }
+    @media(max-width:768px){.app{flex-direction:column}.sidebar{width:100%;min-width:0;max-height:170px}.ed-wrap{flex-direction:column}.ed-pane:first-child{border-right:none;border-bottom:1px solid var(--br)}.ed-pane{max-height:50vh}}
   </style>
 </head>
 <body>
-
-<div class="login-overlay" id="loginOverlay">
+<div class="login-overlay" id="lo">
   <div class="login-box">
-    <h1>🔐 CMS</h1>
-    <p>Akhdan Projects</p>
-    <input type="text" id="username" placeholder="Username" autocomplete="off">
-    <input type="password" id="password" placeholder="Password">
+    <h1>🔐 CMS</h1><p>Akhdan Projects</p>
+    <input type="text" id="luser" placeholder="Username" autocomplete="off">
+    <input type="password" id="lpass" placeholder="Password">
     <button class="btn" onclick="doLogin()">Sign In</button>
-    <p class="login-error" id="loginError">Invalid credentials</p>
+    <p class="login-error" id="lerr">Invalid credentials</p>
   </div>
 </div>
 
 <div class="app" id="app">
-  <!-- Sidebar -->
   <div class="sidebar">
-    <div class="sidebar-hd">
-      <h2>📝 Projects</h2>
-      <button onclick="logout()">Logout</button>
-    </div>
+    <div class="sh"><h2>📝 Projects</h2><span><button onclick="openSettings()" title="Settings">⚙️</button> <button onclick="logout()">✕</button></span></div>
     <div class="sidebar-add"><button onclick="addProject()">+ New Project</button></div>
-    <div class="proj-list" id="projList"></div>
-    <div class="sidebar-stat" id="sidebarStat">0 projects</div>
+    <div class="proj-list" id="plist"></div>
+    <div class="sidebar-stat" id="sstat">0 projects</div>
   </div>
-
-  <!-- Main -->
   <div class="main">
     <div class="main-bar">
-      <h3 id="editorTitle">Select a project</h3>
-      <button onclick="openImageModal()">🖼️ Image</button>
-      <button onclick="insertMD('**bold**')">B</button>
-      <button onclick="insertMD('*italic*')"><em>I</em></button>
-      <button onclick="insertMD('\n## H2\n')">H2</button>
-      <button onclick="insertMD('\n- item\n')">•</button>
-      <button onclick="insertMD('\n> quote\n')">❝</button>
-      <button class="btn-export" onclick="exportData()">📥 Export JSON</button>
-      <button class="btn-save" onclick="save()">💾 Save</button>
+      <h3 id="etitle">Select a project</h3>
+      <button onclick="openImg()">🖼️</button>
+      <button onclick="insMD('**bold**')">B</button>
+      <button onclick="insMD('*italic*')"><em>I</em></button>
+      <button onclick="insMD('\n## H2\n')">H2</button>
+      <button onclick="insMD('\n- item\n')">•</button>
+      <button onclick="insMD('\n> quote\n')">❝</button>
+      <button class="btn-gh" onclick="syncToGitHub()" id="syncBtn" title="Push to GitHub">🚀 Push to GitHub</button>
+      <button class="btn-pri" onclick="save()">💾 Save</button>
     </div>
-    <div class="editor-wrap" id="editorWrap">
-      <!-- Metadata -->
-      <div class="editor-pane" id="metaPane">
-        <div class="meta-tabs">
-          <div class="meta-tab active" onclick="switchMetaTab('info')">Info</div>
-          <div class="meta-tab" onclick="switchMetaTab('tags')">Tags</div>
-          <div class="meta-tab" onclick="switchMetaTab('meta')">Meta Grid</div>
-        </div>
-        <div class="form-scroll" id="metaForm"></div>
+    <div class="ed-wrap">
+      <div class="ed-pane">
+        <div class="mtabs"><div class="mtab on" onclick="switchTab('info')">Info</div><div class="mtab" onclick="switchTab('tags')">Tags</div><div class="mtab" onclick="switchTab('meta')">Meta</div></div>
+        <div class="fscroll" id="mform"></div>
       </div>
-      <!-- Content -->
-      <div class="editor-pane" id="contentPane">
-        <div class="pane-label"><span>Markdown</span><span id="saveStatus" style="color:var(--green);display:none">✓</span></div>
-        <textarea class="md-editor" id="mdEditor" placeholder="Select a project..."></textarea>
-      </div>
-      <!-- Preview -->
-      <div class="editor-pane" id="previewPane">
-        <div class="pane-label">Preview</div>
-        <div class="preview-pane" id="preview"></div>
-      </div>
+      <div class="ed-pane"><div class="plabel"><span>Markdown</span></div><textarea class="mdedit" id="mded" placeholder="Select a project..."></textarea></div>
+      <div class="ed-pane"><div class="plabel">Preview</div><div class="preview" id="preview"></div></div>
     </div>
-    <div class="status-bar">
-      <span id="statusText">Ready</span>
-      <span class="ok" id="savedOk" style="display:none">✓ Saved to localStorage</span>
-    </div>
+    <div class="status-bar"><span id="stext">Ready</span><span class="ok" id="sok" style="display:none">✓ Saved</span><span id="ghstat" style="margin-left:auto"></span></div>
   </div>
 </div>
 
 <!-- Image Modal -->
-<div class="modal-overlay" id="imageModal">
-  <div class="modal">
-    <h3>🖼️ Insert Image</h3>
-    <label style="font-size:0.8rem;font-weight:600">URL</label>
-    <input type="text" id="imgUrl" placeholder="https://...">
-    <label style="font-size:0.8rem;font-weight:600">Alt text</label>
-    <input type="text" id="imgAlt" placeholder="Description">
-    <div class="btn-row">
-      <button onclick="closeImageModal()">Cancel</button>
-      <button class="danger" onclick="insertImage()">Insert</button>
-    </div>
-  </div>
-</div>
+<div class="modal-overlay" id="imgmod"><div class="modal">
+  <h3>🖼️ Insert Image</h3>
+  <label style="font-size:.8rem;font-weight:600">URL</label><input type="text" id="imgurl" placeholder="https://...">
+  <label style="font-size:.8rem;font-weight:600">Alt text</label><input type="text" id="imgalt" placeholder="Description">
+  <div class="btns"><button onclick="closeImg()">Cancel</button><button class="danger" onclick="insertImg()">Insert</button></div>
+</div></div>
 
+<!-- Settings Modal -->
+<div class="modal-overlay" id="setmod"><div class="modal">
+  <h3>⚙️ GitHub Settings</h3>
+  <div class="fg"><label>GitHub Personal Access Token</label><input type="password" id="ghtoken" placeholder="ghp_..."><p style="font-size:.7rem;color:var(--t2);margin-top:.25rem">Needs <b>repo</b> scope. Stored in localStorage.</p></div>
+  <div class="fg"><label>Repo (owner/name)</label><input id="ghrepo" value="akhdanzaman/akhdan-projects"></div>
+  <div class="fg"><label>Branch</label><input id="ghbranch" value="main"></div>
+  <div class="fg"><label>File path in repo</label><input id="ghfile" value="cms-data.json"></div>
+  <div class="sync-status"><span class="dot" id="ghdot"></span><span id="ghmsg">Not configured</span></div>
+  <div class="btns"><button onclick="closeSettings()">Close</button><button class="primary" onclick="testGitHub()">Test Connection</button><button class="danger" onclick="saveSettings()">Save Settings</button></div>
+</div></div>
+</body>
 <script>
 // ============ AUTH ============
-const AUTH_KEY = 'akhdan_cms_auth';
-const DATA_KEY = 'akhdan_cms_data';
-
-function doLogin() {
-  if (document.getElementById('username').value.trim() === 'admin' && document.getElementById('password').value === 'thebestfutureuponmeEe') {
-    localStorage.setItem(AUTH_KEY, 'true');
-    document.getElementById('loginOverlay').style.display = 'none';
-    document.getElementById('app').classList.add('visible');
-    init();
-  } else {
-    document.getElementById('loginError').style.display = 'block';
-  }
+const AK='akhdan_cms_auth';
+function doLogin(){
+  if(gid('luser').value.trim()==='admin'&&gid('lpass').value==='thebestfutureuponmeEe'){localStorage.setItem(AK,'true');gid('lo').style.display='none';gid('app').classList.add('on');init()}else{gid('lerr').style.display='block'}
 }
-function logout() { localStorage.removeItem(AUTH_KEY); location.reload(); }
-document.getElementById('password').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
-if (localStorage.getItem(AUTH_KEY) === 'true') { document.getElementById('loginOverlay').style.display = 'none'; document.getElementById('app').classList.add('visible'); init(); }
+function logout(){localStorage.removeItem(AK);location.reload()}
+gid('lpass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+if(localStorage.getItem(AK)==='true'){gid('lo').style.display='none';gid('app').classList.add('on');init()}
 
-// ============ DEFAULTS ============
-const DEFAULTS = [
-  { id:'arkaiv', title:'Arkaiv — AI-Powered Personal Operating System', subtitle:'React, Gemini, Sheets, OpenClaw', author:'Akhdan Hanif', date:'2026',
-    toolbox:'React 19, Vite, Tailwind CSS 4, Express.js, Google Gemini AI, Google Sheets API, Google Calendar API, OpenClaw AI Agents (Scrum)',
-    techniques:'Full-stack development, AI multi-model routing, Local-first data architecture, PKM, AI-orchestrated Scrum, PWA, Framer Motion, Recharts',
-    industries:'Personal Productivity, Personal Finance, Self-Quantification, Creator Tools',
-    results:'A complete personal OS with 8 integrated views backed by Gemini AI — local-first, PWA-capable, actively maintained.',
-    heroImage:'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=1280&h=480&fit=crop',
-    tags:['REACT','GEMINI AI','GOOGLE SHEETS','OPENCLAW','FULLSTACK'],
-    content: `## Arkaiv — Ngarsip Harian, Unpacked\n\n> "How can I build a single system that actually understands my daily life — and helps me run it better?"\n\nIn 2026, I built **Arkaiv** (Indonesian for "archive"), short for *Ngarsip Harian* — Daily Archiving. It started as a notes dump and evolved into a full personal operating system.\n\nThe app has **8 integrated views**: Money, Notes, Tasks, Shopping, Calendar, Focus, Library, and Summary — all powered by Google Gemini AI, local-first with Google Sheets sync.\n\n**Core Insight**\n- A single unified interface replaces the mental overhead of juggling 5+ separate tools\n- AI works best when it observes passively and surfaces insights\n- Google Sheets as a sync layer is surprisingly powerful: human-readable, versioned, free\n- Multi-model AI routing (Gemini Flash for speed, Pro for depth) keeps the app fast and cheap\n- Orchestrating AI agents with Scrum inside OpenClaw produced production-grade code at solo-founder speed\n\n### Insight #1: Local-First, Sheets-Synced Architecture\nInstead of a traditional database, Arkaiv uses local-first + Google Sheets sync. All data lives in the browser with Google Sheets as the persistent backend.\n- **Zero infra costs:** No database servers\n- **Human-readable backups:** Every entry is a row in Sheets\n- **Batch parsing pipeline:** Custom batchParserCoordinator with canonicalization and validation\n- **Spreadsheet reconciliation:** spreadsheetReconciler diffs local state against Sheets\n\n### Insight #2: Multi-Model AI Routing\nNot every AI task needs Gemini Pro — sometimes Flash is 10x cheaper. A custom parser model router classifies incoming text by complexity:\n- Simple categorization → Flash\n- Complex parsing → Pro\n- Weekly summaries → Pro with structured prompts\n- Chat queries → Context-aware routing\n\n### Insight #3: Behavior Caching and Deep Work Mode\n**Behavior Cache:** Learns recurring patterns — if you always categorize "kopi kenangan" as coffee, it stops asking. Cut parsing latency by 40%.\n**Deep Work Transformer:** A Focus view that transforms tasks into timed deep-work blocks, synced with Calendar. Backed by spec NDC-008 with automated ship-gate validation.\n\n### Insight #4: Building with AI Agents — OpenClaw Scrum\nI orchestrated AI agents inside OpenClaw with Scrum: Product Owner (me), Engineering agents, QA agents, Design agents. The docs/ directory has 20+ spec documents, 15+ screenshot validation runs, automated benchmarks.\n\n### Tech Stack\n- **Frontend:** React 19 + Vite 6 + Tailwind CSS 4, Framer Motion, Recharts\n- **Backend:** Express.js 5, TypeScript, Vercel serverless\n- **AI:** Google Gemini (Flash + Pro) with custom model router\n- **Data:** Local-first + Google Sheets sync via API\n- **Integrations:** Google Calendar API, Google OAuth\n- **PWA:** Full offline via vite-plugin-pwa\n\n## Strategic Takeaways\nArkaiv proved that a personal tool built with intention and modern AI can outperform polished SaaS. It demonstrated AI-orchestrated solo development producing production-grade, tested, documented software at team speed.\n\n**Status:** Live & actively maintained. **Stack:** React 19 + Vite + Express + Gemini + Google Sheets. **Repo:** private (akhdanzaman/notes-dump).`
-  },
-  { id:'olist', title:'Olist Ecommerce Satisfaction Visualization', subtitle:'Power BI, Visualization', author:'Akhdan Hanif', date:'July 2025',
-    toolbox:'Power BI', techniques:'EDA, Visualization, Dashboarding', industries:'Brazilian Marketplace', results:'Data-driven strategies',
-    heroImage:'https://cdn.prod.website-files.com/687117f971cd518b166221a9/6871f67b7972b4b2fbff4287_d4963dd3-20cc-49f2-b0f3-129546ab05d4.png',
-    tags:['POWER BI','CUSTOMER SATISFACTION','DATA ANALYSIS','VISUALIZATION'],
-    content:'## Olist Case Study, Unpacked\n\n> "What truly separates a satisfied customer from a deeply disappointed one?"\n\n**Core Insight**\n1. A healthy average can hide operational illness\n2. Products and sellers aren\'t the real culprits\n3. Delivery delays trigger customer dissatisfaction\n4. The shipping phase is the true bottleneck\n5. Delay hotspots are route-specific\n6. High cost ≠ fast delivery — financial inefficiencies exposed\n\n### Insight #1: Surface-Level Health Can Hide Internal Dysfunction\n![Olist Dashboard](https://cdn.prod.website-files.com/687117f971cd518b166221a9/68727945c3f561671347630c_1.png)\n\nWith a solid 4.09 out of 5, leadership could\'ve easily concluded everything was fine. But averages can lie — they mask extremes that cancel each other out.\n\n### Insight #2: It\'s Not the Products or the Sellers\n![Product Analysis](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872794533838b79611b3f0d_2.png)\n\nPerformance lines were largely flat — top categories and sellers showed no red flags. The obvious culprits were innocent.\n\n### Insight #3: The Turning Point — Delay Drives Dissatisfaction\n![On-Time vs Late](https://cdn.prod.website-files.com/687117f971cd518b166221a9/68727945750d80a157082fbf_3.png)\n\nOn-time deliveries earned 4s and 5s. Late ones got 1s and 2s. Logistics was the #1 driver of customer experience.\n\n### Insight #4: Diagnosing the Delay — Where\'s the Time Lost?\n![Logistics Report](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872794581428b13e9127d9a_4.png)\n\nShipping time ballooned from 8 to 27+ days for late orders. The bottleneck was transit — the logistics partners.\n\n### Insight #5: Mapping the Epicenter\n![Delay Matrix](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687279445fe95b0ea228de3e_5.png)\n\nOnly certain routes were severely affected — especially SP to northeastern states.\n\n### Insight #6: High Costs, Slow Deliveries — The Worst Combo\n![Cost vs Time](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687279457d0489bf504f8247_7.png)\n\nOlist was overpaying for subpar service — a double hit: poor experience and wasted budget.\n\n## Strategic Takeaways\n- Audit and renegotiate logistics partners on high-cost, high-delay routes\n- Enforce stricter SLAs\n- Use data as leverage\n\nIn modern e-commerce, delivery isn\'t just a service — it\'s part of the product.'
-  },
-  { id:'essential-oils', title:'Essential Oils Customer Satisfaction Analysis', subtitle:'Python, Machine Learning', author:'Akhdan Hanif', date:'June 2025',
-    toolbox:'Python, BERTopic, SHAP, XGBoost, GPT-4o', techniques:'Sentiment analysis, topic modeling, explainable AI, regression, Kano classification',
-    industries:'Consumer wellness, essential oils, digital marketplaces', results:'Targeted product insights, data-driven quality improvements, novel review-to-roadmap pipeline.',
-    heroImage:'https://cdn.prod.website-files.com/687117f971cd518b166221a9/687206b233f1b4adf843fdfa_pexels-mareefe-932587.jpg',
-    tags:['PYTHON','WEB SCRAPING','DATA ANALYSIS','MACHINE LEARNING','CUSTOMER SATISFACTION'],
-    content:'## Case Study: Decoding Customer Satisfaction for Essential Oils\n\n> "Can we extract strategic product insights purely from online reviews?"\n\nI explored 23,000+ reviews of essential oil products from Tokopedia to identify what truly drives satisfaction.\n\n**Core Insight**\n- Aroma and packaging are key drivers of 5-star reviews\n- Customers are highly price-sensitive, especially mid-tier buyers\n- Diffuser support is a "must" for premium consumers\n- The Kano Model + SHAP approach reveals segment-specific strategies\n\n### Insight #1: What People Really Talk About\n![BERTopic](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872210461b8e8a2b3c69f32_Screenshot%202025-07-12%20154556.png)\n\nScraped 23,068 reviews using a custom Python pipeline. BERTopic extracted 11 Customer Satisfaction Dimensions — aroma, price, packaging, delivery, service.\n\n### Insight #2: What Drives Ratings\n![Sentiment](https://cdn.prod.website-files.com/687117f971cd518b166221a9/68721ee0b304a9ed752578c3_Screenshot%202025-07-12%20153724.png)\n\nGPT-4o-mini labeled reviews by dimension. Aroma had the strongest influence on 5-star reviews.\n\n### Insight #3: Which Model Knows Best?\n![MAE](https://cdn.prod.website-files.com/687117f971cd518b166221a9/68722109e8c17297c0014e28_MAE%20Model.png)\n\nXGBoost stood out with MAE of 0.125 and balanced performance across segments.\n\n### Insight #4-5: SHAP + Kano Model\n- **Performance:** Aroma, Packaging, Quality\n- **Must-be:** Price (Mid), Diffuser Support (Premium)\n- **Excitement:** Bonus items, Efficacy\n\n### Segment Insights\n![Low SHAP](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872226bb6ac4d56581cbd77_Screenshot%202025-07-12%20155216.png)\n![Mid SHAP](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872226be740983f6e01f40d_Screenshot%202025-07-12%20155228.png)\n![Premium SHAP](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872226b8df2ae8cbeaf1928_Screenshot%202025-07-12%20155238.png)\n\nCustomer feedback should be seen as a vital compass for product innovation, not noisy data.'
-  },
-  { id:'churn', title:'Telco Customer Churn Prediction', subtitle:'Python, EDA, Machine Learning', author:'Aruci Team (Bilal, Akhdan, Dendy)', date:'May 2025',
-    toolbox:'Python, XGBoost, Pandas, Streamlit', techniques:'EDA, feature engineering, classification modeling', industries:'Telecommunication, customer analytics',
-    results:'Lower churn, smarter targeting, service strategies rooted in behavioral data.',
-    heroImage:'https://cdn.prod.website-files.com/687117f971cd518b166221a9/6871e103d5a705d6ac7b293f_PPT%20DSW%202023%20-%20ARUCI_001.png',
-    tags:['PYTHON','DATA ANALYSIS','MACHINE LEARNING'],
-    content:'## Customer Churn, Unpacked\n\n> "How can a telecom company turn churn into insight?"\n\n**Core Insight**\n- Long-tenured customers are more loyal\n- Call center and digital services enhance retention\n- High-end device users are a churn risk\n- Credit-based payment users churn more\n- New customers need nurturing within the first 5 months\n\n7,000+ customer records from Jakarta and Bandung.\n\n### Insight #1: Most Churn Happens Early\n![Churn Early](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227ebb6ac4d56581e585d_Screenshot%202025-07-12%20161413.png)\nNew customers in first 5 months at highest risk.\n\n### Insight #2: Loyalty Lives in Usage\n![Usage](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227eb93dde2a217c84db9_Screenshot%202025-07-12%20161445.png)\nActive service users significantly more likely to stay.\n\n### Insight #3: High-End Device = High Risk\n![Device](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227eb630a6b555231f3d8_Screenshot%202025-07-12%20161504.png)\nPremium device owners churn more — higher expectations, lower switching friction.\n\n### Insight #4: Payment Style Matters\n![Payment](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227ebf48c8590a9a9ee7a_Screenshot%202025-07-12%20161534.png)\nCredit and pulsa users churn at higher rates.\n\n### Insight #5: Call Center Saves Customers\n![Call Center](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227eb290c7dad4c1b09a1_Screenshot%202025-07-12%20161552.png)\nCall center interaction correlates with lower churn.\n\n### Model\n![Model](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687228302a3f1bf28668a00d_Screenshot%202025-07-12%20161729.png)\nXGBoost achieved balanced performance. If I could redo it, I\'d make the model the central decision-support engine.'
-  },
-  { id:'usaid', title:'Health Commodities Supply Chain by USAID Visualization', subtitle:'Tableau, Visualization', author:'Akhdan Hanif', date:'April 2025',
-    toolbox:'Tableau, Tableau Prep', techniques:'Operational dashboarding, multi-year KPI trend analysis', industries:'Public health supply chains',
-    results:'Disrupted assumptions, data-backed narratives, strategic lessons.',
-    heroImage:'https://cdn.prod.website-files.com/687117f971cd518b166221a9/68724bfc305c14dd91b39935_pexels-chanaka-318741-906494.jpg',
-    tags:['TABLEAU','SUPPLY CHAIN','VISUALIZATION'],
-    content:'## USAID Supply Chain Analysis, Unpacked\n\n> "What\'s really happening inside the health commodities supply chain run by USAID?"\n\nMy first-ever visualization project using a proper BI tool. Dataset from Kaggle — simulated USAID health commodities supply chain.\n\n**Core Insight**\n- Sudden delivery volume collapse in 2015\n- Air charter was eating the budget disproportionately\n- RDC share shrinking year over year\n- Nigeria dominated distribution\n- Reliability and cost efficiency feed each other\n\n### Insight #1-4: Key Findings\nThe 2015 delivery cliff, air charter costs, RDC decline, and Nigeria\'s dominance all painted a picture of a supply chain that needed strategic attention.\n\n### Insight #5: The Reliability-Cost Gap\nI realized I was tracking volumes and costs but not answering what matters: reliability (consistency, on-time rate, accuracy) and cost efficiency (shipment count, weight, freight cost). This gap analysis became the foundation for the dashboard redesign.\n\n## Strategic Takeaways\nA first draft dashboard is never the final answer. The real value comes from asking: what question did I not answer? Then going back and answering it.'
-  },
-  { id:'maintenance', title:'Maintenance Schedule and History Visualization', subtitle:'Looker, Visualization', author:'Akhdan Hanif', date:'March 2025',
-    toolbox:'Looker Studio, Script App, Google Spreadsheets', techniques:'Operational dashboarding, multi-year KPI trend analysis', industries:'Manufacturing',
-    results:'Visualization of maintenance schedule and report',
-    heroImage:'https://cdn.prod.website-files.com/687117f971cd518b166221a9/68724c5f761849fb3ee3cacc_pexels-pixabay-257736.jpg',
-    tags:['LOOKER STUDIO','MAINTENANCE','VISUALIZATION'],
-    content:'## First Hands-on Looker Studio\n\nPractice project mocking up a Maintenance dashboard with dummy data based on real machine failure history.\n\n### Dashboard Emphasis\n2 pages: quick overview and detailed report.\n\n#### Page #1: Maintenance Schedule Quick Overview\nColor-coded grids for maintenance status. Google App Scripts integration enables direct spreadsheet manipulation — a fun experiment adding interactivity to an otherwise static dashboard.\n\n#### Page #2: Maintenance Detailed Report\nBar charts of downtime per machine, failure type breakdown, workload distribution by PIC. Tables and location-based charts for tracking issues and spatial patterns.'
-  },
-  { id:'mental-health', title:'Mental Health Prediction App', subtitle:'Python, Machine Learning', author:'Yukai Mojikai Team (Izzan, Akhdan, Bagus, Rafi, Rifqi)', date:'June 2024',
-    toolbox:'Python, BERT', techniques:'EDA, Data Preprocessing, NLP Modeling', industries:'Startup', results:'Journaling App with Mental Health Analysis',
-    heroImage:'https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872829f48edde385bb56b0e_Cover.png',
-    tags:['PYTHON','WEB SCRAPING','DATA ANALYSIS','MACHINE LEARNING','NLP'],
-    content:'## Mental State Classification Using BERT\n\nI led development of a machine learning pipeline that classifies user text into five mental sentiment categories using a pre-trained BERT model and TensorFlow. Deployed as a scalable API on Google Cloud Run.\n\n## Data Preprocessing\n- Removed punctuation, numbers, whitespace, special characters, stop words\n- BERT tokenizer with padding to 53 tokens\n- Attention masks for valid tokens vs padding\n\n## Building the Model\nPre-trained BERT from HuggingFace + custom TensorFlow layers: input layers, BERT embeddings, global max pooling, dense layers with ReLU + dropout, sigmoid output. Optimized with Adam. Score: 88.4.\n\n## Deployment\nGoogle Cloud Run for auto-scaling serverless hosting. REST endpoint accepting raw text, returning predicted sentiment classes.\n\n## Final Thoughts\nEnd-to-end NLP pipeline — from preprocessing to scalable deployment. Built not just a model but a complete sentiment classification service for real-world use.'
-  }
-];
+// ============ DATA ============
+const DK='akhdan_cms_data', SK='akhdan_gh_settings';
+let data=null,ci=-1,dirty=false,mtab='info';
 
-// ============ STATE ============
-let data = null;
-let curIdx = -1;
-let dirty = false;
+const DEFAULTS=[{id:'arkaiv',title:'Arkaiv — AI-Powered Personal Operating System',subtitle:'React, Gemini, Sheets, OpenClaw',author:'Akhdan Hanif',date:'2026',toolbox:'React 19, Vite, Tailwind CSS 4, Express.js, Google Gemini AI, Google Sheets API, Google Calendar API, OpenClaw AI Agents (Scrum)',techniques:'Full-stack development, AI multi-model routing, Local-first data architecture, PKM, AI-orchestrated Scrum, PWA, Framer Motion, Recharts',industries:'Personal Productivity, Personal Finance, Self-Quantification, Creator Tools',results:'A complete personal OS with 8 integrated views backed by Gemini AI — local-first, PWA-capable, actively maintained.',heroImage:'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=1280&h=480&fit=crop',tags:['REACT','GEMINI AI','GOOGLE SHEETS','OPENCLAW','FULLSTACK'],content:'## Arkaiv — Ngarsip Harian, Unpacked\n\n> "How can I build a single system that actually understands my daily life?"\n\nIn 2026, I built **Arkaiv** (Indonesian for "archive"). 8 integrated views: Money, Notes, Tasks, Shopping, Calendar, Focus, Library, Summary — powered by Google Gemini AI.\n\n**Core Insight**\n- Single unified interface replaces 5+ separate tools\n- AI works best when it observes passively and surfaces insights\n- Google Sheets as sync layer: human-readable, versioned, free\n- Multi-model AI routing (Flash vs Pro) keeps it fast and cheap\n- OpenClaw Scrum AI agents produced production-grade code at solo speed\n\n### Insight #1: Local-First, Sheets-Synced Architecture\nLocal-first + Google Sheets sync. Zero infra costs. Human-readable backups. Custom batchParserCoordinator with canonicalization and validation. Spreadsheet reconciler diffs local state against Sheets.\n\n### Insight #2: Multi-Model AI Routing\nCustom parser model router: simple categorization → Flash, complex parsing → Pro, weekly summaries → Pro with templates.\n\n### Insight #3: Behavior Caching & Deep Work\nBehavior cache learns patterns, cut latency 40%. Deep Work Transformer backed by spec NDC-008 with automated ship-gate.\n\n### Insight #4: AI Agent Scrum\nProduct Owner (me) + Engineering/QA/Design agents. 20+ spec docs, 15+ screenshot validations.\n\n**Stack:** React 19 + Vite + Express + Gemini + Google Sheets. **Repo:** private (akhdanzaman/notes-dump).'},{id:'olist',title:'Olist Ecommerce Satisfaction Visualization',subtitle:'Power BI, Visualization',author:'Akhdan Hanif',date:'July 2025',toolbox:'Power BI',techniques:'EDA, Visualization, Dashboarding',industries:'Brazilian Marketplace',results:'Data-driven strategies',heroImage:'https://cdn.prod.website-files.com/687117f971cd518b166221a9/6871f67b7972b4b2fbff4287_d4963dd3-20cc-49f2-b0f3-129546ab05d4.png',tags:['POWER BI','CUSTOMER SATISFACTION','DATA ANALYSIS','VISUALIZATION'],content:'## Olist Case Study, Unpacked\n\n> "What truly separates a satisfied customer from a deeply disappointed one?"\n\n**Core Insight**\n1. A healthy average can hide operational illness\n2. Products and sellers aren\'t the real culprits\n3. Delivery delays trigger dissatisfaction\n4. The shipping phase is the true bottleneck\n5. Delay hotspots are route-specific\n6. High cost ≠ fast delivery\n\n### Insight #1: Surface-Level Health Can Hide Internal Dysfunction\n![Olist Dashboard](https://cdn.prod.website-files.com/687117f971cd518b166221a9/68727945c3f561671347630c_1.png)\n\n4.09 out of 5 looked fine. But averages lie — they mask extremes.\n\n### Insight #2: It\'s Not the Products or Sellers\n![Product Analysis](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872794533838b79611b3f0d_2.png)\n\nPerformance lines were flat — categories and sellers showed no red flags.\n\n### Insight #3-6: Delivery Is the Real Problem\n![On-Time vs Late](https://cdn.prod.website-files.com/687117f971cd518b166221a9/68727945750d80a157082fbf_3.png) ![Logistics](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872794581428b13e9127d9a_4.png) ![Delay Matrix](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687279445fe95b0ea228de3e_5.png) ![Cost vs Time](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687279457d0489bf504f8247_7.png)\n\nShipping time ballooned from 8 to 27+ days. Only certain routes affected. Olist was overpaying for subpar service.\n\n## Strategic Takeaways\n- Audit and renegotiate logistics partners on high-cost routes\n- Enforce stricter SLAs\n- Use data as leverage\n\nIn modern e-commerce, delivery isn\'t just a service — it\'s part of the product.'},{id:'essential-oils',title:'Essential Oils Customer Satisfaction Analysis',subtitle:'Python, Machine Learning',author:'Akhdan Hanif',date:'June 2025',toolbox:'Python, BERTopic, SHAP, XGBoost, GPT-4o',techniques:'Sentiment analysis, topic modeling, explainable AI, regression, Kano classification',industries:'Consumer wellness, essential oils, digital marketplaces',results:'Targeted product insights, data-driven quality improvements, novel review-to-roadmap pipeline.',heroImage:'https://cdn.prod.website-files.com/687117f971cd518b166221a9/687206b233f1b4adf843fdfa_pexels-mareefe-932587.jpg',tags:['PYTHON','WEB SCRAPING','DATA ANALYSIS','MACHINE LEARNING','CUSTOMER SATISFACTION'],content:'## Case Study: Decoding Customer Satisfaction for Essential Oils\n\n> "Can we extract strategic product insights purely from online reviews?"\n\n23,000+ reviews from Tokopedia. Goal: identify what truly drives satisfaction.\n\n**Core Insight**\n- Aroma and packaging are key 5-star drivers\n- Mid-tier buyers are highly price-sensitive\n- Diffuser support is a "must" for premium consumers\n- Kano Model + SHAP reveals segment-specific strategies\n\n### Insight #1: What People Really Talk About\n![BERTopic](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872210461b8e8a2b3c69f32_Screenshot%202025-07-12%20154556.png)\nScraped 23,068 reviews. BERTopic extracted 11 Customer Satisfaction Dimensions.\n\n### Insight #2-3: What Drives Ratings\n![Sentiment](https://cdn.prod.website-files.com/687117f971cd518b166221a9/68721ee0b304a9ed752578c3_Screenshot%202025-07-12%20153724.png)\n![MAE](https://cdn.prod.website-files.com/687117f971cd518b166221a9/68722109e8c17297c0014e28_MAE%20Model.png)\nAroma strongest positive SHAP impact. XGBoost: MAE 0.125.\n\n### Segment Insights\n![Low](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872226bb6ac4d56581cbd77_Screenshot%202025-07-12%20155216.png)\n![Mid](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872226be740983f6e01f40d_Screenshot%202025-07-12%20155228.png)\n![Premium](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872226b8df2ae8cbeaf1928_Screenshot%202025-07-12%20155238.png)\n\nFeedback should be a compass for innovation, not noisy data.'},{id:'churn',title:'Telco Customer Churn Prediction',subtitle:'Python, EDA, Machine Learning',author:'Aruci Team (Bilal, Akhdan, Dendy)',date:'May 2025',toolbox:'Python, XGBoost, Pandas, Streamlit',techniques:'EDA, feature engineering, classification modeling',industries:'Telecommunication, customer analytics',results:'Lower churn, smarter targeting, service strategies rooted in behavioral data.',heroImage:'https://cdn.prod.website-files.com/687117f971cd518b166221a9/6871e103d5a705d6ac7b293f_PPT%20DSW%202023%20-%20ARUCI_001.png',tags:['PYTHON','DATA ANALYSIS','MACHINE LEARNING'],content:'## Customer Churn, Unpacked\n\n> "How can a telecom company turn churn into insight?"\n\n7,000+ records from Jakarta and Bandung.\n\n**Core Insight**\n- New customers churn most in first 5 months\n- Value-added service users stay longer\n- High-end device owners are a churn risk\n- Credit/pulsa users churn more\n- Call center interaction reduces churn\n\n### Insights with Charts\n![Churn Early](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227ebb6ac4d56581e585d_Screenshot%202025-07-12%20161413.png)\n![Usage](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227eb93dde2a217c84db9_Screenshot%202025-07-12%20161445.png)\n![Device](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227eb630a6b555231f3d8_Screenshot%202025-07-12%20161504.png)\n![Payment](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227ebf48c8590a9a9ee7a_Screenshot%202025-07-12%20161534.png)\n![Call Center](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227eb290c7dad4c1b09a1_Screenshot%202025-07-12%20161552.png)\n![Model](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687228302a3f1bf28668a00d_Screenshot%202025-07-12%20161729.png)\n\nXGBoost balanced performance. Next time: model as central decision-support engine.'},{id:'usaid',title:'Health Commodities Supply Chain by USAID Visualization',subtitle:'Tableau, Visualization',author:'Akhdan Hanif',date:'April 2025',toolbox:'Tableau, Tableau Prep',techniques:'Operational dashboarding, multi-year KPI trend analysis',industries:'Public health supply chains',results:'Disrupted assumptions, data-backed narratives, strategic lessons.',heroImage:'https://cdn.prod.website-files.com/687117f971cd518b166221a9/68724bfc305c14dd91b39935_pexels-chanaka-318741-906494.jpg',tags:['TABLEAU','SUPPLY CHAIN','VISUALIZATION'],content:'## USAID Supply Chain Analysis, Unpacked\n\n> "What\'s really happening inside the health commodities supply chain run by USAID?"\n\nMy first-ever visualization project. Dataset from Kaggle — simulated USAID supply chain.\n\n**Core Insight**\n- 2015 delivery volume collapse\n- Air charter ate the budget\n- RDC share shrinking\n- Nigeria dominated distribution\n- Reliability and cost efficiency feed each other\n\n### Key Findings\nThe 2015 delivery cliff, air charter costs, RDC decline, and Nigeria\'s dominance painted a picture needing strategic attention.\n\n### The Reliability-Cost Gap\nI realized I was tracking volumes and costs but not answering what matters: reliability (consistency, on-time rate) and cost efficiency (weight, freight cost). This gap became the dashboard redesign foundation.\n\n## Strategic Takeaways\nA first draft dashboard is never the final answer. Ask: what question did I not answer? Then go back and answer it.'},{id:'maintenance',title:'Maintenance Schedule and History Visualization',subtitle:'Looker, Visualization',author:'Akhdan Hanif',date:'March 2025',toolbox:'Looker Studio, Script App, Google Spreadsheets',techniques:'Operational dashboarding, multi-year KPI trend analysis',industries:'Manufacturing',results:'Visualization of maintenance schedule and report',heroImage:'https://cdn.prod.website-files.com/687117f971cd518b166221a9/68724c5f761849fb3ee3cacc_pexels-pixabay-257736.jpg',tags:['LOOKER STUDIO','MAINTENANCE','VISUALIZATION'],content:'## First Hands-on Looker Studio\n\nPractice project with dummy maintenance data based on real machine failure history.\n\n### Page #1: Maintenance Schedule Quick Overview\nColor-coded grids for maintenance status. Google App Scripts button enables direct spreadsheet manipulation — dynamic interactivity added to a static dashboard.\n\n### Page #2: Maintenance Detailed Report\nBar charts: downtime per machine, failure type breakdown, workload by PIC. Tables and location charts for tracking issues and spatial patterns.'},{id:'mental-health',title:'Mental Health Prediction App',subtitle:'Python, Machine Learning',author:'Yukai Mojikai Team (Izzan, Akhdan, Bagus, Rafi, Rifqi)',date:'June 2024',toolbox:'Python, BERT',techniques:'EDA, Data Preprocessing, NLP Modeling',industries:'Startup',results:'Journaling App with Mental Health Analysis',heroImage:'https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872829f48edde385bb56b0e_Cover.png',tags:['PYTHON','WEB SCRAPING','DATA ANALYSIS','MACHINE LEARNING','NLP'],content:'## Mental State Classification Using BERT\n\nPipeline classifying user text into five mental sentiment categories using BERT and TensorFlow. Deployed on Google Cloud Run.\n\n## Data Preprocessing\n- Removed punctuation, numbers, stop words\n- BERT tokenizer, padded to 53 tokens\n- Attention masks for valid tokens\n\n## Building the Model\nPre-trained BERT from HuggingFace + custom TensorFlow layers. Adam optimizer. Score: 88.4.\n\n## Deployment\nGoogle Cloud Run auto-scaling. REST endpoint: raw text in → sentiment classes out.\n\n## Final Thoughts\nEnd-to-end NLP pipeline. Built not just a model but a complete sentiment service for real-world use.'}];
 
-function load() {
-  const raw = localStorage.getItem(DATA_KEY);
-  if (raw) { try { data = JSON.parse(raw); } catch(e) {} }
-  if (!data || !data.projects || !Array.isArray(data.projects)) {
-    data = { projects: JSON.parse(JSON.stringify(DEFAULTS)) };
-  }
+function load(){
+  const r=localStorage.getItem(DK);if(r)try{data=JSON.parse(r)}catch(e){}
+  if(!data||!data.projects||!Array.isArray(data.projects))data={projects:JSON.parse(JSON.stringify(DEFAULTS))};
 }
-function persist() {
-  localStorage.setItem(DATA_KEY, JSON.stringify(data));
-  dirty = false;
-  document.getElementById('savedOk').style.display = 'inline';
-  document.getElementById('saveStatus').style.display = 'inline';
-  setTimeout(() => { document.getElementById('savedOk').style.display = 'none'; document.getElementById('saveStatus').style.display = 'none'; }, 2000);
+function persistLocal(){
+  localStorage.setItem(DK,JSON.stringify(data));dirty=false;
+  gid('sok').style.display='inline';setTimeout(()=>gid('sok').style.display='none',2000);
 }
 
-// ============ RENDER SIDEBAR ============
-function renderSidebar() {
-  const list = document.getElementById('projList');
-  list.innerHTML = data.projects.map((p, i) => `
-    <div class="proj-item${i === curIdx ? ' active' : ''}" onclick="select(${i})">
-      <div class="name">${esc(p.title)}</div>
-      <div class="meta">${esc(p.subtitle)} · ${esc(p.author)} · ${esc(p.date)}</div>
-      <button class="del-btn" onclick="event.stopPropagation();delProject(${i})" title="Delete">×</button>
-    </div>
-  `).join('');
-  document.getElementById('sidebarStat').textContent = `${data.projects.length} project${data.projects.length !== 1 ? 's' : ''}`;
+// ============ SETTINGS ============
+function getSettings(){try{return JSON.parse(localStorage.getItem(SK))||{}}catch(e){return{}}}
+function saveSettings(){
+  const s={token:gid('ghtoken').value,repo:gid('ghrepo').value,branch:gid('ghbranch').value,file:gid('ghfile').value};
+  localStorage.setItem(SK,JSON.stringify(s));closeSettings();updateGHStatus();
+}
+function openSettings(){
+  const s=getSettings();
+  gid('ghtoken').value=s.token||'';gid('ghrepo').value=s.repo||'akhdanzaman/akhdan-projects';
+  gid('ghbranch').value=s.branch||'main';gid('ghfile').value=s.file||'cms-data.json';
+  gid('setmod').classList.add('on');updateGHStatus();
+}
+function closeSettings(){gid('setmod').classList.remove('on')}
+function updateGHStatus(){
+  const s=getSettings();
+  if(s.token&&s.repo){gid('ghdot').classList.add('live');gid('ghmsg').textContent='Configured — '+s.repo;}
+  else{gid('ghdot').classList.remove('live');gid('ghmsg').textContent='Not configured'}
+}
+async function testGitHub(){
+  const s=getSettings();if(!s.token||!s.repo)return alert('Fill token and repo first');
+  gid('ghmsg').textContent='Testing...';
+  try{
+    const r=await fetch(`https://api.github.com/repos/${s.repo}`,{headers:{'Authorization':'token '+s.token,'Accept':'application/vnd.github+json'}});
+    if(r.ok){gid('ghdot').className='dot live';gid('ghmsg').textContent='Connected ✓'}else{gid('ghdot').className='dot err';gid('ghmsg').textContent='Failed: '+(await r.json()).message}
+  }catch(e){gid('ghdot').className='dot err';gid('ghmsg').textContent='Network error'}
 }
 
+// ============ GITHUB SYNC ============
+async function syncToGitHub(){
+  collectMeta();if(ci>=0)data.projects[ci].content=gid('mded').value;
+  const s=getSettings();
+  if(!s.token||!s.repo){alert('Configure GitHub settings first (⚙️ gear icon)');return;}
+
+  gid('ghstat').textContent='Pushing to GitHub...';gid('syncBtn').disabled=true;
+  try{
+    // Get current file SHA if exists
+    let sha=null;
+    try{
+      const g=await fetch(`https://api.github.com/repos/${s.repo}/contents/${s.file}?ref=${s.branch}`,{headers:{'Authorization':'token '+s.token,'Accept':'application/vnd.github+json'}});
+      if(g.ok){const j=await g.json();sha=j.sha}
+    }catch(e){}
+
+    const content=btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2))));
+    const body={message:'CMS update',content,branch:s.branch};
+    if(sha)body.sha=sha;
+
+    const r=await fetch(`https://api.github.com/repos/${s.repo}/contents/${s.file}`,{
+      method:'PUT',headers:{'Authorization':'token '+s.token,'Accept':'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify(body)
+    });
+    if(r.ok){
+      gid('ghstat').textContent='✓ Pushed to GitHub — Vercel will auto-deploy';
+      gid('ghstat').style.color='var(--grn)';persistLocal();
+    }else{
+      const e=await r.json();gid('ghstat').textContent='✗ '+e.message;gid('ghstat').style.color='var(--red)';
+    }
+  }catch(e){gid('ghstat').textContent='✗ Network error';gid('ghstat').style.color='var(--red)'}
+  gid('syncBtn').disabled=false;
+}
+
+// ============ SIDEBAR ============
+function rSidebar(){
+  gid('plist').innerHTML=data.projects.map((p,i)=>`<div class="proj-item${i===ci?' on':''}" onclick="sel(${i})"><div class="name">${esc(p.title)}</div><div class="meta">${esc(p.subtitle)} · ${esc(p.author)}</div><button class="del" onclick="event.stopPropagation();del(${i})">×</button></div>`).join('');
+  gid('sstat').textContent=`${data.projects.length} project${data.projects.length!==1?'s':''}`;
+}
 // ============ EDITOR ============
-let metaTab = 'info';
-
-function select(i) {
-  if (dirty && !confirm('Unsaved changes. Discard?')) return;
-  curIdx = i;
-  dirty = false;
-  metaTab = 'info';
-  const p = data.projects[i];
-  document.getElementById('editorTitle').textContent = p.title;
-  document.getElementById('mdEditor').value = p.content || '';
-  updatePreview();
-  renderMetaForm();
-  renderSidebar();
-  document.querySelectorAll('.meta-tab').forEach(t => t.classList.remove('active'));
-  document.querySelector('.meta-tab').classList.add('active');
-  document.getElementById('statusText').textContent = `Editing: ${p.title}`;
+function sel(i){if(dirty&&!confirm('Unsaved changes. Discard?'))return;ci=i;dirty=false;mtab='info';const p=data.projects[i];gid('etitle').textContent=p.title;gid('mded').value=p.content||'';upPreview();rMeta();rSidebar();document.querySelectorAll('.mtab').forEach(t=>t.classList.remove('on'));document.querySelector('.mtab').classList.add('on');gid('stext').textContent=`Editing: ${p.title}`}
+function rMeta(){
+  const p=data.projects[ci],f=gid('mform');
+  if(mtab==='info')f.innerHTML=`<div class="fg"><label>Title</label><input id="f_title" value="${escA(p.title)}" oninput="dirty=true"></div><div class="fg"><label>Subtitle</label><input id="f_subtitle" value="${escA(p.subtitle)}" oninput="dirty=true"></div><div class="fg"><label>Author</label><input id="f_author" value="${escA(p.author)}" oninput="dirty=true"></div><div class="fg"><label>Date</label><input id="f_date" value="${escA(p.date)}" oninput="dirty=true"></div><div class="fg"><label>Hero Image URL</label><input id="f_hero" value="${escA(p.heroImage)}" oninput="dirty=true"></div>`;
+  else if(mtab==='tags')f.innerHTML=`<div class="fg"><label>Tags</label><div class="tgi" id="tgw">${(p.tags||[]).map(t=>`<span class="tchip">${esc(t)}<button onclick="this.parentElement.remove();dirty=true">×</button></span>`).join('')}<input placeholder="Add tag..." onkeydown="if(event.key==='Enter'||event.key===','){event.preventDefault();addT(this.value);this.value=''}"></div></div>`;
+  else f.innerHTML=`<div class="fg"><label>Toolbox</label><textarea id="f_tool" oninput="dirty=true">${escA(p.toolbox)}</textarea></div><div class="fg"><label>Techniques</label><textarea id="f_tech" oninput="dirty=true">${escA(p.techniques)}</textarea></div><div class="fg"><label>Industries</label><textarea id="f_ind" oninput="dirty=true">${escA(p.industries)}</textarea></div><div class="fg"><label>Results</label><textarea id="f_res" oninput="dirty=true">${escA(p.results)}</textarea></div>`;
 }
-
-function renderMetaForm() {
-  const p = data.projects[curIdx];
-  const form = document.getElementById('metaForm');
-  if (metaTab === 'info') {
-    form.innerHTML = `
-      <div class="form-group"><label>Title</label><input id="f_title" value="${escAttr(p.title)}" oninput="onFieldChange()"></div>
-      <div class="form-group"><label>Subtitle (shown in tab)</label><input id="f_subtitle" value="${escAttr(p.subtitle)}" oninput="onFieldChange()"></div>
-      <div class="form-group"><label>Author</label><input id="f_author" value="${escAttr(p.author)}" oninput="onFieldChange()"></div>
-      <div class="form-group"><label>Date</label><input id="f_date" value="${escAttr(p.date)}" oninput="onFieldChange()"></div>
-      <div class="form-group"><label>Hero Image URL</label><input id="f_hero" value="${escAttr(p.heroImage)}" oninput="onFieldChange()"></div>`;
-  } else if (metaTab === 'tags') {
-    const tags = (p.tags || []).join(',');
-    form.innerHTML = `
-      <div class="form-group"><label>Tags (comma-separated, shown on homepage card)</label>
-        <div class="tag-input-wrap" id="tagWrap">
-          ${(p.tags || []).map(t => `<span class="tag-chip">${esc(t)}<button onclick="this.parentElement.remove();onFieldChange()">×</button></span>`).join('')}
-          <input placeholder="Add tag..." onkeydown="if(event.key==='Enter'||event.key===','){event.preventDefault();addTag(this.value);this.value=''}">
-        </div>
-      </div>`;
-  } else {
-    form.innerHTML = `
-      <div class="form-group"><label>Toolbox</label><textarea id="f_toolbox" oninput="onFieldChange()">${escAttr(p.toolbox)}</textarea></div>
-      <div class="form-group"><label>Techniques</label><textarea id="f_techniques" oninput="onFieldChange()">${escAttr(p.techniques)}</textarea></div>
-      <div class="form-group"><label>Industries</label><textarea id="f_industries" oninput="onFieldChange()">${escAttr(p.industries)}</textarea></div>
-      <div class="form-group"><label>Results</label><textarea id="f_results" oninput="onFieldChange()">${escAttr(p.results)}</textarea></div>`;
-  }
+function switchTab(t){collectMeta();mtab=t;document.querySelectorAll('.mtab').forEach(x=>x.classList.toggle('on',x.textContent.toLowerCase().startsWith(t)));rMeta()}
+function collectMeta(){
+  if(ci<0)return;const p=data.projects[ci];
+  if(mtab==='info'){const x=id=>gid(id);if(x('f_title')){p.title=x('f_title').value;p.subtitle=x('f_subtitle').value;p.author=x('f_author').value;p.date=x('f_date').value;p.heroImage=x('f_hero').value}}
+  else if(mtab==='tags'){p.tags=Array.from(document.querySelectorAll('#tgw .tchip')).map(c=>c.textContent.replace('×','').trim())}
+  else if(mtab==='meta'){const x=id=>gid(id);if(x('f_tool')){p.toolbox=x('f_tool').value;p.techniques=x('f_tech').value;p.industries=x('f_ind').value;p.results=x('f_res').value}}
 }
-
-function switchMetaTab(tab) {
-  metaTab = tab;
-  document.querySelectorAll('.meta-tab').forEach(t => t.classList.toggle('active', t.textContent.toLowerCase().includes(tab)));
-  collectMetaFields();
-  renderMetaForm();
-}
-
-function collectMetaFields() {
-  if (curIdx < 0) return;
-  const p = data.projects[curIdx];
-  if (metaTab === 'info') {
-    const f = id => document.getElementById(id);
-    if (f('f_title')) { p.title = f('f_title').value; p.subtitle = f('f_subtitle').value; p.author = f('f_author').value; p.date = f('f_date').value; p.heroImage = f('f_hero').value; }
-  } else if (metaTab === 'tags') {
-    const chips = document.querySelectorAll('#tagWrap .tag-chip');
-    p.tags = Array.from(chips).map(c => c.textContent.replace('×','').trim());
-  } else {
-    const f = id => document.getElementById(id);
-    if (f('f_toolbox')) { p.toolbox = f('f_toolbox').value; p.techniques = f('f_techniques').value; p.industries = f('f_industries').value; p.results = f('f_results').value; }
-  }
-}
-
-function addTag(val) {
-  const v = val.trim().replace(/,/g,'');
-  if (!v) return;
-  const p = data.projects[curIdx];
-  if (!p.tags) p.tags = [];
-  if (!p.tags.includes(v)) p.tags.push(v);
-  onFieldChange();
-  renderMetaForm();
-}
-
-function onFieldChange() { dirty = true; }
+function addT(v){const t=v.trim().replace(/,/g,'');if(!t||!data.projects[ci])return;const p=data.projects[ci];if(!p.tags)p.tags=[];if(!p.tags.includes(t))p.tags.push(t);dirty=true;rMeta()}
 
 // ============ MARKDOWN ============
-const mdEditor = document.getElementById('mdEditor');
-mdEditor.addEventListener('input', () => { dirty = true; updatePreview(); });
-
-function updatePreview() {
-  document.getElementById('preview').innerHTML = mdToHTML(mdEditor.value);
-}
-function mdToHTML(md) {
-  return md
-    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" loading="lazy">')
-    .replace(/^#### (.*$)/gim, '<h4>$1</h4>').replace(/^### (.*$)/gim, '<h3>$1</h3>')
-    .replace(/^## (.*$)/gim, '<h2>$1</h2>').replace(/^# (.*$)/gim, '<h1>$1</h1>')
-    .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>').replace(/`([^`]+)`/g, '<code>$1</code>')
-    .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
-    .replace(/^[\-\*] (.*$)/gim, '<li>$1</li>').replace(/^\d+\. (.*$)/gim, '<li>$1</li>')
-    .replace(/((?:<li>.*<\/li>\n?)+)/g, m => m.match(/^\d+\./m) ? '<ol>\n'+m+'</ol>\n' : '<ul>\n'+m+'</ul>\n')
-    .replace(/^(?!<[houbl]|<img|<blockquote)(.+)/gim, '<p>$1</p>')
-    .replace(/<p>\s*<\/p>/g, '').replace(/<\/blockquote>\s*<blockquote>/g, '<br>');
-}
-function insertMD(text) {
-  const s = mdEditor.selectionStart, e = mdEditor.selectionEnd;
-  mdEditor.value = mdEditor.value.substring(0,s) + text + mdEditor.value.substring(e);
-  mdEditor.focus(); mdEditor.selectionStart = mdEditor.selectionEnd = s + text.length;
-  dirty = true; updatePreview();
-}
+const me=gid('mded');me.addEventListener('input',()=>{dirty=true;upPreview()});
+function upPreview(){gid('preview').innerHTML=md2html(me.value)}
+function md2html(m){return m.replace(/!\[([^\]]*)\]\(([^)]+)\)/g,'<img src="$2" alt="$1" loading="lazy">').replace(/^#### (.*$)/gim,'<h4>$1</h4>').replace(/^### (.*$)/gim,'<h3>$1</h3>').replace(/^## (.*$)/gim,'<h2>$1</h2>').replace(/^# (.*$)/gim,'<h1>$1</h1>').replace(/\*\*\*(.+?)\*\*\*/g,'<strong><em>$1</em></strong>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/`([^`]+)`/g,'<code>$1</code>').replace(/^> (.*$)/gim,'<blockquote>$1</blockquote>').replace(/^[\-\*] (.*$)/gim,'<li>$1</li>').replace(/^\d+\. (.*$)/gim,'<li>$1</li>').replace(/((?:<li>.*<\/li>\n?)+)/g,m=>m.match(/^\d+\./m)?'<ol>\n'+m+'</ol>\n':'<ul>\n'+m+'</ul>\n').replace(/^(?!<[houbl]|<img|<blockquote)(.+)/gim,'<p>$1</p>').replace(/<p>\s*<\/p>/g,'').replace(/<\/blockquote>\s*<blockquote>/g,'<br>')}
+function insMD(t){const s=me.selectionStart,e=me.selectionEnd;me.value=me.value.substring(0,s)+t+me.value.substring(e);me.focus();me.selectionStart=me.selectionEnd=s+t.length;dirty=true;upPreview()}
 
 // ============ SAVE ============
-function save() {
-  if (curIdx < 0) return;
-  collectMetaFields();
-  data.projects[curIdx].content = mdEditor.value;
-  persist();
-  dirty = false;
-  renderSidebar();
-  document.getElementById('statusText').textContent = `Saved: ${data.projects[curIdx].title}`;
-}
-document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); save(); } });
+function save(){collectMeta();if(ci>=0)data.projects[ci].content=me.value;persistLocal();rSidebar();gid('stext').textContent=`Saved: ${data.projects[ci]?.title||''}`}
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();save()}});
 
 // ============ CRUD ============
-function addProject() {
-  const id = 'project-' + Date.now();
-  data.projects.unshift({
-    id, title:'New Project', subtitle:'', author:'Akhdan Hanif', date:'2026',
-    toolbox:'', techniques:'', industries:'', results:'', heroImage:'', tags:[], content:'## New Project\n\nStart writing...'
-  });
-  persist(); curIdx = 0; dirty = false; metaTab = 'info';
-  renderSidebar(); select(0);
-}
-function delProject(i) {
-  if (!confirm(`Delete "${data.projects[i].title}"?`)) return;
-  data.projects.splice(i, 1);
-  if (curIdx >= data.projects.length) curIdx = data.projects.length - 1;
-  persist(); dirty = false;
-  renderSidebar();
-  if (curIdx >= 0) select(curIdx);
-  else { document.getElementById('editorTitle').textContent = 'Select a project'; document.getElementById('mdEditor').value = ''; document.getElementById('metaForm').innerHTML = ''; }
-}
+function addProject(){data.projects.unshift({id:'p-'+Date.now(),title:'New Project',subtitle:'',author:'Akhdan Hanif',date:'2026',toolbox:'',techniques:'',industries:'',results:'',heroImage:'',tags:[],content:'## New Project\n\nStart writing...'});persistLocal();ci=0;dirty=false;mtab='info';rSidebar();sel(0)}
+function del(i){if(!confirm(`Delete "${data.projects[i].title}"?`))return;data.projects.splice(i,1);ci=Math.min(ci,data.projects.length-1);persistLocal();dirty=false;rSidebar();if(ci>=0)sel(ci);else{gid('etitle').textContent='Select a project';gid('mded').value='';gid('mform').innerHTML=''}}
 
-// ============ EXPORT ============
-function exportData() {
-  collectMetaFields();
-  if (curIdx >= 0) data.projects[curIdx].content = mdEditor.value;
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-  a.download = 'akhdan-cms-export.json'; a.click();
-}
-
-// ============ IMAGE MODAL ============
-function openImageModal() { document.getElementById('imageModal').classList.add('on'); document.getElementById('imgUrl').focus(); }
-function closeImageModal() { document.getElementById('imageModal').classList.remove('on'); document.getElementById('imgUrl').value = ''; document.getElementById('imgAlt').value = ''; }
-function insertImage() {
-  const url = document.getElementById('imgUrl').value.trim();
-  const alt = document.getElementById('imgAlt').value.trim() || 'image';
-  if (!url) return;
-  insertMD(`\n![${alt}](${url})\n`);
-  closeImageModal();
-}
-document.getElementById('imageModal').addEventListener('click', e => { if (e.target === document.getElementById('imageModal')) closeImageModal(); });
+// ============ IMAGE ============
+function openImg(){gid('imgmod').classList.add('on');gid('imgurl').focus()}
+function closeImg(){gid('imgmod').classList.remove('on');gid('imgurl').value='';gid('imgalt').value=''}
+function insertImg(){const u=gid('imgurl').value.trim(),a=gid('imgalt').value.trim()||'image';if(!u)return;insMD(`\n![${a}](${u})\n`);closeImg()}
+gid('imgmod').addEventListener('click',e=>{if(e.target===gid('imgmod'))closeImg()});
 
 // ============ HELPERS ============
-function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function escAttr(s) { return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function id(s) { return document.getElementById(s); }
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function escA(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function gid(id){return document.getElementById(id)}
 
 // ============ INIT ============
-function init() {
-  load();
-  renderSidebar();
-  if (data.projects.length > 0) select(0);
-  document.getElementById('statusText').textContent = 'Ready — Select a project or add new';
-}
+function init(){load();rSidebar();if(data.projects.length>0)sel(0);gid('stext').textContent='Ready — 💾 Save locally or 🚀 Push to GitHub';updateGHStatus()}
 </script>
-</body>
 </html>
