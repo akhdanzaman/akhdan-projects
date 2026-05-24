@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects - Akhdan Zaman</title>
+  <link rel="icon" href="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6875f721617f26cec12608d0_icon.png">
+  <link rel="apple-touch-icon" href="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6875f7942a2e2615a365399b_Profpic_.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f9fafb;
+      --bg-inverse: #1a1a2e;
+      --text-primary: #1a1a2e;
+      --text-secondary: #6b7280;
+      --text-inverse: #ffffff;
+      --accent-primary: #0f172a;
+      --accent-primary-hover: #1e293b;
+      --border-light: #e5e7eb;
+      --border-medium: #d1d5db;
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --spacing-xs: 0.5rem;
+      --spacing-sm: 0.75rem;
+      --spacing-md: 1rem;
+      --spacing-lg: 1.5rem;
+      --spacing-xl: 2rem;
+      --spacing-2xl: 3rem;
+      --spacing-3xl: 4rem;
+      --spacing-4xl: 6rem;
+      --max-width: 1280px;
+      --font-heading: 'Noto Sans Display', sans-serif;
+      --font-body: 'Noto Sans', sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Nav */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .nav-container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: var(--spacing-md) var(--spacing-xl);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .nav-logo:hover { opacity: 0.7; }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-lg);
+    }
+
+    .nav-link {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover { color: var(--text-primary); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5em;
+      padding: 0.625rem 1.25rem;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      line-height: 1.2;
+      text-decoration: none;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent-primary);
+      color: var(--text-inverse);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-primary-hover);
+    }
+
+    /* Hero / Header */
+    .section {
+      padding: var(--spacing-4xl) var(--spacing-xl);
+    }
+
+    .section-dark {
+      background: var(--bg-inverse);
+      color: var(--text-inverse);
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: var(--spacing-3xl);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: color-mix(in srgb, currentColor 60%, transparent);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .heading-h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .subheading {
+      font-size: 1.125rem;
+      color: color-mix(in srgb, currentColor 65%, transparent);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Tab Navigation */
+    .tabs {
+      margin-top: var(--spacing-2xl);
+    }
+
+    .tab-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-2xl);
+    }
+    .tab-nav .tab-btn {
+      flex: 0 1 calc(33.333% - var(--spacing-sm));
+      min-width: 220px;
+    }
+
+    @media (max-width: 900px) {
+      .tab-nav .tab-btn { flex: 0 1 calc(50% - var(--spacing-sm)); min-width: 180px; }
+    }
+    @media (max-width: 480px) {
+      .tab-nav .tab-btn { flex: 1 1 100%; min-width: 0; }
+    }
+
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      padding: var(--spacing-md);
+      background: transparent;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      text-align: left;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--border-medium);
+      background: var(--bg-secondary);
+    }
+
+    .tab-btn.active {
+      border-color: var(--accent-primary);
+      background: var(--bg-secondary);
+      box-shadow: 0 0 0 1px var(--accent-primary);
+    }
+
+    .tab-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: var(--border-light);
+    }
+
+    .tab-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .tab-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tab-title {
+      font-weight: 600;
+      font-size: 0.8125rem;
+      line-height: 1.3;
+      color: var(--text-primary);
+    }
+
+    .tab-meta {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    /* Project Content */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .project-hero-image {
+      width: 100%;
+      max-height: 480px;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    .project-header {
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .project-header h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 700;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .project-author {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .project-author-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .project-author-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .project-author-info {
+      font-size: 0.875rem;
+    }
+
+    .project-author-name {
+      font-weight: 600;
+    }
+
+    .project-author-date {
+      color: var(--text-secondary);
+    }
+
+    /* Meta Grid */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--spacing-lg);
+      padding: var(--spacing-xl);
+      background: var(--bg-secondary);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    @media (max-width: 768px) {
+      .meta-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .meta-grid { grid-template-columns: 1fr; }
+    }
+
+    .meta-item h5 {
+      font-family: var(--font-heading);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: var(--spacing-xs);
+      color: var(--text-primary);
+    }
+
+    .meta-item p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Article */
+    .article {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .article h2 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: var(--spacing-2xl) 0 var(--spacing-md);
+    }
+
+    .article h3 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: var(--spacing-xl) 0 var(--spacing-sm);
+    }
+
+    .article p {
+      margin-bottom: var(--spacing-md);
+      font-size: 1.0625rem;
+      line-height: 1.7;
+    }
+
+    .article strong {
+      font-weight: 600;
+    }
+
+    .article blockquote {
+      border-left: 3px solid var(--accent-primary);
+      padding: var(--spacing-sm) var(--spacing-lg);
+      margin: var(--spacing-lg) 0;
+      color: var(--text-secondary);
+      font-style: italic;
+      font-size: 1.125rem;
+    }
+
+    .article ul, .article ol {
+      margin-bottom: var(--spacing-md);
+      padding-left: var(--spacing-xl);
+    }
+
+    .article li {
+      margin-bottom: var(--spacing-xs);
+      font-size: 1.0625rem;
+      line-height: 1.7;
+    }
+
+    .article img {
+      width: 100%;
+      border-radius: var(--radius-md);
+      margin: var(--spacing-lg) 0;
+    }
+
+    .article code {
+      background: var(--bg-secondary);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 0.9em;
+      font-family: monospace;
+      border: 1px solid var(--border-light);
+    }
+
+    .article a {
+      color: var(--accent-primary);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .article a:hover { opacity: 0.7; }
+
+    /* Image Slider */
+    .slider {
+      position: relative;
+      margin: var(--spacing-2xl) 0;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--bg-secondary);
+    }
+
+    .slider-track {
+      display: flex;
+      transition: transform 0.4s ease;
+    }
+
+    .slider-slide {
+      min-width: 100%;
+    }
+
+    .slider-slide img {
+      width: 100%;
+      display: block;
+    }
+
+    .slider-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-sm);
+      padding: var(--spacing-md);
+    }
+
+    .slider-arrow {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-light);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      color: var(--text-primary);
+      transition: all 0.2s;
+    }
+
+    .slider-arrow:hover {
+      background: var(--bg-secondary);
+      border-color: var(--border-medium);
+    }
+
+    .slider-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .slider-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border-medium);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .slider-dot.active {
+      background: var(--accent-primary);
+    }
+
+    .slider-counter {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      margin-left: var(--spacing-sm);
+    }
+
+    /* Segment boxes for Essential Oils project */
+    .segment-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-lg);
+      margin: var(--spacing-xl) 0;
+    }
+
+    @media (max-width: 768px) {
+      .segment-grid { grid-template-columns: 1fr; }
+    }
+
+    .segment-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-lg);
+    }
+
+    .segment-card h4 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .segment-card p {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+    }
+
+    /* Repository / Link boxes */
+    .link-box {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+      padding: var(--spacing-md) var(--spacing-lg);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-xl);
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: all 0.2s;
+    }
+
+    .link-box:hover {
+      border-color: var(--border-medium);
+      background: #f3f4f6;
+    }
+
+    .link-box-icon {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .link-box-text {
+      font-size: 0.9375rem;
+      font-weight: 500;
+    }
+
+    .link-box-arrow {
+      margin-left: auto;
+      color: var(--text-secondary);
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--bg-inverse);
+      color: var(--text-inverse);
+      padding: var(--spacing-4xl) var(--spacing-xl);
+      position: relative;
+    }
+
+    .footer-container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .footer h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .footer-email {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      color: color-mix(in srgb, #fff 70%, transparent);
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    .footer-email:hover { color: #fff; }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: var(--spacing-xl);
+      margin-top: var(--spacing-xl);
+    }
+
+    @media (max-width: 640px) {
+      .footer-bottom { flex-direction: column; gap: var(--spacing-lg); }
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.9375rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-inverse);
+      text-decoration: none;
+    }
+
+    .footer-logo svg {
+      width: 20px;
+      height: 20px;
+      color: var(--text-inverse);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: var(--spacing-md);
+    }
+
+    .footer-social a {
+      color: color-mix(in srgb, #fff 60%, transparent);
+      transition: color 0.2s;
+    }
+
+    .footer-social a:hover { color: #fff; }
+
+    .footer-social svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .footer-cta a {
+      color: color-mix(in srgb, #fff 70%, transparent);
+      text-decoration: none;
+      font-size: 0.9375rem;
+      transition: color 0.2s;
+    }
+
+    .footer-cta a:hover { color: #fff; }
+
+    .back-to-top {
+      position: absolute;
+      bottom: var(--spacing-xl);
+      right: var(--spacing-xl);
+      color: color-mix(in srgb, #fff 50%, transparent);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+
+    .back-to-top:hover { color: #fff; }
+
+    .text-block-notice {
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    /* Screen reader only */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Responsive section padding */
+    @media (max-width: 640px) {
+      .section { padding: var(--spacing-2xl) var(--spacing-md); }
+      .article p, .article li { font-size: 1rem; }
+      .project-hero-image { max-height: 280px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav id="top" class="nav">
+    <div class="nav-container">
+      <a href="../" class="nav-logo">Home</a>
+      <div class="nav-right">
+        <a href="../#about" class="nav-link">About</a>
+        <a href="#projects" class="btn btn-primary">See work</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Projects Section -->
+  <section id="projects" class="section">
+    <div class="container">
+      <div class="header">
+        <div class="eyebrow">Data Stories, Fresh Insights</div>
+        <h2 class="heading-h2">Blogging the Data-Driven Life</h2>
+        <p class="subheading">Behind the Numbers: My Process, Wins, and Lessons Learned. Dive into project retros, data deep-dives, and the stories behind the dashboards.</p>
+      </div>
+
+      <p class="text-block-notice">Please select one and scroll down</p>
+
+      <!-- Tab Navigation -->
+      <div class="tabs">
+        <div class="tab-nav" role="tablist">
+          <button class="tab-btn active" role="tab" data-tab="6" aria-selected="true">
+            <div class="tab-avatar"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=150&h=150&fit=crop&crop=face" alt="" loading="lazy"></div>
+            <div class="tab-info">
+              <span class="tab-title">AI-Powered Personal Productivity & Management Web App</span>
+              <span class="tab-meta">React, Gemini, Sheets, OpenClaw</span>
+            </div>
+          </button>
+          <button class="tab-btn" role="tab" data-tab="0" aria-selected="false">
+            <div class="tab-avatar"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6871f6121048141aca3fecc9_71caf9be408a7cb5bb24936cad34b0a2_icon.png" alt="" loading="lazy"></div>
+            <div class="tab-info">
+              <span class="tab-title">Olist Ecommerce Satisfaction Visualization</span>
+              <span class="tab-meta">Power BI, Visualization</span>
+            </div>
+          </button>
+          <button class="tab-btn" role="tab" data-tab="1" aria-selected="false">
+            <div class="tab-avatar"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/687206b233f1b4adf843fdfa_pexels-mareefe-932587.jpg" alt="" loading="lazy"></div>
+            <div class="tab-info">
+              <span class="tab-title">Essential Oils Customer Satisfaction Analysis</span>
+              <span class="tab-meta">Python, Machine Learning</span>
+            </div>
+          </button>
+          <button class="tab-btn" role="tab" data-tab="2" aria-selected="false">
+            <div class="tab-avatar"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68720687675f672338135a9c_pexels-photo-579471.jpeg" alt="" loading="lazy"></div>
+            <div class="tab-info">
+              <span class="tab-title">Telco Customer Churn Prediction</span>
+              <span class="tab-meta">Python, EDA, Machine Learning</span>
+            </div>
+          </button>
+          <button class="tab-btn" role="tab" data-tab="3" aria-selected="false">
+            <div class="tab-avatar"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68724bfc305c14dd91b39935_pexels-chanaka-318741-906494.jpg" alt="" loading="lazy"></div>
+            <div class="tab-info">
+              <span class="tab-title">Health Commodities Supply Chain by USAID Visualization</span>
+              <span class="tab-meta">Tableau, Visualization</span>
+            </div>
+          </button>
+          <button class="tab-btn" role="tab" data-tab="4" aria-selected="false">
+            <div class="tab-avatar"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68724c5f761849fb3ee3cacc_pexels-pixabay-257736.jpg" alt="" loading="lazy"></div>
+            <div class="tab-info">
+              <span class="tab-title">Maintenance Schedule and History Visualization</span>
+              <span class="tab-meta">Looker, Visualization</span>
+            </div>
+          </button>
+          <button class="tab-btn" role="tab" data-tab="5" aria-selected="false">
+            <div class="tab-avatar"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68720b4ba17974998254e512_channels4_profile.jpg" alt="" loading="lazy"></div>
+            <div class="tab-info">
+              <span class="tab-title">Mental Health Prediction App</span>
+              <span class="tab-meta">Python, Machine Learning</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- ========== PROJECT 7: Arkaiv AI Productivity ========== -->
+        <div class="tab-content active" data-tab-content="6">
+          <img class="project-hero-image" src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=1280&h=480&fit=crop" alt="Arkaiv App" loading="lazy">
+
+          <div class="project-header">
+            <h1>Arkaiv — AI-Powered Personal Productivity & Management Web App</h1>
+            <div class="project-author">
+              <div class="project-author-avatar"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68720a9ce1c1fed237b49108_Foto%20non-formal%202.jpg" alt="Akhdan Hanif" loading="lazy"></div>
+              <div class="project-author-info">
+                <div class="project-author-name">Akhdan Hanif</div>
+                <div class="project-author-date">2026</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-grid">
+            <div class="meta-item">
+              <h5>Toolbox</h5>
+              <p>React 19, Vite, Tailwind CSS 4, Express.js, Google Gemini AI, Google Sheets API, Google Calendar API, OpenClaw AI Agents (Scrum)</p>
+            </div>
+            <div class="meta-item">
+              <h5>Techniques</h5>
+              <p>Full-stack development, AI multi-model routing, Local-first data architecture, Personal Knowledge Management (PKM), AI-orchestrated Scrum, PWA, Framer Motion, Recharts</p>
+            </div>
+            <div class="meta-item">
+              <h5>Industries</h5>
+              <p>Personal Productivity, Personal Finance, Self-Quantification, Creator Tools</p>
+            </div>
+            <div class="meta-item">
+              <h5>Results</h5>
+              <p>A complete personal operating system with 8 integrated views (Money, Notes, Tasks, Shopping, Calendar, Focus, Library, Summary) backed by Gemini AI — all local-first, PWA-capable, and actively maintained.</p>
+            </div>
+          </div>
+
+          <article class="article">
+            <a class="link-box" href="https://ai.studio/apps/3069c24a-a11d-49e8-83aa-1ce7f1bbe4c1" target="_blank" rel="noopener">
+              <span class="link-box-icon">🤖</span>
+              <span class="link-box-text">View on AI Studio</span>
+              <span class="link-box-arrow">↗</span>
+            </a>
+
+            <h2>Arkaiv — Ngarsip Harian, Unpacked</h2>
+            <blockquote>"How can I build a single system that actually understands my daily life — and helps me run it better?"</blockquote>
+            <p>In 2026, I built <strong>Arkaiv</strong> (Indonesian for "archive"), short for <em>Ngarsip Harian</em> — Daily Archiving. It started as a notes dump and evolved into a full personal operating system: my daily driver for tracking money, tasks, shopping, notes, and habits — all powered by Google Gemini AI.</p>
+            <p>The app has <strong>8 integrated views</strong>: Money (expenses & budgets), Notes (AI-parsed archiving), Tasks (with routines), Shopping lists, Calendar (Google Calendar sync), Focus (deep work mode), Library (searchable archive), and Summary (AI-generated weekly reviews). Everything is local-first with Google Sheets as the sync backbone — no SaaS lock-in.</p>
+
+            <p><strong>Core Insight</strong></p>
+            <ul>
+              <li>A single unified interface replaces the mental overhead of juggling 5+ separate tools</li>
+              <li>AI works best when it observes passively and surfaces insights — not when it demands attention</li>
+              <li>Google Sheets as a sync layer is surprisingly powerful: human-readable, versioned, and free</li>
+              <li>Multi-model AI routing (Gemini Flash for speed, Pro for depth) keeps the app fast and cheap</li>
+              <li>Orchestrating AI agents with Scrum inside OpenClaw produced production-grade code at solo-founder speed</li>
+              <li>Framer Motion + Tailwind makes the app feel alive without performance penalties</li>
+            </ul>
+
+            <h3>The Starting Point — Notes Dump to Something Real</h3>
+            <p>Arkaiv didn't start with a grand vision. It started with a <code>notes-dump</code> — a chaotic repository of ideas, scripts, and half-baked components. The breakthrough came when I realized the pieces could connect: a parser that understands my spending habits, a task router that knows my energy patterns, and a calendar integration that bridges Google Calendar with my local data.</p>
+            <p>The first working version had just two views: Notes and Money. Everything else grew organically as I kept asking: "what's the friction I'm facing right now, and can Arkaiv solve it?"</p>
+
+            <h3>Insight #1: Local-First, Sheets-Synced Architecture</h3>
+            <p>Instead of a traditional database, Arkaiv uses a <strong>local-first + Google Sheets sync</strong> architecture. All data lives in the browser (React state + localStorage), with Google Sheets acting as the persistent backend. This gave me several wins:</p>
+            <ul>
+              <li><strong>Zero infra costs:</strong> No database servers, no cloud storage bills</li>
+              <li><strong>Human-readable backups:</strong> Every financial entry is a row anyone can read in Sheets</li>
+              <li><strong>Batch parsing pipeline:</strong> A custom <code>batchParserCoordinator</code> processes raw input through canonicalization, field validation, and budget categorization</li>
+              <li><strong>Spreadsheet reconciliation:</strong> A <code>spreadsheetReconciler</code> diffs local state against Sheets to keep everything consistent</li>
+            </ul>
+            <p>This architecture is unconventional. Most devs would reach for Supabase or Firebase. But for a personal tool that only I use, the simplicity and zero-cost nature of Sheets won every tradeoff discussion.</p>
+
+            <h3>Insight #2: Multi-Model AI Routing — Right Model, Right Job</h3>
+            <p>One of the most interesting technical decisions was building a <strong>parser model router</strong>. Not every AI task needs Gemini Pro — sometimes Gemini Flash is faster and 10x cheaper for the same quality. The router classifies incoming text by complexity and routes accordingly:</p>
+            <ul>
+              <li><strong>Simple categorization</strong> ("lunch 35k" → expense, food) → Flash</li>
+              <li><strong>Complex parsing</strong> (multi-item receipt, mixed currencies) → Pro</li>
+              <li><strong>Weekly summaries and insights</strong> → Pro with structured prompt templates</li>
+              <li><strong>Chat and free-form queries</strong> → Context-aware routing based on query type</li>
+            </ul>
+            <p>This saved significant API costs while keeping the experience snappy. The router itself is a lightweight classifier trained on real usage patterns over several weeks.</p>
+
+            <h3>Insight #3: Behavior Caching and Deep Work Mode</h3>
+            <p>Two features that emerged from real usage pain points:</p>
+            <p><strong>Behavior Cache:</strong> Arkaiv learns your recurring patterns — if you always categorize "kopi kenangan" as coffee/breakfast, it stops asking. The <code>behaviorCacheService</code> builds confidence scores over time and skips the AI roundtrip for high-confidence matches. This cut the average parsing latency by 40%.</p>
+            <p><strong>Deep Work Transformer:</strong> A dedicated Focus view that transforms your task list into timed deep-work blocks. It syncs with Calendar to block focus time, suppresses non-urgent notifications, and uses Gemini to suggest optimal task ordering based on energy levels and deadlines. The <code>deepWorkTransformer</code> is backed by a structured spec (NDC-008) and validated through an automated ship-gate checklist.</p>
+
+            <h3>Insight #4: Building with AI Agents — The OpenClaw Scrum Engine</h3>
+            <p>The development process itself became a case study. I orchestrated a team of AI agents inside OpenClaw, each with specialized roles, running Scrum sprints:</p>
+            <ul>
+              <li><strong>Product Owner:</strong> Me — defining vision, priorities, and acceptance criteria</li>
+              <li><strong>Engineering agents:</strong> Spec-driven implementation with automated validation scripts</li>
+              <li><strong>QA agents:</strong> Automated screenshot capture, regression checklists, benchmark runs</li>
+              <li><strong>Design agents:</strong> Desktop polish passes, responsive layout observations, tablet baseline acceptance</li>
+            </ul>
+            <p>The <code>docs/</code> directory tells the story: 20+ spec documents (NDC, NDX, NDZ prefixes), 15+ screenshot validation runs, automated benchmark scripts, and a ship-gate checklist that gates every deployment. The <code>.mission-control-proof/</code> directory contains artifacts proving agent-driven development — actual agent outputs that shipped to production.</p>
+
+            <h3>Tech Stack — What's Under the Hood</h3>
+            <ul>
+              <li><strong>Frontend:</strong> React 19 + Vite 6 + Tailwind CSS 4, with Framer Motion for animations and Recharts for data visualization</li>
+              <li><strong>Backend:</strong> Express.js 5 with TypeScript, deployed on Vercel serverless</li>
+              <li><strong>AI:</strong> Google Gemini (Flash + Pro) with custom model router, batch parser coordinator, and context-aware prompt engineering</li>
+              <li><strong>Data:</strong> Local-first (React state + localStorage) synced to Google Sheets via API</li>
+              <li><strong>Integrations:</strong> Google Calendar API, Google Sheets API, Google OAuth</li>
+              <li><strong>PWA:</strong> Full offline support via vite-plugin-pwa</li>
+              <li><strong>Testing:</strong> 15+ automated screenshot capture scripts, benchmark suites for parser and model routing, behavior cache validation</li>
+            </ul>
+
+            <h2>Strategic Takeaways</h2>
+            <p>Arkaiv proved that a personal tool, built with real intention and modern AI, can outperform polished SaaS products — at least for the person who built it. More importantly, it demonstrated a new paradigm: <strong>AI-orchestrated solo development</strong> that produces production-grade, tested, documented software at a speed that would normally require a small team.</p>
+            <p>Several skills I sharpened through this project:</p>
+            <ul>
+              <li><strong>AI system architecture:</strong> Multi-model routing, prompt engineering at scale, context window management</li>
+              <li><strong>Spec-driven development:</strong> Writing structured specs that AI agents can implement autonomously</li>
+              <li><strong>Local-first patterns:</strong> Sync reconciliation, offline-capable design, behavior caching</li>
+              <li><strong>Agent orchestration:</strong> Running Scrum with AI agents — sprint planning, retrospectives, ship-gate validation</li>
+              <li><strong>PWA optimization:</strong> Service workers, offline-first data flows, install prompts</li>
+            </ul>
+            <p>Arkaiv sits at the intersection of everything I'm passionate about: building robust software, designing AI systems that feel invisible, and relentlessly optimizing my own life. It's not a side project — it's the operating system I live in every day.</p>
+
+            <p><strong>Status:</strong> Live & actively maintained. <strong>Stack:</strong> React 19 + Vite + Express + Gemini + Google Sheets. <strong>Repository:</strong> private (akhdanzaman/notes-dump).</p>
+          </article>
+        </div>
+        <!-- ========== PROJECT 1: Olist ========== -->
+        <div class="tab-content" data-tab-content="0">
+          <img class="project-hero-image" src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6871f67b7972b4b2fbff4287_d4963dd3-20cc-49f2-b0f3-129546ab05d4.png" alt="Olist Dashboard" loading="lazy">
+
+          <div class="project-header">
+            <h1>Olist Ecommerce Satisfaction Visualization</h1>
+            <div class="project-author">
+              <div class="project-author-avatar"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68720a9ce1c1fed237b49108_Foto%20non-formal%202.jpg" alt="Akhdan Hanif" loading="lazy"></div>
+              <div class="project-author-info">
+                <div class="project-author-name">Akhdan Hanif</div>
+                <div class="project-author-date">July 2025</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-grid">
+            <div class="meta-item">
+              <h5>Toolbox</h5>
+              <p>Power BI</p>
+            </div>
+            <div class="meta-item">
+              <h5>Techniques</h5>
+              <p>EDA, Visualization, Dashboarding</p>
+            </div>
+            <div class="meta-item">
+              <h5>Industries</h5>
+              <p>Brazilian Marketplace</p>
+            </div>
+            <div class="meta-item">
+              <h5>Results</h5>
+              <p>Data-driven strategies</p>
+            </div>
+          </div>
+
+          <article class="article">
+            <h2>Olist Case Study, Unpacked</h2>
+            <p>Here's a behind-the-scenes look into how I approached one key question:</p>
+            <blockquote>"What truly separates a satisfied customer from a deeply disappointed one?"</blockquote>
+
+            <p><strong>Core Insight</strong></p>
+            <ol>
+              <li>A healthy average can hide operational illness</li>
+              <li>Products and sellers aren't the real culprits</li>
+              <li>Delivery delays trigger customer dissatisfaction</li>
+              <li>The shipping phase is the true bottleneck</li>
+              <li>Delay hotspots are route-specific</li>
+              <li>High cost ≠ fast delivery  -  financial inefficiencies exposed</li>
+            </ol>
+            <p>This journey took me from high-level metrics, through disproven hypotheses, to uncovering a hidden root cause buried deep within operational data.</p>
+
+            <h3>Insight #1: Surface-Level Health Can Hide Internal Dysfunction</h3>
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68727945c3f561671347630c_1.png" alt="Olist dashboard overview" loading="lazy">
+            <p>As always, I started from the top. The <strong>General Overview Dashboard</strong> displayed the company's vitals  -  Gross Merchant Value (GMV), Total Orders, and Average Review Score.</p>
+            <p>With a solid 4.09 out of 5, leadership could've easily concluded everything was fine.</p>
+            <p>But seasoned analysts know better: averages can lie. They mask extremes that cancel each other out. That's where the real investigation began.</p>
+
+            <h3>Insight #2: It's Not the Products or the Sellers</h3>
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872794533838b79611b3f0d_2.png" alt="Product category analysis" loading="lazy">
+            <p>As always, I started from the top. The <strong>General Overview Dashboard</strong> displayed the company's vitals  -  Gross Merchant Value (GMV), Total Orders, and Average Review Score.</p>
+            <p>With a solid 4.09 out of 5, leadership could've easily concluded everything was fine.</p>
+            <p>But seasoned analysts know better: averages can lie. They mask extremes that cancel each other out. That's where the real investigation began. The most logical first suspects? Bad products or bad sellers. Could certain categories be low quality? Were rogue vendors dragging down the experience?</p>
+            <p>To find out, I visualized performance by segment. For each product category and top seller, I layered sales volume with average reviews and delay rates.</p>
+            <p>The results were surprising: performance lines were largely flat. Top categories (like <em>furniture_decor</em>) weren't notably worse. Top sellers also showed no red flags.</p>
+            <p>This was a critical pivot. The obvious culprits were innocent. I had to look elsewhere.</p>
+
+            <h3>Insight #3: The Turning Point  -  Delay Drives Dissatisfaction</h3>
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68727945750d80a157082fbf_3.png" alt="On-time vs late delivery satisfaction" loading="lazy">
+            <p>Next, I turned to the process itself  -  the customer journey from <em>"Buy"</em> to <em>"Delivered."</em> Here, I found the smoking gun.</p>
+            <p>I compared satisfaction scores for On-Time vs. Late orders. The contrast was stark: on-time deliveries earned 4s and 5s. Late ones consistently got 1s and 2s.</p>
+            <p>The correlation was too strong to ignore  -  and more than a correlation, it was a cause.</p>
+            <p>Logistics was the #1 driver of customer experience.</p>
+
+            <h3>Insight #4: Diagnosing the Delay  -  Where's the Time Lost?</h3>
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872794581428b13e9127d9a_4.png" alt="Logistics report breakdown" loading="lazy">
+            <p>Next, I turned to the process itself  -  the customer journey from <em>"Buy"</em> to <em>"Delivered."</em> Here, I found the smoking gun.</p>
+            <p>Knowing <em>delays</em> were the issue, I asked the next question: <strong>Where exactly is time being lost?</strong></p>
+            <p>To answer this, I created the <strong>Logistics Report</strong> and broke the order journey into three stages:</p>
+            <ul>
+              <li><strong>Approval</strong> (payment confirmation),</li>
+              <li><strong>Processing</strong> (seller prep),</li>
+              <li><strong>Shipping</strong> (delivery).</li>
+            </ul>
+            <p>The data showed one clear spike: <strong>Shipping time ballooned</strong> from an average of 8 days to over 27 for late orders. Processing times barely changed.</p>
+            <p>The bottleneck was transit  -  the logistics partners.</p>
+
+            <h3>Insight #5: Mapping the Epicenter</h3>
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/687279445fe95b0ea228de3e_5.png" alt="Delay distribution matrix" loading="lazy">
+            <p>But was this a country-wide problem? Or a regional one?</p>
+            <p>Using a <strong>Delay Distribution Matrix</strong>, I mapped delay rates from seller_state → customer_state.</p>
+            <p>It became clear: <strong>only certain routes</strong> were severely affected. Especially shipments from São Paulo (SP) to northeastern states.</p>
+            <p>This reframed the problem:<br>Not "our deliveries are slow"<br>→ but "5 critical routes are severely delayed and need urgent attention."</p>
+
+            <h3>Insight #6: High Costs, Slow Deliveries  -  The Worst Combo</h3>
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/687279457d0489bf504f8247_7.png" alt="Freight cost vs shipping time scatter" loading="lazy">
+            <p>Lastly, I looked into shipping <strong>cost efficiency</strong>. Was Olist using cheap shipping partners, and getting what they paid for?</p>
+            <p>I built a <strong>scatter plot of Freight Cost vs. Shipping Time</strong>. In theory, more expensive should mean faster. But in reality?</p>
+            <p>The chart was chaotic. Too many data points landed in the <em>"Expensive & Slow"</em> quadrant.</p>
+            <p>The takeaway? Olist was often overpaying for subpar service  -  a double hit: poor experience <em>and</em> wasted budget.</p>
+
+            <h2>Strategic Takeaways: Turning Data into a Roadmap</h2>
+            <p>This analysis transformed a vague business concern into a concrete set of strategic actions.</p>
+            <p>We learned that Olist doesn't need to change its products or pricing  -  it needs to fine-tune its <strong>operations</strong>.</p>
+            <h3>Here's the roadmap:</h3>
+            <ul>
+              <li><strong>Audit and renegotiate with logistics partners</strong>, focusing on high-cost, high-delay routes</li>
+              <li><strong>Enforce stricter SLAs</strong> with sellers to maintain consistency, even if they're not the core issue</li>
+              <li><strong>Use data as leverage</strong> to demand better service or lower cost</li>
+            </ul>
+            <p>Ultimately, this case proves that in modern e-commerce, <strong>delivery isn't just a service  -  it's part of the product.</strong></p>
+
+            <h2>Dashboard Visualization</h2>
+            <!-- Slider for Olist dashboards -->
+            <div class="slider" data-slider="olist">
+              <div class="slider-track">
+                <div class="slider-slide"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/687279bcca081c054861b469_Full%201.png" alt="Dashboard Full 1" loading="lazy"></div>
+                <div class="slider-slide"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/687279bc305c14dd91c3c31e_Full%202.png" alt="Dashboard Full 2" loading="lazy"></div>
+              </div>
+              <div class="slider-nav">
+                <button class="slider-arrow slider-prev" aria-label="Previous">◂</button>
+                <div class="slider-dots"></div>
+                <span class="slider-counter">1 / 2</span>
+                <button class="slider-arrow slider-next" aria-label="Next">▸</button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- ========== PROJECT 2: Essential Oils ========== -->
+        <div class="tab-content" data-tab-content="1">
+          <img class="project-hero-image" src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/687206b233f1b4adf843fdfa_pexels-mareefe-932587.jpg" alt="Essential Oils" loading="lazy">
+
+          <div class="project-header">
+            <h1>Essential Oils Customer Satisfaction Analysis</h1>
+            <div class="project-author">
+              <div class="project-author-avatar"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68720a9ce1c1fed237b49108_Foto%20non-formal%202.jpg" alt="Akhdan Hanif" loading="lazy"></div>
+              <div class="project-author-info">
+                <div class="project-author-name">Akhdan Hanif</div>
+                <div class="project-author-date">June 2025</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-grid">
+            <div class="meta-item">
+              <h5>Toolbox</h5>
+              <p>Python, BERTopic, SHAP, XGBoost, GPT-4o</p>
+            </div>
+            <div class="meta-item">
+              <h5>Techniques</h5>
+              <p>Sentiment analysis, topic modeling, explainable AI, regression modeling, and Kano classification</p>
+            </div>
+            <div class="meta-item">
+              <h5>Industries</h5>
+              <p>Consumer wellness, essential oils, and digital marketplaces</p>
+            </div>
+            <div class="meta-item">
+              <h5>Results</h5>
+              <p>Targeted product insights, data-driven quality improvements, and a novel pipeline for turning reviews into roadmaps.</p>
+            </div>
+          </div>
+
+          <article class="article">
+            <a class="link-box" href="https://github.com/akhdanzaman/essential-oil-csd/" target="_blank" rel="noopener">
+              <span class="link-box-icon">📦</span>
+              <span class="link-box-text">Repository: akhdanzaman/essential-oil-csd</span>
+              <span class="link-box-arrow">↗</span>
+            </a>
+            <a class="link-box" href="https://drive.google.com/file/d/1KPxGRC5_8LPLOIRIgsMFQtxIL3f1_seq/view?usp=sharing" target="_blank" rel="noopener">
+              <span class="link-box-icon">📄</span>
+              <span class="link-box-text">Full document: Research Article</span>
+              <span class="link-box-arrow">↗</span>
+            </a>
+
+            <h2>Case Study: Decoding Customer Satisfaction for Essential Oils</h2>
+            <blockquote>"Can we extract strategic product insights purely from online reviews?"</blockquote>
+            <p>The question I explored using 23,000+ reviews of essential oil products from Tokopedia. My goal: identify what truly drives satisfaction in this growing wellness niche and what breaks it.</p>
+
+            <p><strong>Core Insight</strong></p>
+            <ul>
+              <li>Aroma and packaging are key drivers of 5-star reviews</li>
+              <li>Customers are highly price-sensitive, especially mid-tier buyers</li>
+              <li>Diffuser support is a "must" for premium consumers</li>
+              <li>Most product features act as performance attributes</li>
+              <li>The Kano Model + SHAP approach reveals segment-specific strategies</li>
+            </ul>
+            <p>This project turned raw text into actionable insights  -  and transformed black-box sentiment into a product development compass.</p>
+
+            <h3>Insight #1: What People Really Talk About</h3>
+            <p>I started by scraping 23,068 Tokopedia reviews using a custom Python pipeline. Using BERTopic, I extracted latent themes and grouped them into 11 Customer Satisfaction Dimensions (CSDs)  -  like aroma, price, packaging, delivery, and service.</p>
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872210461b8e8a2b3c69f32_Screenshot%202025-07-12%20154556.png" alt="BERTopic Topic Modeling" loading="lazy">
+
+            <h3>Insight #2: What Drives Ratings</h3>
+            <p>Then came labeling. Using GPT-4o-mini, I matched reviews to their respective dimensions and classified sentiments. Unsurprisingly, Aroma had the strongest influence on 5-star reviews, while Price, Packaging, and Description Accuracy also emerged as decisive.</p>
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68721ee0b304a9ed752578c3_Screenshot%202025-07-12%20153724.png" alt="Sentiment Classification Dashboard" loading="lazy">
+
+            <h3>Insight #3: Which Model Knows Best?</h3>
+            <p>I trained multiple models (Linear, SVR, RF, GBoost, XGBoost) to predict star ratings. XGBoost stood out  -  with a MAE of 0.125 and balanced performance across segments.</p>
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68722109e8c17297c0014e28_MAE%20Model.png" alt="Model MAE Comparison" loading="lazy">
+
+            <h3>Insight #4: Explain, Don't Just Predict</h3>
+            <p>Using SHAP, an explainable AI library, I explained what drove those predictions. The most impactful aspects on satisfaction:</p>
+            <ul>
+              <li>Aroma had the highest positive SHAP impact on ratings</li>
+              <li>Delivery condition and price had strong negative SHAP values when expectations weren't met</li>
+            </ul>
+
+            <h3>Insight #5: What the Kano Model Reveals</h3>
+            <p>I mapped each CSD using SHAP impact into Kano categories:</p>
+            <ul>
+              <li><strong>Performance:</strong> Aroma, Packaging, Quality  -  more = better</li>
+              <li><strong>Must-be:</strong> Price (Mid Segment), Diffuser Support (Premium)</li>
+              <li><strong>Excitement:</strong> Bonus items, Efficacy (when present, delight; when absent, no complaint)</li>
+            </ul>
+
+            <h2>Segment Insights: What Matters to Whom</h2>
+
+            <div class="segment-grid">
+              <div class="segment-card">
+                <h4>Low-Price Buyers</h4>
+                <p>Consumers treat all product attributes as Performance factors. While expectations are functional and basic, delivery and efficacy begin to show signs of latent Excitement. SMEs can boost satisfaction cost-effectively by improving packaging, offering better tracking, or using volume-based pricing.</p>
+              </div>
+              <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872226bb6ac4d56581cbd77_Screenshot%202025-07-12%20155216.png" alt="Low Segment SHAP Analysis" loading="lazy" style="width:100%;border-radius:8px;margin:1rem 0;">
+              <div class="segment-card">
+                <h4>Mid-Price Buyers</h4>
+                <p>Price emerges as a Must-be factor  -  consumers expect fair pricing and penalize deviations. To win this segment, brands should maintain price-to-value quality consistency while adding subtle experiential value through packaging, sampling, or better service.</p>
+              </div>
+              <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872226be740983f6e01f40d_Screenshot%202025-07-12%20155228.png" alt="Mid Segment SHAP Analysis" loading="lazy" style="width:100%;border-radius:8px;margin:1rem 0;">
+              <div class="segment-card">
+                <h4>Premium Buyers</h4>
+                <p>Diffuser support becomes a Must-be expectation. Features like bonuses, aroma, and product benefits approach the Excitement zone. To satisfy this segment, SMEs must meet foundational expectations flawlessly while enhancing exclusivity through personalization, superior packaging, and tech integration.</p>
+              </div>
+              <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872226b8df2ae8cbeaf1928_Screenshot%202025-07-12%20155238.png" alt="Premium Segment SHAP Analysis" loading="lazy" style="width:100%;border-radius:8px;margin:1rem 0;">
+            </div>
+
+            <h3>Final Reflection: Redefining Satisfaction in the Voice of the Customer</h3>
+            <p>This study shows that customer satisfaction is not just a checklist of product attributes but a dynamic spectrum of expectations shaped by price segments and service experiences.</p>
+            <p>By translating unstructured reviews into a strategic roadmap, we give SMEs the power to act on what customers truly value  -  accurately, scalably, and responsively.</p>
+            <p>Going forward, customer feedback should no longer be seen as noisy data, but as a vital compass for product innovation and service excellence.</p>
+          </article>
+        </div>
+
+        <!-- ========== PROJECT 3: Customer Churn ========== -->
+        <div class="tab-content" data-tab-content="2">
+          <img class="project-hero-image" src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6871e103d5a705d6ac7b293f_PPT%20DSW%202023%20-%20ARUCI_001.png" alt="Customer Churn Prediction" loading="lazy">
+
+          <div class="project-header">
+            <h1>Telco Customer Churn Prediction</h1>
+            <div class="project-author">
+              <div class="project-author-avatar"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68720a9ce1c1fed237b49108_Foto%20non-formal%202.jpg" alt="Akhdan Hanif" loading="lazy"></div>
+              <div class="project-author-info">
+                <div class="project-author-name">Akhdan Hanif</div>
+                <div class="project-author-date">May 2025</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-grid">
+            <div class="meta-item">
+              <h5>Toolbox</h5>
+              <p>Python, XGBoost, Pandas, Streamlit</p>
+            </div>
+            <div class="meta-item">
+              <h5>Techniques</h5>
+              <p>Exploratory Data Analysis (EDA), feature engineering, classification modeling.</p>
+            </div>
+            <div class="meta-item">
+              <h5>Industries</h5>
+              <p>Telecommunication, customer analytics.</p>
+            </div>
+            <div class="meta-item">
+              <h5>Results</h5>
+              <p>Lower churn, smarter targeting, and service strategies rooted in behavioral data.</p>
+            </div>
+          </div>
+
+          <article class="article">
+            <a class="link-box" href="https://github.com/sulaimanbilal/portofolio./tree/main/1.%20Data%20Science%20Week%20-%20Aruci%20Team" target="_blank" rel="noopener">
+              <span class="link-box-icon">📦</span>
+              <span class="link-box-text">Repository: sulaimanbilal/portofolio  -  Aruci Team</span>
+              <span class="link-box-arrow">↗</span>
+            </a>
+
+            <h2>Customer Churn, Unpacked</h2>
+            <blockquote>"How can a telecom company turn churn into insight?"</blockquote>
+
+            <p><strong>Core Insight</strong></p>
+            <ul>
+              <li>Long-tenured customers are more loyal</li>
+              <li>Call center and digital services enhance retention</li>
+              <li>High-end device users are a churn risk</li>
+              <li>Credit-based payment users churn more</li>
+              <li>New customers need nurturing within the first 5 months</li>
+            </ul>
+            <p>What signals tell us someone's about to leave? How can we intervene early?</p>
+
+            <p><strong>The Data Story</strong></p>
+            <p>Our dataset, from the Data Science Week Competition and enriched for business context, covered 7,000+ customer records from Jakarta and Bandung, featuring fields like tenure, device class, app usage, payment method, and CLTV.</p>
+
+            <h3>Insight #1: Most Churn Happens Early</h3>
+            <p>New customers within their first 5 months show the highest churn risk, suggesting weak onboarding or unmet expectations. This early exit window indicates that acquisition strategies may not be matched with retention hooks. Companies must treat the first quarter as a critical loyalty-building phase with targeted welcome offers or guided feature adoption.</p>
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227ebb6ac4d56581e585d_Screenshot%202025-07-12%20161413.png" alt="Churn by Tenure" loading="lazy">
+
+            <h3>Insight #2: Loyalty Lives in Usage</h3>
+            <p>Customers who actively use value-added services (e.g., MyApp, Games, Music) are significantly more likely to stay, highlighting a strong link between ecosystem engagement and retention. These services create habitual touchpoints that deepen brand stickiness. Companies should promote cross-service usage through personalized nudges and bundled experiences.</p>
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227eb93dde2a217c84db9_Screenshot%202025-07-12%20161445.png" alt="Service Usage vs Churn" loading="lazy">
+
+            <h3>Insight #3: High-End Device = High Risk</h3>
+            <p>Despite being premium users, high-end device owners churn more often  -  possibly due to higher expectations and lower switching friction. These customers are value-driven, not price-sensitive, and will leave if not offered premium experiences. Tailored VIP programs or priority support could turn this churn risk into a loyalty opportunity.</p>
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227eb630a6b555231f3d8_Screenshot%202025-07-12%20161504.png" alt="Device Class vs Churn" loading="lazy">
+
+            <h3>Insight #4: Payment Style Matters</h3>
+            <p>Credit and pulsa users churn at higher rates, likely due to payment friction or lack of automation. Pulsa, in particular, discourages sustained engagement due to its limited utility and manual top-ups. Transitioning these users to digital wallets or auto-pay systems with incentives could improve satisfaction and reduce dropout.</p>
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227ebf48c8590a9a9ee7a_Screenshot%202025-07-12%20161534.png" alt="Payment Method Analysis" loading="lazy">
+
+            <h3>Insight #5: Call Center Saves Customers</h3>
+            <p>Call center interaction correlates with lower churn, not just due to problem resolution, but because it creates a human touchpoint in a digital service. This shows that proactive support builds trust, especially for confused or hesitant users. Embedding retention offers in customer service conversations can turn support into a growth channel.</p>
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227eb290c7dad4c1b09a1_Screenshot%202025-07-12%20161552.png" alt="Call Center Impact" loading="lazy">
+
+            <h2>Our Recommendations</h2>
+            <ol>
+              <li><strong>Nurture Early Tenure</strong>  -  Provide benefits or loyalty points within the first 5 months.</li>
+              <li><strong>Engage High-End Users</strong>  -  Offer exclusive plans, concierge support, or early access to new services.</li>
+              <li><strong>Bundling for Value</strong>  -  Cross-promote Video + Game services for synergistic stickiness.</li>
+              <li><strong>Optimize Payment Methods</strong>  -  Encourage digital wallets with cashback or ease-of-use benefits.</li>
+              <li><strong>Expand Call Center Campaigns</strong>  -  Use outbound calling to educate users and promote retention packages.</li>
+            </ol>
+
+            <h3>From Insights to Action: Why We Built a Prediction Model</h3>
+            <p>We trained multiple models and selected XGBoost, which achieved balanced performance across churned vs retained classes. The model was also interpretable and production-ready.</p>
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/687228302a3f1bf28668a00d_Screenshot%202025-07-12%20161729.png" alt="Model Performance Comparison" loading="lazy">
+
+            <h3>If I Could Turn Back the Time</h3>
+            <p>Looking back, one area that needed sharper integration was the machine learning model. While we successfully built an XGBoost-based churn predictor, it felt like an appendix, not an engine powering the strategy. If I could rework the project, I'd focus on making the model a central decision-support system, directly answering tactical questions like:</p>
+            <ul>
+              <li>Which new users need urgent onboarding incentives?</li>
+              <li>Which high-end device users are likely to churn next month?</li>
+              <li>Which service bundles should we offer to each user segment based on predicted behavior?</li>
+            </ul>
+          </article>
+        </div>
+
+        <!-- ========== PROJECT 4: USAID Supply Chain ========== -->
+        <div class="tab-content" data-tab-content="3">
+          <img class="project-hero-image" src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68724bfc305c14dd91b39935_pexels-chanaka-318741-906494.jpg" alt="USAID Supply Chain" loading="lazy">
+
+          <div class="project-header">
+            <h1>Health Commodities Supply Chain by USAID Visualization</h1>
+            <div class="project-author">
+              <div class="project-author-avatar"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68720a9ce1c1fed237b49108_Foto%20non-formal%202.jpg" alt="Akhdan Hanif" loading="lazy"></div>
+              <div class="project-author-info">
+                <div class="project-author-name">Akhdan Hanif</div>
+                <div class="project-author-date">April 2025</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-grid">
+            <div class="meta-item">
+              <h5>Toolbox</h5>
+              <p>Tableau, Tableau Prep</p>
+            </div>
+            <div class="meta-item">
+              <h5>Techniques</h5>
+              <p>Operational dashboarding, multi-year KPI trend analysis.</p>
+            </div>
+            <div class="meta-item">
+              <h5>Industries</h5>
+              <p>Public health supply chains</p>
+            </div>
+            <div class="meta-item">
+              <h5>Results</h5>
+              <p>Disrupted assumptions, data-backed narratives, and strategic lessons.</p>
+            </div>
+          </div>
+
+          <article class="article">
+            <h2>USAID Supply Chain Analysis, Unpacked</h2>
+            <blockquote>"What's really happening inside the health commodities supply chain run by USAID  -  and can we prove it with data?"</blockquote>
+            <p>This was my first-ever visualization project using a proper BI tool. The dataset came from Kaggle  -  a simulated USAID health commodities supply chain covering years of deliveries across multiple countries. The question I started with was deceptively simple: just figure out what's going on.</p>
+            <p>What came out the other side was a lot more: disrupted assumptions, a gap analysis I'm still thinking about, and a clear before-and-after of my own growth as an analyst.</p>
+
+            <p><strong>Core Insight</strong></p>
+            <ul>
+              <li>A sudden delivery volume collapse in 2015 raised immediate red flags</li>
+              <li>Air charter was eating up the budget disproportionately</li>
+              <li>RDC (Regional Distribution Center) share was shrinking year over year</li>
+              <li>Nigeria dominated the distribution map  -  but was that strategic or reactive?</li>
+              <li>Reliability and cost efficiency aren't just tracked separately  -  they feed each other</li>
+            </ul>
+
+            <h3>Insight #1: The 2015 Delivery Collapse  -  What Happened?</h3>
+            <p>The first thing that jumped out of the data was a massive delivery volume drop in 2015. Not a gradual decline  -  a cliff. My initial reaction was data quality issues. But after cleaning and verifying, the pattern held.</p>
+            <p>This wasn't just noise. Something structural changed that year  -  possibly a funding cycle shift, a policy change, or a program sunset. I flagged it as a priority investigation point for anyone with operational context into USAID's health programs.</p>
+
+            <h3>Insight #2: Air Charter Was the Budget Killer</h3>
+            <p>Among all shipping methods, air charter stood alone at the top of the cost chart. The per-shipment cost was orders of magnitude higher than ocean or truck freight. Yet the volume going through air wasn't proportional to the spend.</p>
+            <p>This is the classic cost-efficiency question: was air charter being used for genuine emergencies, or had it become a crutch? Either way, it deserved a hard look from procurement.</p>
+
+            <h3>Insight #3: RDC Distribution Was Shrinking</h3>
+            <p>Regional Distribution Centers are supposed to be the backbone of efficient last-mile delivery. But the data showed their share of total volume declining each year. If RDCs are losing ground, what's replacing them  -  direct shipments? Ad-hoc logistics? Each answer has different cost and reliability implications.</p>
+
+            <h3>Insight #4: Nigeria Was the Elephant in the Room</h3>
+            <p>Nigeria consistently received the largest share of shipments by a wide margin. On one hand, this makes sense given population size and health burden. On the other, it raised a question I couldn't fully answer with this dataset alone: was this allocation proportional to actual need, or was it path-dependent  -  a historical pattern that nobody had revisited?</p>
+
+            <h3>Insight #5: The Gap I Couldn't Close  -  Reliability and Cost Efficiency</h3>
+            <p>This is where I hit the limits of my initial analysis  -  and where the real growth happened. After finishing the first dashboard, I realized I'd only scratched the surface. I was tracking volumes and costs, but I wasn't answering the questions that actually matter in supply chain management:</p>
+            <ul>
+              <li>How do you measure <strong>reliability</strong>? Consistency, on-time rate, accuracy</li>
+              <li>How do you measure <strong>cost efficiency</strong>? Shipment count, weight per shipment, freight cost per unit</li>
+              <li>What actually <strong>drives</strong> reliability and cost? Shipping method and vendor selection</li>
+            </ul>
+            <p>This gap analysis became the foundation for the dashboard redesign. Instead of just showing what happened, I wanted to surface the relationship between vendor choices, shipping methods, and supply chain performance.</p>
+
+            <h3>Dashboard Before</h3>
+
+            <!-- USAID Dashboard Slider -->
+            <div class="slider" data-slider="usaid">
+              <div class="slider-track">
+                <div class="slider-slide"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68728613c61183291a6639d9_Screenshot%202025-07-12%20225726.png" alt="USAID Dashboard Screenshot 1" loading="lazy"></div>
+                <div class="slider-slide"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68727d44b5fc585879adec27_Screenshot%202025-07-12%20180811.png" alt="USAID Dashboard Screenshot 2" loading="lazy"></div>
+                <div class="slider-slide"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68727d4392953bb8b08a7aff_Screenshot%202025-07-12%20180821.png" alt="USAID Dashboard Screenshot 3" loading="lazy"></div>
+                <div class="slider-slide"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68728612c991ac394e506d31_Screenshot%202025-07-12%20225751.png" alt="USAID Dashboard Screenshot 4" loading="lazy"></div>
+              </div>
+              <div class="slider-nav">
+                <button class="slider-arrow slider-prev" aria-label="Previous">◂</button>
+                <div class="slider-dots"></div>
+                <span class="slider-counter">1 / 4</span>
+                <button class="slider-arrow slider-next" aria-label="Next">▸</button>
+              </div>
+            </div>
+
+            <h3>Preview Dashboard After</h3>
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6873fcc4c6cb5aeb2e7ea6da_Screenshot%202025-07-14%20013642.png" alt="Dashboard After" loading="lazy">
+            <p>The redesigned dashboard tells a much richer story. Instead of just total shipments and cost, it now surfaces weight-per-shipment comparisons  -  a KPI that actually speaks to logistics efficiency. Vendor and shipping method breakdowns make it easy to compare performance side by side, so strategic decisions aren't based on gut feel anymore.</p>
+
+            <h2>Strategic Takeaways</h2>
+            <p>This project taught me that a first draft dashboard is never the final answer. The real value comes from stepping back and asking: what question did I not answer? Then going back and answering it.</p>
+            <p>Specifically, this project pushed me to think beyond descriptive analytics  -  volumes over time, costs by category  -  and toward diagnostic questions about why things happen. That shift is what separates surface-level reporting from analysis that actually informs decisions.</p>
+            <p>If I were to revisit this today, I'd build the reliability and cost-efficiency KPIs directly into the dashboard from day one, and I'd layer in the shipping method and vendor analysis as the core narrative, not an afterthought.</p>
+          </article>
+        </div>
+
+        <!-- ========== PROJECT 5: Maintenance Dashboard ========== -->
+        <div class="tab-content" data-tab-content="4">
+          <img class="project-hero-image" src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68724c5f761849fb3ee3cacc_pexels-pixabay-257736.jpg" alt="Maintenance Dashboard" loading="lazy">
+
+          <div class="project-header">
+            <h1>Maintenance Schedule and History Visualization</h1>
+            <div class="project-author">
+              <div class="project-author-avatar"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68720a9ce1c1fed237b49108_Foto%20non-formal%202.jpg" alt="Akhdan Hanif" loading="lazy"></div>
+              <div class="project-author-info">
+                <div class="project-author-name">Akhdan Hanif</div>
+                <div class="project-author-date">March 2025</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-grid">
+            <div class="meta-item">
+              <h5>Toolbox</h5>
+              <p>Looker Studio, Script App, Google Spreadsheets</p>
+            </div>
+            <div class="meta-item">
+              <h5>Techniques</h5>
+              <p>Operational dashboarding, multi-year KPI trend analysis.</p>
+            </div>
+            <div class="meta-item">
+              <h5>Industries</h5>
+              <p>Manufacturing</p>
+            </div>
+            <div class="meta-item">
+              <h5>Results</h5>
+              <p>Visualization of Maintenance schedule and report</p>
+            </div>
+          </div>
+
+          <article class="article">
+            <h2>First Hands-on Looker Studio</h2>
+            <p>In this project, I was doing a practice, with my experience in Tableau and Power BI to try mocking up a Maintenance dashboard.</p>
+            <p>The schedule maintenance data used in this dashboard is dummy at the moment but based on real machine failure history in an industry.</p>
+
+            <h3>Dashboard Emphasis</h3>
+            <p>Consists of 2 pages, for quick overview and detailed report.</p>
+
+            <h4>Page #1: Maintenance Schedule Quick Overview</h4>
+            <p>This page uses color-coded grids to present scheduled maintenance activities, allowing users to quickly assess the status of each machine's maintenance.</p>
+            <p>A key feature here is a button connected to Google App Scripts, which enables users to directly manipulate maintenance status in the source spreadsheet. This is especially useful because visualization tools like Looker Studio are typically optimized for historical reporting, not real-time interaction.</p>
+            <p>The integration with App Scripts was a fun experiment and added a dynamic, interactive component to an otherwise static dashboard.</p>
+
+            <h4>Page #2: Maintenance Detailed Report</h4>
+            <p>This page provides an in-depth analysis of machine failures and maintenance trends throughout the year. It features visualizations such as a bar chart of downtime per machine, a failure type breakdown, and workload distribution by PIC. Additionally, tables and location-based charts enhance tracking of issue details, responsible personnel, and spatial patterns for more informed maintenance planning.</p>
+            <p>Overall, this project is used for me to learn and prepare if I were asked to do visualization in Looker Studio.</p>
+
+            <!-- Slider for Maintenance dashboards -->
+            <div class="slider" data-slider="maintenance">
+              <div class="slider-track">
+                <div class="slider-slide"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68727ebe61b8e8a2b3e8beec_Screenshot%202025-07-12%20222618.png" alt="Maintenance Dashboard 1" loading="lazy"></div>
+                <div class="slider-slide"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68727ebe1dd2d8c3fbe04e68_Screenshot%202025-07-12%20222637.png" alt="Maintenance Dashboard 2" loading="lazy"></div>
+              </div>
+              <div class="slider-nav">
+                <button class="slider-arrow slider-prev" aria-label="Previous">◂</button>
+                <div class="slider-dots"></div>
+                <span class="slider-counter">1 / 2</span>
+                <button class="slider-arrow slider-next" aria-label="Next">▸</button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- ========== PROJECT 6: Mental Health ========== -->
+        <div class="tab-content" data-tab-content="5">
+          <img class="project-hero-image" src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872829f48edde385bb56b0e_Cover.png" alt="Mental Health App" loading="lazy">
+
+          <div class="project-header">
+            <h1>Mental Health Prediction App</h1>
+            <div class="project-author">
+              <div class="project-author-avatar"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68720a9ce1c1fed237b49108_Foto%20non-formal%202.jpg" alt="Akhdan Hanif" loading="lazy"></div>
+              <div class="project-author-info">
+                <div class="project-author-name">Akhdan Hanif</div>
+                <div class="project-author-date">June 2024</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="meta-grid">
+            <div class="meta-item">
+              <h5>Toolbox</h5>
+              <p>Python, BERT</p>
+            </div>
+            <div class="meta-item">
+              <h5>Techniques</h5>
+              <p>Exploratory Data Analysis (EDA), Data Preprocessing, NLP Modeling</p>
+            </div>
+            <div class="meta-item">
+              <h5>Industries</h5>
+              <p>Startup</p>
+            </div>
+            <div class="meta-item">
+              <h5>Results</h5>
+              <p>Journaling App with Mental Health Analysis</p>
+            </div>
+          </div>
+
+          <article class="article">
+            <a class="link-box" href="https://github.com/akhdanzaman/happy-you-project/tree/master/Machine%20Learning" target="_blank" rel="noopener">
+              <span class="link-box-icon">📦</span>
+              <span class="link-box-text">Repository: akhdanzaman/happy-you-project · GitHub</span>
+              <span class="link-box-arrow">↗</span>
+            </a>
+
+            <h2>Mental State Classification Using BERT</h2>
+            <p>Understanding human sentiment is no longer limited to surveys and guesswork. In this project, I led a development of a machine learning pipeline that classifies user text into five mental sentiment categories, using a pre-trained BERT model and TensorFlow. The result was a fully deployed, scalable sentiment analysis service, accessible through API and ready for integration across platforms, including mobile.</p>
+            <p>This article outlines the full journey from raw text data to real-time model deployment, offering both a technical overview and strategic reasoning behind each step.</p>
+
+            <h2>Starting with the Problem</h2>
+            <p>Modern digital platforms generate vast amounts of unstructured user feedback.</p>
+            <p>Extracting meaningful emotional signals from this data can guide product decisions, mental health interventions, or conversational AI responses.</p>
+            <p>My goal was to build a model that not only classifies text sentiment but also works efficiently across web and mobile environments.</p>
+
+            <h2>Data Preprocessing</h2>
+            <p>The first step was preparing the data for the BERT model. Since BERT is sensitive to tokenization and formatting, I implemented a structured pipeline to clean and standardize the text. This included:</p>
+            <ul>
+              <li>Removing punctuation, numbers, whitespace, special characters, and stop words</li>
+              <li>Tokenizing the text using BERT's tokenizer</li>
+              <li>Padding all sequences to a uniform length of 53 tokens</li>
+              <li>Creating attention masks to distinguish between valid tokens and padding</li>
+            </ul>
+            <p>These steps ensured consistent and high-quality input for the model.</p>
+
+            <h2>Building the Model</h2>
+            <p>The core of the project used a pre-trained BERT model from HuggingFace, combined with custom layers in TensorFlow. The architecture was designed to retain the power of BERT embeddings while tailoring output for a multiclass sentiment task. Key layers included:</p>
+            <ul>
+              <li>Input layers for <code>input_ids</code> and <code>attention_mask</code></li>
+              <li>BERT layer producing contextual embeddings</li>
+              <li>A global max pooling layer to reduce sequence outputs</li>
+              <li>Dense layers with ReLU activations and dropout for regularization</li>
+              <li>A final output layer using sigmoid activation for multiclass classification</li>
+            </ul>
+            <p>The model was optimized using the Adam optimizer. Balanced accuracy was tracked to account for class imbalance. Even though I don't really remember and the ipynb does not save the model result anymore, I can't tell the accuracy number. We got 88.4 score on this project tho.</p>
+
+            <h2>Serving and Deployment</h2>
+            <p>For real-time inference, the model was deployed as a web service. Our team used Google Cloud Run to host the API, taking advantage of its auto-scaling and serverless architecture. The serving pipeline accepted raw text as input, applied preprocessing, and returned predicted sentiment classes through a REST endpoint.</p>
+            <p>This setup allowed integration into mobile applications and other digital platforms with minimal latency and high reliability. The sentiment engine could now operate seamlessly across different user interfaces and traffic loads.</p>
+
+            <h2>Final Thoughts</h2>
+            <p>This project demonstrates a complete machine learning pipeline for NLP tasks, from preprocessing and model development to scalable deployment. The use of BERT allowed for high-quality embeddings, while the deployment through Cloud Run provided flexibility for real-world usage.</p>
+            <p>In the end, I built not just a model, but an end-to-end sentiment classification service that can help organizations monitor emotional signals from user text across platforms. This experience sharpened my skills in model architecture design, TensorFlow workflows, and cloud-based deployment strategies.</p>
+            <p>If you're building systems that require real-time sentiment insight, this model architecture and deployment strategy provide a strong foundation.</p>
+
+            <!-- Slider for HappyYou presentation -->
+            <div class="slider" data-slider="happyyou">
+              <div class="slider-track">
+                <div class="slider-slide"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68728448aa48a044cdbaad8f_Capstone%20Bangkit%20-%20HappyYou_001.png" alt="HappyYou Slide 1" loading="lazy"></div>
+                <div class="slider-slide"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68728449d85cfa3fef96ded2_Capstone%20Bangkit%20-%20HappyYou_002.png" alt="HappyYou Slide 2" loading="lazy"></div>
+                <div class="slider-slide"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/687284480f92a05200782cd7_Capstone%20Bangkit%20-%20HappyYou_009.png" alt="HappyYou Slide 3" loading="lazy"></div>
+                <div class="slider-slide"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68728448d85cfa3fef96de97_Capstone%20Bangkit%20-%20HappyYou_010.png" alt="HappyYou Slide 4" loading="lazy"></div>
+                <div class="slider-slide"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68728448cdbc691975db5b3e_Capstone%20Bangkit%20-%20HappyYou_011.png" alt="HappyYou Slide 5" loading="lazy"></div>
+                <div class="slider-slide"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/687284485fe95b0ea22ce14a_Capstone%20Bangkit%20-%20HappyYou_013.png" alt="HappyYou Slide 6" loading="lazy"></div>
+              </div>
+              <div class="slider-nav">
+                <button class="slider-arrow slider-prev" aria-label="Previous">◂</button>
+                <div class="slider-dots"></div>
+                <span class="slider-counter">1 / 6</span>
+                <button class="slider-arrow slider-next" aria-label="Next">▸</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="header" style="margin-bottom: 0.5rem;">
+        <h2 class="heading-h2" style="margin-bottom: 0.25rem;">Crafting data stories that drive change</h2>
+        <a href="mailto:akhdanzaman@gmail.com" class="footer-email">akhdanzaman@gmail.com</a>
+      </div>
+      <div class="footer-bottom">
+        <a href="../" class="footer-logo">
+          <svg width="100%" height="100%" viewBox="0 0 33 33"><path d="M28,0H5C2.24,0,0,2.24,0,5v23c0,2.76,2.24,5,5,5h23c2.76,0,5-2.24,5-5V5c0-2.76-2.24-5-5-5ZM29,17c-6.63,0-12,5.37-12,12h-1c0-6.63-5.37-12-12-12v-1c6.63,0,12-5.37,12-12h1c0,6.63,5.37,12,12,12v1Z" fill="currentColor"></path></svg>
+          Akhdan Zaman
+        </a>
+        <div class="footer-social">
+          <a href="https://instagram.com/ahdanhanif" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 16 16"><path d="M8,1.441c2.136,0,2.389.009,3.233.047a4.419,4.419,0,0,1,1.485.276,2.472,2.472,0,0,1,.92.6,2.472,2.472,0,0,1,.6.92,4.419,4.419,0,0,1,.276,1.485c.038.844.047,1.1.047,3.233s-.009,2.389-.047,3.233a4.419,4.419,0,0,1-.276,1.485,2.644,2.644,0,0,1-1.518,1.518,4.419,4.419,0,0,1-1.485.276c-.844.038-1.1.047-3.233.047s-2.389-.009-3.233-.047a4.419,4.419,0,0,1-1.485-.276,2.472,2.472,0,0,1-.92-.6,2.472,2.472,0,0,1-.6-.92,4.419,4.419,0,0,1-.276-1.485c-.038-.844-.047-1.1-.047-3.233s.009-2.389.047-3.233a4.419,4.419,0,0,1,.276-1.485,2.472,2.472,0,0,1,.6-.92,2.472,2.472,0,0,1,.92-.6,4.419,4.419,0,0,1,1.485-.276c.844-.038,1.1-.047,3.233-.047M8,0C5.827,0,5.555.009,4.7.048A5.868,5.868,0,0,0,2.76.42a3.908,3.908,0,0,0-1.417.923A3.908,3.908,0,0,0,.42,2.76,5.868,5.868,0,0,0,.048,4.7C.009,5.555,0,5.827,0,8s.009,2.445.048,3.3A5.868,5.868,0,0,0,.42,13.24a3.908,3.908,0,0,0,.923,1.417,3.908,3.908,0,0,0,1.417.923,5.868,5.868,0,0,0,1.942.372C5.555,15.991,5.827,16,8,16s2.445-.009,3.3-.048a5.868,5.868,0,0,0,1.942-.372,4.094,4.094,0,0,0,2.34-2.34,5.868,5.868,0,0,0,.372-1.942c.039-.853.048-1.125.048-3.3s-.009-2.445-.048-3.3A5.868,5.868,0,0,0,15.58,2.76a3.908,3.908,0,0,0-.923-1.417A3.908,3.908,0,0,0,13.24.42,5.868,5.868,0,0,0,11.3.048C10.445.009,10.173,0,8,0Z" fill="currentColor"></path><path d="M8,3.892A4.108,4.108,0,1,0,12.108,8,4.108,4.108,0,0,0,8,3.892Zm0,6.775A2.667,2.667,0,1,1,10.667,8,2.667,2.667,0,0,1,8,10.667Z" fill="currentColor"></path><circle cx="12.27" cy="3.73" r="0.96" fill="currentColor"></circle></svg>
+          </a>
+          <a href="https://linkedin.com/in/akhdanzaman" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 16 16"><path d="M15.3,0H0.7C0.3,0,0,0.3,0,0.7v14.7C0,15.7,0.3,16,0.7,16h14.7c0.4,0,0.7-0.3,0.7-0.7V0.7 C16,0.3,15.7,0,15.3,0z M4.7,13.6H2.4V6h2.4V13.6z M3.6,5C2.8,5,2.2,4.3,2.2,3.6c0-0.8,0.6-1.4,1.4-1.4c0.8,0,1.4,0.6,1.4,1.4 C4.9,4.3,4.3,5,3.6,5z M13.6,13.6h-2.4V9.9c0-0.9,0-2-1.2-2c-1.2,0-1.4,1-1.4,2v3.8H6.2V6h2.3v1h0c0.3-0.6,1.1-1.2,2.2-1.2 c2.4,0,2.8,1.6,2.8,3.6V13.6z" fill="currentColor"></path></svg>
+          </a>
+        </div>
+        <div class="footer-cta">
+          <a href="mailto:akhdanzaman@gmail.com?subject=Hello%20Akhdan">Email</a>
+        </div>
+      </div>
+    </div>
+    <a href="#top" class="back-to-top">↑ Back to top</a>
+  <a href="admin/" style="position:absolute;bottom:1rem;left:1.5rem;color:rgba(255,255,255,0.25);text-decoration:none;font-size:0.75rem;">CMS</a>
+  </footer>
+
+  <script>
+    // Tab switching
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabIndex = btn.dataset.tab;
+        tabButtons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+        tabContents.forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        document.querySelector(`[data-tab-content="${tabIndex}"]`).classList.add('active');
+        // Re-initialize sliders in newly active tab
+        initSliders();
+      });
+    });
+
+    // Image Sliders
+    function initSliders() {
+      document.querySelectorAll('.slider').forEach(slider => {
+        if (slider.dataset.initialized) return;
+        slider.dataset.initialized = 'true';
+
+        const track = slider.querySelector('.slider-track');
+        const slides = track.querySelectorAll('.slider-slide');
+        const prevBtn = slider.querySelector('.slider-prev');
+        const nextBtn = slider.querySelector('.slider-next');
+        const dotsContainer = slider.querySelector('.slider-dots');
+        const counter = slider.querySelector('.slider-counter');
+        const totalSlides = slides.length;
+        let currentIndex = 0;
+
+        // Create dots
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < totalSlides; i++) {
+          const dot = document.createElement('span');
+          dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+          dot.addEventListener('click', () => goToSlide(i));
+          dotsContainer.appendChild(dot);
+        }
+
+        function updateUI() {
+          track.style.transform = `translateX(-${currentIndex * 100}%)`;
+          dotsContainer.querySelectorAll('.slider-dot').forEach((d, i) => {
+            d.classList.toggle('active', i === currentIndex);
+          });
+          counter.textContent = `${currentIndex + 1} / ${totalSlides}`;
+        }
+
+        function goToSlide(index) {
+          currentIndex = index;
+          updateUI();
+        }
+
+        prevBtn.addEventListener('click', () => {
+          goToSlide((currentIndex - 1 + totalSlides) % totalSlides);
+        });
+
+        nextBtn.addEventListener('click', () => {
+          goToSlide((currentIndex + 1) % totalSlides);
+        });
+
+        updateUI();
+      });
+    }
+
+    // Initialize sliders on load
+    initSliders();
+
+    // CMS Content Override — check localStorage for edited content
+    (function() {
+      try {
+        const saved = localStorage.getItem('akhdan_cms_content');
+        if (!saved) return;
+        const projects = JSON.parse(saved);
+        if (!Array.isArray(projects)) return;
+
+        // Map tab indices to project IDs
+        const tabMap = {
+          '6': 'arkaiv', '0': 'olist', '1': 'essential-oils',
+          '2': 'churn', '3': 'usaid', '4': 'maintenance', '5': 'mental-health'
+        };
+
+        // Simple markdown to HTML renderer
+        function mdToHTML(md) {
+          let html = md
+            .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" loading="lazy" style="width:100%;border-radius:8px;margin:1rem 0;">')
+            .replace(/^#### (.*$)/gim, '<h4>$1</h4>')
+            .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+            .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+            .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+            .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
+            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.+?)\*/g, '<em>$1</em>')
+            .replace(/`([^`]+)`/g, '<code>$1</code>')
+            .replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>')
+            .replace(/^[\-\*] (.*$)/gim, '<li>$1</li>')
+            .replace(/^\d+\. (.*$)/gim, '<li>$1</li>')
+            .replace(/((?:<li>.*<\/li>\n?)+)/g, function(m) {
+              return m.match(/^\d+\./m) ? '<ol>\n' + m + '</ol>\n' : '<ul>\n' + m + '</ul>\n';
+            })
+            .replace(/^(?!<[houbl]|<img|<blockquote)(.+)/gim, '<p>$1</p>')
+            .replace(/<p>\s*<\/p>/g, '')
+            .replace(/<\/blockquote>\s*<blockquote>/g, '<br>');
+          return html;
+        }
+
+        // Override each project's article content
+        document.querySelectorAll('[data-tab-content]').forEach(pane => {
+          const tabId = pane.getAttribute('data-tab-content');
+          const projId = tabMap[tabId];
+          if (!projId) return;
+          const proj = projects.find(p => p.id === projId);
+          if (!proj || !proj.content) return;
+          const article = pane.querySelector('article.article');
+          if (article) {
+            article.innerHTML = mdToHTML(proj.content);
+          }
+        });
+      } catch(e) { /* silently ignore */ }
+    })();
+  </script>
+</body>
+</html>

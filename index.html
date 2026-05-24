@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akhdan Zaman</title>
+  <meta name="description" content="From insight to impact  -  data visualized. Akhdan Hanif Kartika Zaman  -  Aspiring Data Analyst | Industrial Engineering Graduate">
+  <link rel="icon" href="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6875f721617f26cec12608d0_icon.png">
+  <link rel="apple-touch-icon" href="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6875f7942a2e2615a365399b_Profpic_.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f9fafb;
+      --bg-inverse: #1a1a2e;
+      --text-primary: #1a1a2e;
+      --text-secondary: #6b7280;
+      --text-inverse: #ffffff;
+      --accent-primary: #0f172a;
+      --accent-primary-hover: #1e293b;
+      --border-light: #e5e7eb;
+      --border-medium: #d1d5db;
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --spacing-xs: 0.5rem;
+      --spacing-sm: 0.75rem;
+      --spacing-md: 1rem;
+      --spacing-lg: 1.5rem;
+      --spacing-xl: 2rem;
+      --spacing-2xl: 3rem;
+      --spacing-3xl: 4rem;
+      --spacing-4xl: 6rem;
+      --max-width: 1280px;
+      --max-width-narrow: 1080px;
+      --font-heading: 'Noto Sans Display', sans-serif;
+      --font-body: 'Noto Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* === NAV === */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-light);
+    }
+    .nav-container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: var(--spacing-md) var(--spacing-xl);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-logo {
+      font-family: var(--font-heading);
+      font-size: 1.0625rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    .nav-logo:hover { opacity: 0.7; }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-lg);
+    }
+    .nav-link {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--text-primary); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5em;
+      padding: 0.625rem 1.25rem;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      line-height: 1.2;
+      text-decoration: none;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary {
+      background: var(--accent-primary);
+      color: var(--text-inverse);
+    }
+    .btn-primary:hover { background: var(--accent-primary-hover); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      box-shadow: inset 0 0 0 1px rgba(26,26,46,0.2);
+    }
+    .btn-secondary:hover {
+      box-shadow: inset 0 0 0 1px rgba(26,26,46,0.4);
+    }
+
+    /* === SECTIONS === */
+    .section {
+      padding: var(--spacing-4xl) var(--spacing-xl);
+    }
+    .section-inverse {
+      background: var(--bg-inverse);
+      color: var(--text-inverse);
+    }
+    .section-hero {
+      padding-top: var(--spacing-4xl);
+      padding-bottom: var(--spacing-4xl);
+      overflow: hidden;
+    }
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+    .container-narrow {
+      max-width: var(--max-width-narrow);
+      margin: 0 auto;
+    }
+
+    /* === HERO === */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-3xl);
+      align-items: end;
+    }
+    @media (max-width: 768px) { .hero-grid { grid-template-columns: 1fr; } }
+
+    .hero-heading {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+    }
+    .hero-byline {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      margin-top: var(--spacing-sm);
+    }
+    .hero-subheading {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      margin-bottom: var(--spacing-lg);
+      line-height: 1.6;
+    }
+    .button-group {
+      display: flex;
+      gap: var(--spacing-sm);
+      flex-wrap: wrap;
+    }
+
+    /* === PROJECTS SECTION === */
+    .header-center {
+      text-align: center;
+      margin-bottom: var(--spacing-3xl);
+    }
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: color-mix(in srgb, currentColor 60%, transparent);
+      margin-bottom: var(--spacing-sm);
+    }
+    .eyebrow code {
+      font-family: var(--font-body);
+      background: transparent;
+      font-size: inherit;
+    }
+    .heading-h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: var(--spacing-md);
+    }
+    .subheading {
+      font-size: 1.125rem;
+      color: color-mix(in srgb, currentColor 65%, transparent);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* === PROJECT TABS === */
+    .tabs-nav {
+      display: flex;
+      justify-content: center;
+      gap: var(--spacing-xs);
+      margin-bottom: var(--spacing-2xl);
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: var(--spacing-sm) var(--spacing-lg);
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      color: color-mix(in srgb, currentColor 70%, transparent);
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .tab-btn:hover { color: currentColor; }
+    .tab-btn.active {
+      border-color: color-mix(in srgb, currentColor 30%, transparent);
+      color: currentColor;
+      background: rgba(255,255,255,0.05);
+    }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* === PROJECT CARDS === */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-lg);
+    }
+    @media (max-width: 900px) { .project-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .project-grid { grid-template-columns: 1fr; } }
+
+    .project-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      transition: opacity 0.2s;
+    }
+    .project-card:hover { opacity: 0.85; }
+
+    .card-image-wrap {
+      position: relative;
+      aspect-ratio: 3/2;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: var(--spacing-sm);
+      background: var(--border-light);
+    }
+    .card-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .card-image-wrap .hover-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .project-card:hover .hover-img { opacity: 1; }
+
+    /* === TAGS === */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: var(--spacing-sm);
+    }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.1);
+      color: color-mix(in srgb, currentColor 85%, transparent);
+    }
+    .section-inverse .tag {
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.85);
+    }
+
+    .card-title {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: var(--spacing-xs);
+      line-height: 1.3;
+    }
+    .card-desc {
+      font-size: 0.9375rem;
+      color: color-mix(in srgb, currentColor 70%, transparent);
+      line-height: 1.5;
+      margin-bottom: var(--spacing-sm);
+    }
+    .card-author {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+    .card-author img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .card-author-name {
+      font-size: 0.8125rem;
+      font-weight: 500;
+    }
+    .card-author-year {
+      font-size: 0.75rem;
+      color: color-mix(in srgb, currentColor 55%, transparent);
+    }
+
+    .btn-see-work {
+      text-align: center;
+      margin-top: var(--spacing-2xl);
+    }
+
+    /* === TESTIMONIALS === */
+    .testimonial-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-2xl);
+      align-items: start;
+      margin-bottom: var(--spacing-2xl);
+    }
+    @media (max-width: 768px) { .testimonial-header { grid-template-columns: 1fr; } }
+
+    .testimonial-header h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      font-weight: 700;
+    }
+    .testimonial-header p {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-lg);
+    }
+    @media (max-width: 768px) { .testimonial-grid { grid-template-columns: 1fr; } }
+
+    .testimonial-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-2xl);
+      text-align: center;
+    }
+    .testimonial-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto var(--spacing-md);
+      display: block;
+    }
+    .testimonial-name {
+      font-weight: 700;
+      margin-bottom: var(--spacing-xs);
+    }
+    .testimonial-role {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: var(--spacing-md);
+    }
+    .testimonial-quote {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    /* Stechoq highlight card */
+    .highlight-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin-top: var(--spacing-lg);
+    }
+    @media (max-width: 768px) { .highlight-card { grid-template-columns: 1fr; } }
+    .highlight-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      min-height: 280px;
+    }
+    .highlight-card-content {
+      padding: var(--spacing-2xl);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .highlight-card-content h3 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: var(--spacing-sm);
+    }
+    .highlight-card-content p {
+      color: var(--text-secondary);
+      font-size: 1.125rem;
+    }
+
+    /* === ABOUT === */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-lg);
+      align-items: center;
+    }
+    @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; } }
+    .about-text {
+      padding: var(--spacing-2xl) 0;
+    }
+    .about-pre {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: var(--spacing-sm);
+    }
+    .about-name {
+      font-size: 1.75rem;
+      font-weight: 700;
+      font-family: var(--font-heading);
+      margin-bottom: var(--spacing-md);
+      line-height: 1.2;
+    }
+    .about-bio {
+      font-size: 1.0625rem;
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    .about-cta {
+      margin-top: var(--spacing-xl);
+      padding-top: var(--spacing-md);
+      border-top: 1px solid var(--border-light);
+    }
+    .about-cta strong {
+      font-weight: 600;
+    }
+    .about-cta .hint {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+    .about-photo {
+      width: 100%;
+      border-radius: var(--radius-md);
+    }
+
+    /* === FOOTER === */
+    .footer {
+      background: var(--bg-inverse);
+      color: var(--text-inverse);
+      padding: var(--spacing-4xl) var(--spacing-xl);
+      position: relative;
+    }
+    .footer-container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      text-align: center;
+    }
+    .footer h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: var(--spacing-xs);
+    }
+    .footer-email {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      color: color-mix(in srgb, #fff 70%, transparent);
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: var(--spacing-2xl);
+    }
+    .footer-email:hover { color: #fff; }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: var(--spacing-xl);
+      margin-top: var(--spacing-xl);
+    }
+    @media (max-width: 640px) { .footer-bottom { flex-direction: column; gap: var(--spacing-lg); } }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.9375rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-inverse);
+      text-decoration: none;
+    }
+    .footer-logo svg { width: 20px; height: 20px; color: var(--text-inverse); }
+    .footer-social { display: flex; gap: var(--spacing-md); }
+    .footer-social a { color: color-mix(in srgb, #fff 60%, transparent); transition: color 0.2s; }
+    .footer-social a:hover { color: #fff; }
+    .footer-social svg { width: 18px; height: 18px; }
+    .footer-cta a {
+      color: color-mix(in srgb, #fff 70%, transparent);
+      text-decoration: none;
+      font-size: 0.9375rem;
+      transition: color 0.2s;
+    }
+    .footer-cta a:hover { color: #fff; }
+    .back-to-top {
+      position: absolute;
+      bottom: var(--spacing-xl);
+      right: var(--spacing-xl);
+      color: color-mix(in srgb, #fff 50%, transparent);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+    .back-to-top:hover { color: #fff; }
+
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 640px) {
+      .section { padding: var(--spacing-2xl) var(--spacing-md); }
+      .section-hero { padding-top: var(--spacing-2xl); padding-bottom: var(--spacing-2xl); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav id="top" class="nav">
+    <div class="nav-container">
+      <a href="/" class="nav-logo" aria-current="page">Home</a>
+      <div class="nav-right">
+        <a href="#about" class="nav-link">About</a>
+        <a href="projects/" class="btn btn-primary">See work</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <header class="section section-hero" id="hero">
+    <div class="container-narrow">
+      <div class="hero-grid">
+        <div>
+          <h1 class="hero-heading">From insight to impact, data visualized.</h1>
+          <div class="hero-byline">by Akhdan Hanif Kartika Zaman</div>
+        </div>
+        <div>
+          <p class="hero-subheading">Transforming numbers into bold strategies across industries and borders.</p>
+          <div class="button-group">
+            <a href="#projects" class="btn btn-primary">Explore projects</a>
+            <a href="#about" class="btn btn-secondary">About Me</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== PROJECTS ===== -->
+  <section class="section section-inverse" id="projects">
+    <div class="container">
+      <div class="header-center">
+        <div class="eyebrow"><code>Exploratory, Predictive, &amp; Dashboarding</code></div>
+        <h2 class="heading-h2">My Projects</h2>
+        <p class="subheading">A collection of hands-on data analysis projects using public datasets and real data using data scraping. Focused on turning messy data into clear insight</p>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="tabs-nav">
+        <button class="tab-btn active" data-filter="all">All</button>
+        <button class="tab-btn" data-filter="visualization">Visualization</button>
+        <button class="tab-btn" data-filter="data-analysis">Data Analysis</button>
+        <button class="tab-btn" data-filter="machine-learning">Machine Learning</button>
+      </div>
+
+      <!-- Project Cards -->
+      <div class="project-grid">
+
+        <!-- Olist -->
+        <!-- Arkaiv AI Productivity -->
+        <a href="projects/" class="project-card" data-categories="machine-learning">
+          <div class="card-image-wrap">
+            <img src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=800&h=533&fit=crop" alt="Arkaiv App" loading="lazy">
+          </div>
+          <div class="tags">
+            <span class="tag">REACT</span>
+            <span class="tag">GEMINI AI</span>
+            <span class="tag">GOOGLE SHEETS</span>
+            <span class="tag">OPENCLAW</span>
+            <span class="tag">FULLSTACK</span>
+          </div>
+          <h3 class="card-title">Arkaiv — AI-Powered Personal Operating System</h3>
+          <p class="card-desc">Built a local-first personal OS with 8 integrated views — Money, Notes, Tasks, Shopping, Calendar, Focus, Library, and AI Summary. Powered by Gemini, synced to Google Sheets, and developed with AI-orchestrated Scrum.</p>
+          <div class="card-author">
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68720a9ce1c1fed237b49108_Foto%20non-formal%202.jpg" alt="Akhdan Hanif" loading="lazy">
+            <div>
+              <div class="card-author-name">Akhdan Hanif</div>
+              <div class="card-author-year">2026</div>
+            </div>
+          </div>
+        </a>
+        <a href="projects/" class="project-card" data-categories="visualization data-analysis">
+          <div class="card-image-wrap">
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6871f67b7972b4b2fbff4287_d4963dd3-20cc-49f2-b0f3-129546ab05d4.png" alt="Olist Dashboard">
+            <img class="hover-img" src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/687201367972b4b2fb020f75_Full%201.png" alt="Olist Full Dashboard" loading="lazy">
+          </div>
+          <div class="tags">
+            <span class="tag">power bi</span>
+            <span class="tag">Customer satisfaction</span>
+            <span class="tag">data analysis</span>
+            <span class="tag">visualization</span>
+          </div>
+          <h3 class="card-title">Olist Ecommerce Satisfaction Visualization</h3>
+          <p class="card-desc">Analyzed Brazilian e-commerce (Olist) data using Power BI. Designed dashboards tracking order status, review scores, and shipping performance across customer segments.</p>
+          <div class="card-author">
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68720a9ce1c1fed237b49108_Foto%20non-formal%202.jpg" alt="Akhdan Hanif" loading="lazy">
+            <div>
+              <div class="card-author-name">Akhdan Hanif</div>
+              <div class="card-author-year">2025</div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Essential Oils -->
+        <a href="projects/" class="project-card" data-categories="data-analysis machine-learning">
+          <div class="card-image-wrap">
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/687206b233f1b4adf843fdfa_pexels-mareefe-932587.jpg" alt="Essential Oils">
+            <img class="hover-img" src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872226b8df2ae8cbeaf1928_Screenshot%202025-07-12%20155238.png" alt="Essential Oils Analysis" loading="lazy">
+          </div>
+          <div class="tags">
+            <span class="tag">PYTHON</span>
+            <span class="tag">WEB SCRAPING</span>
+            <span class="tag">DATA ANALYSIS</span>
+            <span class="tag">MACHINE LEARNING</span>
+            <span class="tag">CUSTOMER SATISFACTION</span>
+          </div>
+          <h3 class="card-title">Essential Oils Customer Satisfaction Analysis</h3>
+          <p class="card-desc">Scraped product reviews from e-commerce listings to analyze satisfaction dimensions. Applied sentiment analysis, keyword extraction, and categorized user feedback patterns.</p>
+          <div class="card-author">
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68720a9ce1c1fed237b49108_Foto%20non-formal%202.jpg" alt="Akhdan Hanif" loading="lazy">
+            <div>
+              <div class="card-author-name">Akhdan Hanif</div>
+              <div class="card-author-year">2025</div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Churn -->
+        <a href="projects/" class="project-card" data-categories="data-analysis machine-learning">
+          <div class="card-image-wrap">
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6871e103d5a705d6ac7b293f_PPT%20DSW%202023%20-%20ARUCI_001.png" alt="Telco Churn">
+          </div>
+          <div class="tags">
+            <span class="tag">python</span>
+            <span class="tag">data analysis</span>
+            <span class="tag">machine learning</span>
+          </div>
+          <h3 class="card-title">Telco Churn EDA and Prediction</h3>
+          <p class="card-desc">Explored a telecom dataset to identify churn patterns. Applied feature engineering and trained classification models (XGBoost) to predict customer attrition.</p>
+          <div class="card-author">
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68720afbc27c24c6258d22a1_FullMoon2010.jpg" alt="Aruci Team" loading="lazy">
+            <div>
+              <div class="card-author-name">Aruci Team (Bilal, Akhdan, Dendy)</div>
+              <div class="card-author-year">2024</div>
+            </div>
+          </div>
+        </a>
+
+        <!-- USAID -->
+        <a href="projects/" class="project-card" data-categories="visualization">
+          <div class="card-image-wrap">
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68724bfc305c14dd91b39935_pexels-chanaka-318741-906494.jpg" alt="USAID Supply Chain">
+            <img class="hover-img" src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6871cea1e740983f6eeb9a80_Screenshot%202025-07-08%20152412.png" alt="USAID Dashboard" loading="lazy">
+          </div>
+          <div class="tags">
+            <span class="tag">Tableau</span>
+            <span class="tag">supply chain</span>
+            <span class="tag">visualization</span>
+          </div>
+          <h3 class="card-title">Health Commodities Supply Chain by USAID Visualization</h3>
+          <p class="card-desc">Built a Tableau dashboard using a simulated USAID dataset from Kaggle. Visualized distribution flows, delivery timelines, and regional bottlenecks to simulate NGO decision-making processes.</p>
+          <div class="card-author">
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68720a9ce1c1fed237b49108_Foto%20non-formal%202.jpg" alt="Akhdan Hanif" loading="lazy">
+            <div>
+              <div class="card-author-name">Akhdan Hanif</div>
+              <div class="card-author-year">2024</div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Maintenance -->
+        <a href="projects/" class="project-card" data-categories="visualization">
+          <div class="card-image-wrap">
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68724c5f761849fb3ee3cacc_pexels-pixabay-257736.jpg" alt="Maintenance Dashboard">
+            <img class="hover-img" src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6871e28c76a02631e1de48df_Screenshot%202025-07-12%20111959.png" alt="Looker Dashboard" loading="lazy">
+          </div>
+          <div class="tags">
+            <span class="tag">looker studio</span>
+            <span class="tag">maintenance</span>
+            <span class="tag">visualization</span>
+          </div>
+          <h3 class="card-title">Maintenance Schedule and History Visualization</h3>
+          <p class="card-desc">Developed a Looker Studio dashboard using dummy equipment logs. Showcased maintenance frequency, failure types, and downtime impact. Designed with operational prioritization in mind.</p>
+          <div class="card-author">
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68720a9ce1c1fed237b49108_Foto%20non-formal%202.jpg" alt="Akhdan Hanif" loading="lazy">
+            <div>
+              <div class="card-author-name">Akhdan Hanif</div>
+              <div class="card-author-year">2025</div>
+            </div>
+          </div>
+        </a>
+
+        <!-- Mental Health -->
+        <a href="projects/" class="project-card" data-categories="machine-learning">
+          <div class="card-image-wrap">
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6871e398d85cfa3fef65d093_Capstone%20Bangkit%20-%20HappyYou.jpg" alt="HappyYou App">
+          </div>
+          <div class="tags">
+            <span class="tag">PYTHON</span>
+            <span class="tag">WEB SCRAPING</span>
+            <span class="tag">DATA ANALYSIS</span>
+            <span class="tag">MACHINE LEARNING</span>
+            <span class="tag">NLP</span>
+          </div>
+          <h3 class="card-title">Mental Health Prediction App</h3>
+          <p class="card-desc">Analyzed text data on mental health across the internet. Explored key text influencing mental health issues and built classification models to predict individuals at risk based on user typing.</p>
+          <div class="card-author">
+            <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68720b4ba17974998254e512_channels4_profile.jpg" alt="Yukai Mojikai Team" loading="lazy">
+            <div>
+              <div class="card-author-name">Yukai Mojikai Team (Izzan, Akhdan, Bagus, Rafi, Rifqi)</div>
+              <div class="card-author-year">2023</div>
+            </div>
+          </div>
+        </a>
+
+
+      </div>
+
+      <div class="btn-see-work">
+        <a href="projects/" class="btn btn-primary">See Work</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section class="section" id="testimonials">
+    <div class="container">
+      <div class="testimonial-header">
+        <div>
+          <p class="eyebrow">What OTHERS say ABOUT MY WORK</p>
+          <h2>Testimonials</h2>
+        </div>
+        <p>Discover how my works have transformed data into insight across various sectors.</p>
+      </div>
+
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <img class="testimonial-avatar" src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872376a95e1498effaeaf64_1723565432632.jpeg" alt="Izzananda Adimas F." loading="lazy">
+          <div class="testimonial-name">Izzananda Adimas F., S.T.</div>
+          <div class="testimonial-role">POSI Laboratory Partner</div>
+          <p class="testimonial-quote">"Working with Akhdan has been an absolute privilege. He consistently demonstrates high level of dedication and reliability, making them a standout team member in any collaborative setting. His strong technical skills are complemented by an exceptional drive for exploration and problem-solving. What truly sets them apart is their ability to take initiative and deliver outstanding results with minimal guidance. A true asset to any team."</p>
+        </div>
+        <div class="testimonial-card">
+          <img class="testimonial-avatar" src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68727c26e8c17297c0213fb6_1697536808650.jpeg" alt="Auldy Setia Mahendra" loading="lazy">
+          <div class="testimonial-name">Auldy Setia Mahendra, S.T.</div>
+          <div class="testimonial-role">Class President of UNS Industrial Engineering 2021</div>
+          <p class="testimonial-quote">"Akhdan is the kind of person who thrives on challenges - he's never afraid to take risks in learning new things, tackles every task with determination, and consistently adapts and picks up new skills faster than anyone I've worked with"</p>
+        </div>
+      </div>
+
+      <!-- PT Stechoq -->
+      <div class="highlight-card">
+        <img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68759b7349fed55548eef34a_WhatsApp%20Image%202025-07-15%20at%2006.55.44_1ad40100.jpg" alt="PT Stechoq Robotika Indonesia" loading="lazy">
+        <div class="highlight-card-content">
+          <h3>The Most Tenacious Mentee</h3>
+          <p>PT Stechoq Robotika Indonesia</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="about-pre">Thanks for scrolling all the way down</p>
+          <p class="about-name">I am Akhdan Hanif Kartika Zaman!</p>
+          <p class="about-bio">Aspiring Data Analyst | Industrial Engineering Graduate<br>Passionate about turning raw data into impactful insights.</p>
+          <div class="about-cta">
+            <p><strong>Ready to bring value through data.</strong></p>
+            <p class="hint">Let's talk if you're hiring.</p>
+          </div>
+        </div>
+        <img class="about-photo" src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/687239258ca50302026db555_Foto%20non%20formal%20biru.png" alt="Akhdan Hanif Kartika Zaman" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-container">
+      <h2>Crafting data stories that drive change</h2>
+      <a href="mailto:akhdanzaman@gmail.com" class="footer-email">akhdanzaman@gmail.com</a>
+      <div class="footer-bottom">
+        <a href="#" class="footer-logo">
+          <svg width="100%" height="100%" viewBox="0 0 33 33"><path d="M28,0H5C2.24,0,0,2.24,0,5v23c0,2.76,2.24,5,5,5h23c2.76,0,5-2.24,5-5V5c0-2.76-2.24-5-5-5ZM29,17c-6.63,0-12,5.37-12,12h-1c0-6.63-5.37-12-12-12v-1c6.63,0,12-5.37,12-12h1c0,6.63,5.37,12,12,12v1Z" fill="currentColor"></path></svg>
+          Akhdan Zaman
+        </a>
+        <div class="footer-social">
+          <a href="https://instagram.com/ahdanhanif" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 16 16"><path d="M8,1.441c2.136,0,2.389.009,3.233.047a4.419,4.419,0,0,1,1.485.276,2.472,2.472,0,0,1,.92.6,2.472,2.472,0,0,1,.6.92,4.419,4.419,0,0,1,.276,1.485c.038.844.047,1.1.047,3.233s-.009,2.389-.047,3.233a4.419,4.419,0,0,1-.276,1.485,2.644,2.644,0,0,1-1.518,1.518,4.419,4.419,0,0,1-1.485.276c-.844.038-1.1.047-3.233.047s-2.389-.009-3.233-.047a4.419,4.419,0,0,1-1.485-.276,2.472,2.472,0,0,1-.92-.6,2.472,2.472,0,0,1-.6-.92,4.419,4.419,0,0,1-.276-1.485c-.038-.844-.047-1.1-.047-3.233s.009-2.389.047-3.233a4.419,4.419,0,0,1,.276-1.485,2.472,2.472,0,0,1,.6-.92,2.472,2.472,0,0,1,.92-.6,4.419,4.419,0,0,1,1.485-.276c.844-.038,1.1-.047,3.233-.047M8,0C5.827,0,5.555.009,4.7.048A5.868,5.868,0,0,0,2.76.42a3.908,3.908,0,0,0-1.417.923A3.908,3.908,0,0,0,.42,2.76,5.868,5.868,0,0,0,.048,4.7C.009,5.555,0,5.827,0,8s.009,2.445.048,3.3A5.868,5.868,0,0,0,.42,13.24a3.908,3.908,0,0,0,.923,1.417,3.908,3.908,0,0,0,1.417.923,5.868,5.868,0,0,0,1.942.372C5.555,15.991,5.827,16,8,16s2.445-.009,3.3-.048a5.868,5.868,0,0,0,1.942-.372,4.094,4.094,0,0,0,2.34-2.34,5.868,5.868,0,0,0,.372-1.942c.039-.853.048-1.125.048-3.3s-.009-2.445-.048-3.3A5.868,5.868,0,0,0,15.58,2.76a3.908,3.908,0,0,0-.923-1.417A3.908,3.908,0,0,0,13.24.42,5.868,5.868,0,0,0,11.3.048C10.445.009,10.173,0,8,0Z" fill="currentColor"></path><path d="M8,3.892A4.108,4.108,0,1,0,12.108,8,4.108,4.108,0,0,0,8,3.892Zm0,6.775A2.667,2.667,0,1,1,10.667,8,2.667,2.667,0,0,1,8,10.667Z" fill="currentColor"></path><circle cx="12.27" cy="3.73" r="0.96" fill="currentColor"></circle></svg>
+          </a>
+          <a href="https://linkedin.com/in/akhdanzaman" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 16 16"><path d="M15.3,0H0.7C0.3,0,0,0.3,0,0.7v14.7C0,15.7,0.3,16,0.7,16h14.7c0.4,0,0.7-0.3,0.7-0.7V0.7C16,0.3,15.7,0,15.3,0z M4.7,13.6H2.4V6h2.4V13.6z M3.6,5C2.8,5,2.2,4.3,2.2,3.6c0-0.8,0.6-1.4,1.4-1.4c0.8,0,1.4,0.6,1.4,1.4C4.9,4.3,4.3,5,3.6,5z M13.6,13.6h-2.4V9.9c0-0.9,0-2-1.2-2c-1.2,0-1.4,1-1.4,2v3.8H6.2V6h2.3v1h0c0.3-0.6,1.1-1.2,2.2-1.2c2.4,0,2.8,1.6,2.8,3.6V13.6z" fill="currentColor"></path></svg>
+          </a>
+        </div>
+        <div class="footer-cta">
+          <a href="mailto:akhdanzaman@gmail.com?subject=Hello%20Akhdan">Email</a>
+        </div>
+      </div>
+    </div>
+    <a href="#top" class="back-to-top">↑ Back to top</a>
+  <a href="admin/" style="position:absolute;bottom:1rem;left:1.5rem;color:rgba(255,255,255,0.25);text-decoration:none;font-size:0.75rem;">CMS</a>
+  </footer>
+
+  <script>
+    // Project filter tabs
+    const tabs = document.querySelectorAll('.tab-btn');
+    const cards = document.querySelectorAll('.project-card');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const filter = tab.dataset.filter;
+
+        cards.forEach(card => {
+          if (filter === 'all') {
+            card.style.display = '';
+          } else {
+            const cats = card.dataset.categories.split(' ');
+            card.style.display = cats.includes(filter) ? '' : 'none';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

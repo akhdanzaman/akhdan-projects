@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS — Akhdan Projects</title>
+  <link rel="icon" href="https://cdn.prod.website-files.com/687117f971cd518b166221a9/6875f721617f26cec12608d0_icon.png">
+  <style>
+    :root {
+      --bg: #f8f9fa;
+      --bg-card: #fff;
+      --bg-dark: #1a1a2e;
+      --text: #1a1a2e;
+      --text-secondary: #6b7280;
+      --border: #e5e7eb;
+      --accent: #0f172a;
+      --danger: #ef4444;
+      --success: #10b981;
+      --radius: 8px;
+      --font: system-ui, -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); }
+
+    /* Login */
+    .login-overlay {
+      position: fixed; inset: 0; background: var(--bg-dark);
+      display: flex; align-items: center; justify-content: center; z-index: 9999;
+    }
+    .login-box {
+      background: var(--bg-card); padding: 2.5rem; border-radius: 12px;
+      width: 380px; max-width: 90vw; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .login-box h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+    .login-box p { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem; }
+    .login-box input {
+      width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border);
+      border-radius: var(--radius); font-size: 0.95rem; margin-bottom: 0.75rem;
+      font-family: var(--font);
+    }
+    .login-box input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(15,23,42,0.1); }
+    .login-box .btn {
+      width: 100%; padding: 0.75rem; background: var(--accent); color: #fff;
+      border: none; border-radius: var(--radius); font-size: 0.95rem; font-weight: 600;
+      cursor: pointer; transition: background 0.2s; font-family: var(--font);
+    }
+    .login-box .btn:hover { background: #1e293b; }
+    .login-error { color: var(--danger); font-size: 0.85rem; margin-top: 0.5rem; display: none; }
+
+    /* Layout */
+    .app { display: none; height: 100vh; }
+    .app.visible { display: flex; }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px; min-width: 280px; background: var(--bg-dark); color: #fff;
+      display: flex; flex-direction: column; overflow-y: auto;
+    }
+    .sidebar-header {
+      padding: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .sidebar-header h2 { font-size: 1rem; font-weight: 600; }
+    .sidebar-header .logout-btn {
+      background: none; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7);
+      padding: 0.3rem 0.75rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem;
+      transition: all 0.2s; font-family: var(--font);
+    }
+    .sidebar-header .logout-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+    .project-list { flex: 1; overflow-y: auto; padding: 0.5rem 0; }
+    .project-item {
+      padding: 0.85rem 1.25rem; cursor: pointer; border-left: 3px solid transparent;
+      transition: all 0.15s; display: flex; flex-direction: column; gap: 0.15rem;
+    }
+    .project-item:hover { background: rgba(255,255,255,0.05); }
+    .project-item.active { background: rgba(255,255,255,0.08); border-left-color: #fff; }
+    .project-item .name { font-size: 0.85rem; font-weight: 600; line-height: 1.3; }
+    .project-item .meta { font-size: 0.72rem; color: rgba(255,255,255,0.5); }
+    .sidebar-footer {
+      padding: 0.75rem 1.25rem; border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.72rem; color: rgba(255,255,255,0.35);
+    }
+
+    /* Main editor */
+    .main {
+      flex: 1; display: flex; flex-direction: column; overflow: hidden;
+    }
+    .editor-toolbar {
+      padding: 0.75rem 1.25rem; background: var(--bg-card); border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+    }
+    .editor-toolbar h3 { font-size: 1rem; font-weight: 600; margin-right: auto; }
+    .toolbar-btn {
+      padding: 0.4rem 0.75rem; border: 1px solid var(--border); background: var(--bg-card);
+      border-radius: 4px; cursor: pointer; font-size: 0.8rem; color: var(--text);
+      transition: all 0.15s; font-family: var(--font); white-space: nowrap;
+    }
+    .toolbar-btn:hover { background: var(--bg); border-color: #ccc; }
+    .toolbar-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .toolbar-btn.primary:hover { background: #1e293b; }
+
+    .editor-body { flex: 1; display: flex; overflow: hidden; }
+    .editor-pane {
+      flex: 1; display: flex; flex-direction: column; min-width: 0;
+    }
+    .editor-pane:first-child { border-right: 1px solid var(--border); }
+    .pane-label {
+      padding: 0.4rem 1rem; background: var(--bg); font-size: 0.72rem;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary);
+      border-bottom: 1px solid var(--border); font-weight: 600;
+    }
+    .pane-label span { font-size: 0.68rem; color: var(--success); margin-left: 0.5rem; }
+
+    textarea.editor {
+      flex: 1; padding: 1.25rem; border: none; resize: none;
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 0.9rem;
+      line-height: 1.6; color: var(--text); background: var(--bg-card);
+      outline: none; tab-size: 2;
+    }
+
+    .preview {
+      flex: 1; padding: 1.25rem; overflow-y: auto; background: var(--bg-card);
+      line-height: 1.7; font-size: 0.95rem;
+    }
+    .preview h1 { font-size: 1.75rem; margin: 1rem 0 0.5rem; }
+    .preview h2 { font-size: 1.4rem; margin: 1.5rem 0 0.5rem; }
+    .preview h3 { font-size: 1.15rem; margin: 1.25rem 0 0.4rem; }
+    .preview p { margin-bottom: 0.75rem; }
+    .preview ul, .preview ol { margin-bottom: 0.75rem; padding-left: 1.5rem; }
+    .preview li { margin-bottom: 0.3rem; }
+    .preview blockquote {
+      border-left: 3px solid var(--accent); padding: 0.5rem 1rem;
+      margin: 1rem 0; color: var(--text-secondary); font-style: italic;
+    }
+    .preview img { max-width: 100%; border-radius: 6px; margin: 0.75rem 0; }
+    .preview code { background: #f1f3f5; padding: 2px 6px; border-radius: 3px; font-size: 0.85em; }
+    .preview strong { font-weight: 600; }
+    .preview a { color: var(--accent); }
+
+    /* Status bar */
+    .status-bar {
+      padding: 0.4rem 1rem; background: var(--bg-dark); color: rgba(255,255,255,0.6);
+      font-size: 0.72rem; display: flex; align-items: center; gap: 1rem;
+    }
+    .status-bar .saved { color: var(--success); }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100;
+      display: none; align-items: center; justify-content: center;
+    }
+    .modal-overlay.visible { display: flex; }
+    .modal {
+      background: var(--bg-card); padding: 1.5rem; border-radius: 12px;
+      width: 500px; max-width: 90vw; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .modal h3 { margin-bottom: 1rem; font-size: 1.1rem; }
+    .modal label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .modal input, .modal textarea {
+      width: 100%; padding: 0.6rem 0.75rem; border: 1px solid var(--border);
+      border-radius: var(--radius); font-size: 0.9rem; margin-bottom: 0.75rem;
+      font-family: var(--font);
+    }
+    .modal textarea { min-height: 80px; resize: vertical; }
+    .modal .btn-row { display: flex; gap: 0.5rem; justify-content: flex-end; }
+    .modal .btn {
+      padding: 0.5rem 1rem; border: 1px solid var(--border); background: var(--bg-card);
+      border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-family: var(--font);
+    }
+    .modal .btn.save { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    @media (max-width: 768px) {
+      .app { flex-direction: column; }
+      .sidebar { width: 100%; min-width: 0; max-height: 180px; }
+      .editor-body { flex-direction: column; }
+      .editor-pane:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+      .editor-pane { max-height: 50vh; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-box">
+      <h1>🔐 CMS Login</h1>
+      <p>Akhdan Projects — Content Management</p>
+      <input type="text" id="username" placeholder="Username" autocomplete="off">
+      <input type="password" id="password" placeholder="Password">
+      <button class="btn" onclick="doLogin()">Sign In</button>
+      <p class="login-error" id="loginError">Invalid credentials</p>
+    </div>
+  </div>
+
+  <!-- APP -->
+  <div class="app" id="app">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h2>📝 Projects</h2>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+      <div class="project-list" id="projectList"></div>
+      <div class="sidebar-footer" id="sidebarFooter">7 projects loaded</div>
+    </div>
+
+    <!-- Main -->
+    <div class="main">
+      <div class="editor-toolbar">
+        <h3 id="editorTitle">Select a project</h3>
+        <button class="toolbar-btn" onclick="insertMarkdown('**bold**')" title="Bold">B</button>
+        <button class="toolbar-btn" onclick="insertMarkdown('*italic*')" title="Italic"><em>I</em></button>
+        <button class="toolbar-btn" onclick="insertMarkdown('\n## Heading\n')" title="Heading">H2</button>
+        <button class="toolbar-btn" onclick="insertMarkdown('\n### Subheading\n')" title="Subheading">H3</button>
+        <button class="toolbar-btn" onclick="insertMarkdown('\n- List item\n')" title="Bullet list">• List</button>
+        <button class="toolbar-btn" onclick="insertMarkdown('\n1. Numbered\n')" title="Numbered list">1.</button>
+        <button class="toolbar-btn" onclick="insertMarkdown('\n> Blockquote\n')" title="Blockquote">❝</button>
+        <button class="toolbar-btn" onclick="insertMarkdown('\n`code`\n')" title="Inline code">&lt;/&gt;</button>
+        <button class="toolbar-btn" onclick="openImageModal()" title="Insert image">🖼️ Image</button>
+        <button class="toolbar-btn" onclick="insertMarkdown('\n---\n')" title="Horizontal rule">—</button>
+        <button class="toolbar-btn primary" onclick="saveCurrent()">💾 Save</button>
+      </div>
+      <div class="editor-body">
+        <div class="editor-pane">
+          <div class="pane-label">Markdown <span id="editStatus"></span></div>
+          <textarea class="editor" id="editor" placeholder="Select a project from the sidebar to start editing..."></textarea>
+        </div>
+        <div class="editor-pane">
+          <div class="pane-label">Preview</div>
+          <div class="preview" id="preview"></div>
+        </div>
+      </div>
+      <div class="status-bar">
+        <span id="statusText">Ready</span>
+        <span class="saved" id="savedIndicator" style="display:none">✓ Saved</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Modal -->
+  <div class="modal-overlay" id="imageModal">
+    <div class="modal">
+      <h3>🖼️ Insert Image</h3>
+      <label>Image URL</label>
+      <input type="text" id="imageUrl" placeholder="https://example.com/image.jpg">
+      <label>Alt text (description)</label>
+      <input type="text" id="imageAlt" placeholder="Image description">
+      <label>Caption (optional)</label>
+      <input type="text" id="imageCaption" placeholder="Caption text">
+      <div class="btn-row">
+        <button class="btn" onclick="closeImageModal()">Cancel</button>
+        <button class="btn save" onclick="insertImage()">Insert Image</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ============ AUTH ============
+    const AUTH_KEY = 'akhdan_cms_auth';
+    const CONTENT_KEY = 'akhdan_cms_content';
+
+    function doLogin() {
+      const u = document.getElementById('username').value.trim();
+      const p = document.getElementById('password').value;
+      if (u === 'admin' && p === 'thebestfutureuponmeEe') {
+        localStorage.setItem(AUTH_KEY, 'true');
+        document.getElementById('loginOverlay').style.display = 'none';
+        document.getElementById('app').classList.add('visible');
+        initApp();
+      } else {
+        document.getElementById('loginError').style.display = 'block';
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem(AUTH_KEY);
+      location.reload();
+    }
+
+    // Check auth on load
+    if (localStorage.getItem(AUTH_KEY) === 'true') {
+      document.getElementById('loginOverlay').style.display = 'none';
+      document.getElementById('app').classList.add('visible');
+      initApp();
+    }
+
+    // Enter key on login
+    document.getElementById('password').addEventListener('keydown', e => {
+      if (e.key === 'Enter') doLogin();
+    });
+
+    // ============ PROJECT DATA ============
+    const defaultProjects = [
+      {
+        id: 'arkaiv',
+        title: 'Arkaiv — AI-Powered Personal Productivity & Management Web App',
+        subtitle: 'React, Gemini AI, Google Sheets, OpenClaw',
+        author: 'Akhdan Hanif',
+        date: '2026',
+        toolbox: 'React 19, Vite, Tailwind CSS 4, Express.js, Google Gemini AI, Google Sheets API, Google Calendar API, OpenClaw AI Agents (Scrum)',
+        techniques: 'Full-stack development, AI multi-model routing, Local-first data architecture, Personal Knowledge Management (PKM), AI-orchestrated Scrum, PWA, Framer Motion, Recharts',
+        industries: 'Personal Productivity, Personal Finance, Self-Quantification, Creator Tools',
+        results: 'A complete personal operating system with 8 integrated views (Money, Notes, Tasks, Shopping, Calendar, Focus, Library, Summary) backed by Gemini AI — all local-first, PWA-capable, and actively maintained.',
+        heroImage: 'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=1280&h=480&fit=crop',
+        content: `## Arkaiv — Ngarsip Harian, Unpacked
+
+> "How can I build a single system that actually understands my daily life — and helps me run it better?"
+
+In 2026, I built **Arkaiv** (Indonesian for "archive"), short for *Ngarsip Harian* — Daily Archiving. It started as a notes dump and evolved into a full personal operating system: my daily driver for tracking money, tasks, shopping, notes, and habits — all powered by Google Gemini AI.
+
+The app has **8 integrated views**: Money (expenses & budgets), Notes (AI-parsed archiving), Tasks (with routines), Shopping lists, Calendar (Google Calendar sync), Focus (deep work mode), Library (searchable archive), and Summary (AI-generated weekly reviews). Everything is local-first with Google Sheets as the sync backbone — no SaaS lock-in.
+
+**Core Insight**
+
+- A single unified interface replaces the mental overhead of juggling 5+ separate tools
+- AI works best when it observes passively and surfaces insights — not when it demands attention
+- Google Sheets as a sync layer is surprisingly powerful: human-readable, versioned, and free
+- Multi-model AI routing (Gemini Flash for speed, Pro for depth) keeps the app fast and cheap
+- Orchestrating AI agents with Scrum inside OpenClaw produced production-grade code at solo-founder speed
+- Framer Motion + Tailwind makes the app feel alive without performance penalties
+
+### The Starting Point — Notes Dump to Something Real
+
+Arkaiv didn't start with a grand vision. It started with a \`notes-dump\` — a chaotic repository of ideas, scripts, and half-baked components. The breakthrough came when I realized the pieces could connect: a parser that understands my spending habits, a task router that knows my energy patterns, and a calendar integration that bridges Google Calendar with my local data.
+
+The first working version had just two views: Notes and Money. Everything else grew organically as I kept asking: "what's the friction I'm facing right now, and can Arkaiv solve it?"
+
+### Insight #1: Local-First, Sheets-Synced Architecture
+
+Instead of a traditional database, Arkaiv uses a **local-first + Google Sheets sync** architecture. All data lives in the browser (React state + localStorage), with Google Sheets acting as the persistent backend. This gave me several wins:
+
+- **Zero infra costs:** No database servers, no cloud storage bills
+- **Human-readable backups:** Every financial entry is a row anyone can read in Sheets
+- **Batch parsing pipeline:** A custom \`batchParserCoordinator\` processes raw input through canonicalization, field validation, and budget categorization
+- **Spreadsheet reconciliation:** A \`spreadsheetReconciler\` diffs local state against Sheets to keep everything consistent
+
+This architecture is unconventional. Most devs would reach for Supabase or Firebase. But for a personal tool that only I use, the simplicity and zero-cost nature of Sheets won every tradeoff discussion.
+
+### Insight #2: Multi-Model AI Routing — Right Model, Right Job
+
+One of the most interesting technical decisions was building a **parser model router**. Not every AI task needs Gemini Pro — sometimes Gemini Flash is faster and 10x cheaper for the same quality. The router classifies incoming text by complexity and routes accordingly:
+
+- **Simple categorization** ("lunch 35k" → expense, food) → Flash
+- **Complex parsing** (multi-item receipt, mixed currencies) → Pro
+- **Weekly summaries and insights** → Pro with structured prompt templates
+- **Chat and free-form queries** → Context-aware routing based on query type
+
+This saved significant API costs while keeping the experience snappy. The router itself is a lightweight classifier trained on real usage patterns over several weeks.
+
+### Insight #3: Behavior Caching and Deep Work Mode
+
+Two features that emerged from real usage pain points:
+
+**Behavior Cache:** Arkaiv learns your recurring patterns — if you always categorize "kopi kenangan" as coffee/breakfast, it stops asking. The \`behaviorCacheService\` builds confidence scores over time and skips the AI roundtrip for high-confidence matches. This cut the average parsing latency by 40%.
+
+**Deep Work Transformer:** A dedicated Focus view that transforms your task list into timed deep-work blocks. It syncs with Calendar to block focus time, suppresses non-urgent notifications, and uses Gemini to suggest optimal task ordering based on energy levels and deadlines. The \`deepWorkTransformer\` is backed by a structured spec (NDC-008) and validated through an automated ship-gate checklist.
+
+### Insight #4: Building with AI Agents — The OpenClaw Scrum Engine
+
+The development process itself became a case study. I orchestrated a team of AI agents inside OpenClaw, each with specialized roles, running Scrum sprints:
+
+- **Product Owner:** Me — defining vision, priorities, and acceptance criteria
+- **Engineering agents:** Spec-driven implementation with automated validation scripts
+- **QA agents:** Automated screenshot capture, regression checklists, benchmark runs
+- **Design agents:** Desktop polish passes, responsive layout observations, tablet baseline acceptance
+
+The \`docs/\` directory tells the story: 20+ spec documents (NDC, NDX, NDZ prefixes), 15+ screenshot validation runs, automated benchmark scripts, and a ship-gate checklist that gates every deployment. The \`.mission-control-proof/\` directory contains artifacts proving agent-driven development — actual agent outputs that shipped to production.
+
+### Tech Stack — What's Under the Hood
+
+- **Frontend:** React 19 + Vite 6 + Tailwind CSS 4, with Framer Motion for animations and Recharts for data visualization
+- **Backend:** Express.js 5 with TypeScript, deployed on Vercel serverless
+- **AI:** Google Gemini (Flash + Pro) with custom model router, batch parser coordinator, and context-aware prompt engineering
+- **Data:** Local-first (React state + localStorage) synced to Google Sheets via API
+- **Integrations:** Google Calendar API, Google Sheets API, Google OAuth
+- **PWA:** Full offline support via vite-plugin-pwa
+- **Testing:** 15+ automated screenshot capture scripts, benchmark suites for parser and model routing, behavior cache validation
+
+## Strategic Takeaways
+
+Arkaiv proved that a personal tool, built with real intention and modern AI, can outperform polished SaaS products — at least for the person who built it. More importantly, it demonstrated a new paradigm: **AI-orchestrated solo development** that produces production-grade, tested, documented software at a speed that would normally require a small team.
+
+Several skills I sharpened through this project:
+
+- **AI system architecture:** Multi-model routing, prompt engineering at scale, context window management
+- **Spec-driven development:** Writing structured specs that AI agents can implement autonomously
+- **Local-first patterns:** Sync reconciliation, offline-capable design, behavior caching
+- **Agent orchestration:** Running Scrum with AI agents — sprint planning, retrospectives, ship-gate validation
+- **PWA optimization:** Service workers, offline-first data flows, install prompts
+
+Arkaiv sits at the intersection of everything I'm passionate about: building robust software, designing AI systems that feel invisible, and relentlessly optimizing my own life. It's not a side project — it's the operating system I live in every day.
+
+**Status:** Live & actively maintained. **Stack:** React 19 + Vite + Express + Gemini + Google Sheets. **Repository:** private (akhdanzaman/notes-dump).`
+      },
+      {id: 'olist',
+        title: 'Olist Ecommerce Satisfaction Visualization',
+        subtitle: 'Power BI, Visualization',
+        author: 'Akhdan Hanif',
+        date: 'July 2025',
+        toolbox: 'Power BI',
+        techniques: 'EDA, Visualization, Dashboarding',
+        industries: 'Brazilian Marketplace',
+        results: 'Data-driven strategies',
+        heroImage: 'https://cdn.prod.website-files.com/687117f971cd518b166221a9/6871f67b7972b4b2fbff4287_d4963dd3-20cc-49f2-b0f3-129546ab05d4.png',
+        content: `## Olist Case Study, Unpacked
+
+Here's a behind-the-scenes look into how I approached one key question:
+
+> "What truly separates a satisfied customer from a deeply disappointed one?"
+
+**Core Insight**
+
+1. A healthy average can hide operational illness
+2. Products and sellers aren't the real culprits
+3. Delivery delays trigger customer dissatisfaction
+4. The shipping phase is the true bottleneck
+5. Delay hotspots are route-specific
+6. High cost ≠ fast delivery — financial inefficiencies exposed
+
+This journey took me from high-level metrics, through disproven hypotheses, to uncovering a hidden root cause buried deep within operational data.
+
+### Insight #1: Surface-Level Health Can Hide Internal Dysfunction
+
+![Olist Dashboard Overview](https://cdn.prod.website-files.com/687117f971cd518b166221a9/68727945c3f561671347630c_1.png)
+
+As always, I started from the top. The **General Overview Dashboard** displayed the company's vitals — Gross Merchant Value (GMV), Total Orders, and Average Review Score.
+
+With a solid 4.09 out of 5, leadership could've easily concluded everything was fine.
+
+But seasoned analysts know better: averages can lie. They mask extremes that cancel each other out. That's where the real investigation began.
+
+### Insight #2: It's Not the Products or the Sellers
+
+![Product Category Analysis](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872794533838b79611b3f0d_2.png)
+
+The most logical first suspects? Bad products or bad sellers. Could certain categories be low quality? Were rogue vendors dragging down the experience?
+
+To find out, I visualized performance by segment. For each product category and top seller, I layered sales volume with average reviews and delay rates.
+
+The results were surprising: performance lines were largely flat. Top categories (like furniture_decor) weren't notably worse. Top sellers also showed no red flags.
+
+This was a critical pivot. The obvious culprits were innocent. I had to look elsewhere.
+
+### Insight #3: The Turning Point — Delay Drives Dissatisfaction
+
+![On-Time vs Late Delivery](https://cdn.prod.website-files.com/687117f971cd518b166221a9/68727945750d80a157082fbf_3.png)
+
+Next, I turned to the process itself — the customer journey from "Buy" to "Delivered." Here, I found the smoking gun.
+
+I compared satisfaction scores for On-Time vs. Late orders. The contrast was stark: on-time deliveries earned 4s and 5s. Late ones consistently got 1s and 2s.
+
+The correlation was too strong to ignore — and more than a correlation, it was a cause.
+
+Logistics was the #1 driver of customer experience.
+
+### Insight #4: Diagnosing the Delay — Where's the Time Lost?
+
+![Logistics Report](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872794581428b13e9127d9a_4.png)
+
+Knowing delays were the issue, I asked the next question: **Where exactly is time being lost?**
+
+To answer this, I created the **Logistics Report** and broke the order journey into three stages:
+
+- **Approval** (payment confirmation)
+- **Processing** (seller prep)
+- **Shipping** (delivery)
+
+The data showed one clear spike: **Shipping time ballooned** from an average of 8 days to over 27 for late orders. Processing times barely changed.
+
+The bottleneck was transit — the logistics partners.
+
+### Insight #5: Mapping the Epicenter
+
+![Delay Distribution Matrix](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687279445fe95b0ea228de3e_5.png)
+
+But was this a country-wide problem? Or a regional one?
+
+Using a **Delay Distribution Matrix**, I mapped delay rates from seller_state → customer_state.
+
+It became clear: only certain routes were severely affected. Especially shipments from São Paulo (SP) to northeastern states.
+
+This reframed the problem:
+Not "our deliveries are slow"
+→ but "5 critical routes are severely delayed and need urgent attention."
+
+### Insight #6: High Costs, Slow Deliveries — The Worst Combo
+
+![Freight Cost vs Shipping Time](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687279457d0489bf504f8247_7.png)
+
+Lastly, I looked into shipping cost efficiency. Was Olist using cheap shipping partners, and getting what they paid for?
+
+I built a scatter plot of Freight Cost vs. Shipping Time. In theory, more expensive should mean faster. But in reality?
+
+The chart was chaotic. Too many data points landed in the "Expensive & Slow" quadrant.
+
+The takeaway? Olist was often overpaying for subpar service — a double hit: poor experience and wasted budget.
+
+## Strategic Takeaways: Turning Data into a Roadmap
+
+This analysis transformed a vague business concern into a concrete set of strategic actions.
+
+We learned that Olist doesn't need to change its products or pricing — it needs to fine-tune its operations.
+
+**Here's the roadmap:**
+
+- Audit and renegotiate with logistics partners, focusing on high-cost, high-delay routes
+- Enforce stricter SLAs with sellers to maintain consistency, even if they're not the core issue
+- Use data as leverage to demand better service or lower cost
+
+Ultimately, this case proves that in modern e-commerce, delivery isn't just a service — it's part of the product.`
+      },
+      {
+        id: 'essential-oils',
+        title: 'Essential Oils Customer Satisfaction Analysis',
+        subtitle: 'Python, Machine Learning',
+        author: 'Akhdan Hanif',
+        date: 'June 2025',
+        toolbox: 'Python, BERTopic, SHAP, XGBoost, GPT-4o',
+        techniques: 'Sentiment analysis, topic modeling, explainable AI, regression modeling, and Kano classification',
+        industries: 'Consumer wellness, essential oils, and digital marketplaces',
+        results: 'Targeted product insights, data-driven quality improvements, and a novel pipeline for turning reviews into roadmaps.',
+        heroImage: 'https://cdn.prod.website-files.com/687117f971cd518b166221a9/687206b233f1b4adf843fdfa_pexels-mareefe-932587.jpg',
+        content: `## Case Study: Decoding Customer Satisfaction for Essential Oils
+
+> "Can we extract strategic product insights purely from online reviews?"
+
+The question I explored using 23,000+ reviews of essential oil products from Tokopedia. My goal: identify what truly drives satisfaction in this growing wellness niche and what breaks it.
+
+**Core Insight**
+
+- Aroma and packaging are key drivers of 5-star reviews
+- Customers are highly price-sensitive, especially mid-tier buyers
+- Diffuser support is a "must" for premium consumers
+- Most product features act as performance attributes
+- The Kano Model + SHAP approach reveals segment-specific strategies
+
+This project turned raw text into actionable insights — and transformed black-box sentiment into a product development compass.
+
+### Insight #1: What People Really Talk About
+
+![BERTopic Topic Modeling](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872210461b8e8a2b3c69f32_Screenshot%202025-07-12%20154556.png)
+
+I started by scraping 23,068 Tokopedia reviews using a custom Python pipeline. Using BERTopic, I extracted latent themes and grouped them into 11 Customer Satisfaction Dimensions (CSDs) — like aroma, price, packaging, delivery, and service.
+
+### Insight #2: What Drives Ratings
+
+![Sentiment Classification](https://cdn.prod.website-files.com/687117f971cd518b166221a9/68721ee0b304a9ed752578c3_Screenshot%202025-07-12%20153724.png)
+
+Then came labeling. Using GPT-4o-mini, I matched reviews to their respective dimensions and classified sentiments. Unsurprisingly, Aroma had the strongest influence on 5-star reviews, while Price, Packaging, and Description Accuracy also emerged as decisive.
+
+### Insight #3: Which Model Knows Best?
+
+![Model MAE Comparison](https://cdn.prod.website-files.com/687117f971cd518b166221a9/68722109e8c17297c0014e28_MAE%20Model.png)
+
+I trained multiple models (Linear, SVR, RF, GBoost, XGBoost) to predict star ratings. XGBoost stood out — with a MAE of 0.125 and balanced performance across segments.
+
+### Insight #4: Explain, Don't Just Predict
+
+Using SHAP, an explainable AI library, I explained what drove those predictions:
+
+- Aroma had the highest positive SHAP impact on ratings
+- Delivery condition and price had strong negative SHAP values when expectations weren't met
+
+### Insight #5: What the Kano Model Reveals
+
+I mapped each CSD using SHAP impact into Kano categories:
+
+- **Performance:** Aroma, Packaging, Quality — more = better
+- **Must-be:** Price (Mid Segment), Diffuser Support (Premium)
+- **Excitement:** Bonus items, Efficacy (when present, delight; when absent, no complaint)
+
+## Segment Insights: What Matters to Whom
+
+### Low-Price Buyers
+
+Consumers treat all product attributes as Performance factors. While expectations are functional and basic, delivery and efficacy begin to show signs of latent Excitement. SMEs can boost satisfaction cost-effectively by improving packaging, offering better tracking, or using volume-based pricing.
+
+![Low Segment SHAP](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872226bb6ac4d56581cbd77_Screenshot%202025-07-12%20155216.png)
+
+### Mid-Price Buyers
+
+Price emerges as a Must-be factor — consumers expect fair pricing and penalize deviations. To win this segment, brands should maintain price-to-value quality consistency while adding subtle experiential value through packaging, sampling, or better service.
+
+![Mid Segment SHAP](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872226be740983f6e01f40d_Screenshot%202025-07-12%20155228.png)
+
+### Premium Buyers
+
+Diffuser support becomes a Must-be expectation. Features like bonuses, aroma, and product benefits approach the Excitement zone. To satisfy this segment, SMEs must meet foundational expectations flawlessly while enhancing exclusivity through personalization, superior packaging, and tech integration.
+
+![Premium Segment SHAP](https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872226b8df2ae8cbeaf1928_Screenshot%202025-07-12%20155238.png)
+
+### Final Reflection
+
+This study shows that customer satisfaction is not just a checklist of product attributes but a dynamic spectrum of expectations shaped by price segments and service experiences.
+
+By translating unstructured reviews into a strategic roadmap, we give SMEs the power to act on what customers truly value — accurately, scalably, and responsively.
+
+Going forward, customer feedback should no longer be seen as noisy data, but as a vital compass for product innovation and service excellence.`
+      },
+      {
+        id: 'churn',
+        title: 'Telco Customer Churn Prediction',
+        subtitle: 'Python, EDA, Machine Learning',
+        author: 'Aruci Team (Bilal, Akhdan, Dendy)',
+        date: 'May 2025',
+        toolbox: 'Python, XGBoost, Pandas, Streamlit',
+        techniques: 'Exploratory Data Analysis (EDA), feature engineering, classification modeling',
+        industries: 'Telecommunication, customer analytics',
+        results: 'Lower churn, smarter targeting, and service strategies rooted in behavioral data.',
+        heroImage: 'https://cdn.prod.website-files.com/687117f971cd518b166221a9/6871e103d5a705d6ac7b293f_PPT%20DSW%202023%20-%20ARUCI_001.png',
+        content: `## Customer Churn, Unpacked
+
+> "How can a telecom company turn churn into insight?"
+
+**Core Insight**
+
+- Long-tenured customers are more loyal
+- Call center and digital services enhance retention
+- High-end device users are a churn risk
+- Credit-based payment users churn more
+- New customers need nurturing within the first 5 months
+
+What signals tell us someone's about to leave? How can we intervene early?
+
+**The Data Story**
+
+Our dataset, from the Data Science Week Competition and enriched for business context, covered 7,000+ customer records from Jakarta and Bandung, featuring fields like tenure, device class, app usage, payment method, and CLTV.
+
+### Insight #1: Most Churn Happens Early
+
+![Churn by Tenure](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227ebb6ac4d56581e585d_Screenshot%202025-07-12%20161413.png)
+
+New customers within their first 5 months show the highest churn risk, suggesting weak onboarding or unmet expectations. This early exit window indicates that acquisition strategies may not be matched with retention hooks. Companies must treat the first quarter as a critical loyalty-building phase with targeted welcome offers or guided feature adoption.
+
+### Insight #2: Loyalty Lives in Usage
+
+![Service Usage vs Churn](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227eb93dde2a217c84db9_Screenshot%202025-07-12%20161445.png)
+
+Customers who actively use value-added services (e.g., MyApp, Games, Music) are significantly more likely to stay, highlighting a strong link between ecosystem engagement and retention. These services create habitual touchpoints that deepen brand stickiness. Companies should promote cross-service usage through personalized nudges and bundled experiences.
+
+### Insight #3: High-End Device = High Risk
+
+![Device Class vs Churn](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227eb630a6b555231f3d8_Screenshot%202025-07-12%20161504.png)
+
+Despite being premium users, high-end device owners churn more often — possibly due to higher expectations and lower switching friction. These customers are value-driven, not price-sensitive, and will leave if not offered premium experiences. Tailored VIP programs or priority support could turn this churn risk into a loyalty opportunity.
+
+### Insight #4: Payment Style Matters
+
+![Payment Method Analysis](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227ebf48c8590a9a9ee7a_Screenshot%202025-07-12%20161534.png)
+
+Credit and pulsa users churn at higher rates, likely due to payment friction or lack of automation. Pulsa, in particular, discourages sustained engagement due to its limited utility and manual top-ups. Transitioning these users to digital wallets or auto-pay systems with incentives could improve satisfaction and reduce dropout.
+
+### Insight #5: Call Center Saves Customers
+
+![Call Center Impact](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687227eb290c7dad4c1b09a1_Screenshot%202025-07-12%20161552.png)
+
+Call center interaction correlates with lower churn, not just due to problem resolution, but because it creates a human touchpoint in a digital service. This shows that proactive support builds trust, especially for confused or hesitant users. Embedding retention offers in customer service conversations can turn support into a growth channel.
+
+## Our Recommendations
+
+1. **Nurture Early Tenure** — Provide benefits or loyalty points within the first 5 months
+2. **Engage High-End Users** — Offer exclusive plans, concierge support, or early access to new services
+3. **Bundling for Value** — Cross-promote Video + Game services for synergistic stickiness
+4. **Optimize Payment Methods** — Encourage digital wallets with cashback or ease-of-use benefits
+5. **Expand Call Center Campaigns** — Use outbound calling to educate users and promote retention packages
+
+### From Insights to Action: Why We Built a Prediction Model
+
+We trained multiple models and selected XGBoost, which achieved balanced performance across churned vs retained classes. The model was also interpretable and production-ready.
+
+![Model Performance](https://cdn.prod.website-files.com/687117f971cd518b166221a9/687228302a3f1bf28668a00d_Screenshot%202025-07-12%20161729.png)
+
+### If I Could Turn Back the Time
+
+Looking back, one area that needed sharper integration was the machine learning model. While we successfully built an XGBoost-based churn predictor, it felt like an appendix, not an engine powering the strategy. If I could rework the project, I'd focus on making the model a central decision-support system, directly answering tactical questions like:
+
+- Which new users need urgent onboarding incentives?
+- Which high-end device users are likely to churn next month?
+- Which service bundles should we offer to each user segment based on predicted behavior?`
+      },
+      {
+        id: 'usaid',
+        title: 'Health Commodities Supply Chain by USAID Visualization',
+        subtitle: 'Tableau, Visualization',
+        author: 'Akhdan Hanif',
+        date: 'April 2025',
+        toolbox: 'Tableau, Tableau Prep',
+        techniques: 'Operational dashboarding, multi-year KPI trend analysis',
+        industries: 'Public health supply chains',
+        results: 'Disrupted assumptions, data-backed narratives, and strategic lessons.',
+        heroImage: 'https://cdn.prod.website-files.com/687117f971cd518b166221a9/68724bfc305c14dd91b39935_pexels-chanaka-318741-906494.jpg',
+        content: `## USAID Supply Chain Analysis, Unpacked
+
+> "What's really happening inside the health commodities supply chain run by USAID — and can we prove it with data?"
+
+This was my first-ever visualization project using a proper BI tool. The dataset came from Kaggle — a simulated USAID health commodities supply chain covering years of deliveries across multiple countries. The question I started with was deceptively simple: just figure out what's going on.
+
+What came out the other side was a lot more: disrupted assumptions, a gap analysis I'm still thinking about, and a clear before-and-after of my own growth as an analyst.
+
+**Core Insight**
+
+- A sudden delivery volume collapse in 2015 raised immediate red flags
+- Air charter was eating up the budget disproportionately
+- RDC (Regional Distribution Center) share was shrinking year over year
+- Nigeria dominated the distribution map — but was that strategic or reactive?
+- Reliability and cost efficiency aren't just tracked separately — they feed each other
+
+### Insight #1: The 2015 Delivery Collapse — What Happened?
+
+The first thing that jumped out of the data was a massive delivery volume drop in 2015. Not a gradual decline — a cliff. My initial reaction was data quality issues. But after cleaning and verifying, the pattern held.
+
+This wasn't just noise. Something structural changed that year — possibly a funding cycle shift, a policy change, or a program sunset. I flagged it as a priority investigation point for anyone with operational context into USAID's health programs.
+
+### Insight #2: Air Charter Was the Budget Killer
+
+Among all shipping methods, air charter stood alone at the top of the cost chart. The per-shipment cost was orders of magnitude higher than ocean or truck freight. Yet the volume going through air wasn't proportional to the spend.
+
+This is the classic cost-efficiency question: was air charter being used for genuine emergencies, or had it become a crutch? Either way, it deserved a hard look from procurement.
+
+### Insight #3: RDC Distribution Was Shrinking
+
+Regional Distribution Centers are supposed to be the backbone of efficient last-mile delivery. But the data showed their share of total volume declining each year. If RDCs are losing ground, what's replacing them — direct shipments? Ad-hoc logistics? Each answer has different cost and reliability implications.
+
+### Insight #4: Nigeria Was the Elephant in the Room
+
+Nigeria consistently received the largest share of shipments by a wide margin. On one hand, this makes sense given population size and health burden. On the other, it raised a question I couldn't fully answer with this dataset alone: was this allocation proportional to actual need, or was it path-dependent — a historical pattern that nobody had revisited?
+
+### Insight #5: The Gap I Couldn't Close — Reliability and Cost Efficiency
+
+This is where I hit the limits of my initial analysis — and where the real growth happened. After finishing the first dashboard, I realized I'd only scratched the surface. I was tracking volumes and costs, but I wasn't answering the questions that actually matter in supply chain management:
+
+- How do you measure **reliability**? Consistency, on-time rate, accuracy
+- How do you measure **cost efficiency**? Shipment count, weight per shipment, freight cost per unit
+- What actually **drives** reliability and cost? Shipping method and vendor selection
+
+This gap analysis became the foundation for the dashboard redesign. Instead of just showing what happened, I wanted to surface the relationship between vendor choices, shipping methods, and supply chain performance.
+
+## Strategic Takeaways
+
+This project taught me that a first draft dashboard is never the final answer. The real value comes from stepping back and asking: what question did I not answer? Then going back and answering it.
+
+Specifically, this project pushed me to think beyond descriptive analytics — volumes over time, costs by category — and toward diagnostic questions about why things happen. That shift is what separates surface-level reporting from analysis that actually informs decisions.
+
+If I were to revisit this today, I'd build the reliability and cost-efficiency KPIs directly into the dashboard from day one, and I'd layer in the shipping method and vendor analysis as the core narrative, not an afterthought.`
+      },
+      {
+        id: 'maintenance',
+        title: 'Maintenance Schedule and History Visualization',
+        subtitle: 'Looker, Visualization',
+        author: 'Akhdan Hanif',
+        date: 'March 2025',
+        toolbox: 'Looker Studio, Script App, Google Spreadsheets',
+        techniques: 'Operational dashboarding, multi-year KPI trend analysis',
+        industries: 'Manufacturing',
+        results: 'Visualization of Maintenance schedule and report',
+        heroImage: 'https://cdn.prod.website-files.com/687117f971cd518b166221a9/68724c5f761849fb3ee3cacc_pexels-pixabay-257736.jpg',
+        content: `## First Hands-on Looker Studio
+
+In this project, I was doing a practice, with my experience in Tableau and Power BI to try mocking up a Maintenance dashboard.
+
+The schedule maintenance data used in this dashboard is dummy at the moment but based on real machine failure history in an industry.
+
+### Dashboard Emphasis
+
+Consists of 2 pages, for quick overview and detailed report.
+
+#### Page #1: Maintenance Schedule Quick Overview
+
+This page uses color-coded grids to present scheduled maintenance activities, allowing users to quickly assess the status of each machine's maintenance.
+
+A key feature here is a button connected to Google App Scripts, which enables users to directly manipulate maintenance status in the source spreadsheet. This is especially useful because visualization tools like Looker Studio are typically optimized for historical reporting, not real-time interaction.
+
+The integration with App Scripts was a fun experiment and added a dynamic, interactive component to an otherwise static dashboard.
+
+#### Page #2: Maintenance Detailed Report
+
+This page provides an in-depth analysis of machine failures and maintenance trends throughout the year. It features visualizations such as a bar chart of downtime per machine, a failure type breakdown, and workload distribution by PIC. Additionally, tables and location-based charts enhance tracking of issue details, responsible personnel, and spatial patterns for more informed maintenance planning.
+
+Overall, this project is used for me to learn and prepare if I were asked to do visualization in Looker Studio.`
+      },
+      {
+        id: 'mental-health',
+        title: 'Mental Health Prediction App',
+        subtitle: 'Python, Machine Learning',
+        author: 'Yukai Mojikai Team (Izzan, Akhdan, Bagus, Rafi, Rifqi)',
+        date: 'June 2024',
+        toolbox: 'Python, BERT',
+        techniques: 'Exploratory Data Analysis (EDA), Data Preprocessing, NLP Modeling',
+        industries: 'Startup',
+        results: 'Journaling App with Mental Health Analysis',
+        heroImage: 'https://cdn.prod.website-files.com/687117f971cd518b166221a9/6872829f48edde385bb56b0e_Cover.png',
+        content: `## Mental State Classification Using BERT
+
+Understanding human sentiment is no longer limited to surveys and guesswork. In this project, I led a development of a machine learning pipeline that classifies user text into five mental sentiment categories, using a pre-trained BERT model and TensorFlow. The result was a fully deployed, scalable sentiment analysis service, accessible through API and ready for integration across platforms, including mobile.
+
+This article outlines the full journey from raw text data to real-time model deployment, offering both a technical overview and strategic reasoning behind each step.
+
+## Starting with the Problem
+
+Modern digital platforms generate vast amounts of unstructured user feedback.
+
+Extracting meaningful emotional signals from this data can guide product decisions, mental health interventions, or conversational AI responses.
+
+My goal was to build a model that not only classifies text sentiment but also works efficiently across web and mobile environments.
+
+## Data Preprocessing
+
+The first step was preparing the data for the BERT model. Since BERT is sensitive to tokenization and formatting, I implemented a structured pipeline to clean and standardize the text. This included:
+
+- Removing punctuation, numbers, whitespace, special characters, and stop words
+- Tokenizing the text using BERT's tokenizer
+- Padding all sequences to a uniform length of 53 tokens
+- Creating attention masks to distinguish between valid tokens and padding
+
+These steps ensured consistent and high-quality input for the model.
+
+## Building the Model
+
+The core of the project used a pre-trained BERT model from HuggingFace, combined with custom layers in TensorFlow. The architecture was designed to retain the power of BERT embeddings while tailoring output for a multiclass sentiment task. Key layers included:
+
+- Input layers for \`input_ids\` and \`attention_mask\`
+- BERT layer producing contextual embeddings
+- A global max pooling layer to reduce sequence outputs
+- Dense layers with ReLU activations and dropout for regularization
+- A final output layer using sigmoid activation for multiclass classification
+
+The model was optimized using the Adam optimizer. Balanced accuracy was tracked to account for class imbalance. We got 88.4 score on this project.
+
+## Serving and Deployment
+
+For real-time inference, the model was deployed as a web service. Our team used Google Cloud Run to host the API, taking advantage of its auto-scaling and serverless architecture. The serving pipeline accepted raw text as input, applied preprocessing, and returned predicted sentiment classes through a REST endpoint.
+
+This setup allowed integration into mobile applications and other digital platforms with minimal latency and high reliability. The sentiment engine could now operate seamlessly across different user interfaces and traffic loads.
+
+## Final Thoughts
+
+This project demonstrates a complete machine learning pipeline for NLP tasks, from preprocessing and model development to scalable deployment. The use of BERT allowed for high-quality embeddings, while the deployment through Cloud Run provided flexibility for real-world usage.
+
+In the end, I built not just a model, but an end-to-end sentiment classification service that can help organizations monitor emotional signals from user text across platforms. This experience sharpened my skills in model architecture design, TensorFlow workflows, and cloud-based deployment strategies.
+
+If you're building systems that require real-time sentiment insight, this model architecture and deployment strategy provide a strong foundation.`
+      }
+    ];
+
+    // ============ APP STATE ============
+    let projects = [];
+    let currentProject = null;
+    let hasChanges = false;
+
+    function loadProjects() {
+      const saved = localStorage.getItem(CONTENT_KEY);
+      if (saved) {
+        try { projects = JSON.parse(saved); } catch(e) { projects = [...defaultProjects]; }
+      } else {
+        projects = JSON.parse(JSON.stringify(defaultProjects));
+      }
+      document.getElementById('sidebarFooter').textContent = `${projects.length} projects loaded`;
+    }
+
+    function saveProjects() {
+      localStorage.setItem(CONTENT_KEY, JSON.stringify(projects));
+      hasChanges = false;
+      document.getElementById('savedIndicator').style.display = 'inline';
+      document.getElementById('editStatus').textContent = '';
+      setTimeout(() => {
+        document.getElementById('savedIndicator').style.display = 'none';
+      }, 2000);
+    }
+
+    function renderProjectList() {
+      const list = document.getElementById('projectList');
+      list.innerHTML = projects.map((p, i) => `
+        <div class="project-item ${currentProject && currentProject.id === p.id ? 'active' : ''}" onclick="selectProject(${i})">
+          <div class="name">${p.title}</div>
+          <div class="meta">${p.subtitle} · ${p.author} · ${p.date}</div>
+        </div>
+      `).join('');
+    }
+
+    function selectProject(index) {
+      if (hasChanges && !confirm('You have unsaved changes. Discard?')) return;
+      currentProject = projects[index];
+      document.getElementById('editorTitle').textContent = currentProject.title;
+      document.getElementById('editor').value = currentProject.content || '';
+      document.getElementById('editStatus').textContent = '';
+      hasChanges = false;
+      document.getElementById('savedIndicator').style.display = 'none';
+      updatePreview();
+      renderProjectList();
+      document.getElementById('statusText').textContent = `Editing: ${currentProject.title}`;
+    }
+
+    // ============ EDITOR ============
+    const editor = document.getElementById('editor');
+    const preview = document.getElementById('preview');
+
+    editor.addEventListener('input', () => {
+      hasChanges = true;
+      document.getElementById('editStatus').textContent = '(edited)';
+      document.getElementById('savedIndicator').style.display = 'none';
+      updatePreview();
+    });
+
+    function updatePreview() {
+      preview.innerHTML = renderMarkdown(editor.value);
+    }
+
+    function renderMarkdown(md) {
+      let html = md
+        // Images
+        .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" loading="lazy">')
+        // Headings
+        .replace(/^#### (.*$)/gim, '<h4>$1</h4>')
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        // Bold and italic
+        .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        // Inline code
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        // Blockquote
+        .replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>')
+        // Horizontal rules
+        .replace(/^---$/gim, '<hr>')
+        // Unordered lists
+        .replace(/^[\-\*] (.*$)/gim, '<li>$1</li>')
+        // Ordered lists
+        .replace(/^\d+\. (.*$)/gim, '<li>$1</li>')
+        // Wrap consecutive <li> in <ul> or <ol>
+        .replace(/((?:<li>.*<\/li>\n?)+)/g, (match) => {
+          if (match.includes('<li>')) {
+            // Check if it was ordered
+            const first = match.match(/^\d+\./m);
+            return `<${first ? 'ol' : 'ul'}>\n${match}</${first ? 'ol' : 'ul'}>\n`;
+          }
+          return match;
+        })
+        // Paragraphs (lines that aren't tags)
+        .replace(/^(?!<[houbl]|<img|<hr|<blockquote)(.+)/gim, '<p>$1</p>')
+        // Clean up empty paragraphs
+        .replace(/<p>\s*<\/p>/g, '')
+        // Fix duplicate blockquote wrapping
+        .replace(/<\/blockquote>\s*<blockquote>/g, '<br>');
+
+      return html;
+    }
+
+    function insertMarkdown(text) {
+      const el = editor;
+      const start = el.selectionStart;
+      const end = el.selectionEnd;
+      const before = el.value.substring(0, start);
+      const selected = el.value.substring(start, end);
+      const after = el.value.substring(end);
+
+      if (selected) {
+        // Wrap selected text
+        const wrapChar = text.trim().charAt(0);
+        if (['*', '`'].includes(wrapChar)) {
+          el.value = before + wrapChar + selected + wrapChar + after;
+        } else {
+          el.value = before + text + after;
+        }
+      } else {
+        el.value = before + text + after;
+        el.selectionStart = el.selectionEnd = start + text.length;
+      }
+      el.focus();
+      el.dispatchEvent(new Event('input'));
+    }
+
+    function saveCurrent() {
+      if (!currentProject) return;
+      currentProject.content = editor.value;
+      saveProjects();
+      document.getElementById('statusText').textContent = `Saved: ${currentProject.title}`;
+    }
+
+    // Keyboard shortcut: Ctrl/Cmd + S
+    document.addEventListener('keydown', e => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        saveCurrent();
+      }
+    });
+
+    // ============ IMAGE MODAL ============
+    function openImageModal() {
+      document.getElementById('imageModal').classList.add('visible');
+      document.getElementById('imageUrl').focus();
+    }
+
+    function closeImageModal() {
+      document.getElementById('imageModal').classList.remove('visible');
+      document.getElementById('imageUrl').value = '';
+      document.getElementById('imageAlt').value = '';
+      document.getElementById('imageCaption').value = '';
+    }
+
+    function insertImage() {
+      const url = document.getElementById('imageUrl').value.trim();
+      const alt = document.getElementById('imageAlt').value.trim() || 'image';
+      const caption = document.getElementById('imageCaption').value.trim();
+
+      if (!url) return;
+
+      let md = `\n![${alt}](${url})\n`;
+      if (caption) md += `*${caption}*\n`;
+
+      insertMarkdown(md);
+      closeImageModal();
+    }
+
+    // Enter in image modal
+    document.getElementById('imageUrl').addEventListener('keydown', e => {
+      if (e.key === 'Enter') insertImage();
+    });
+
+    // Click outside modal to close
+    document.getElementById('imageModal').addEventListener('click', e => {
+      if (e.target === document.getElementById('imageModal')) closeImageModal();
+    });
+
+    // ============ INIT ============
+    function initApp() {
+      loadProjects();
+      renderProjectList();
+      // Auto-select first project
+      if (projects.length > 0) {
+        selectProject(0);
+      }
+      document.getElementById('statusText').textContent = 'Ready — Select a project to edit';
+    }
+  </script>
+</body>
+</html>
