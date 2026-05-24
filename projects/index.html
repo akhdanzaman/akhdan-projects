@@ -844,7 +844,7 @@
               <li><strong>Batch parsing pipeline:</strong> A custom <code>batchParserCoordinator</code> processes raw input through canonicalization, field validation, and budget categorization</li>
               <li><strong>Spreadsheet reconciliation:</strong> A <code>spreadsheetReconciler</code> diffs local state against Sheets to keep everything consistent</li>
             </ul>
-            <p>This architecture is unconventional. Most devs would reach for Supabase or Firebase. But for a personal tool that only I use, the simplicity and zero-cost nature of Sheets won every tradeoff discussion.</p>
+            <p>This architecture is unconventional. But for a personal tool that only I use, the simplicity and zero-cost nature of Sheets won every tradeoff discussion.</p>
 
             <h3>Insight #2: Multi-Model AI Routing — Right Model, Right Job</h3>
             <p>One of the most interesting technical decisions was building a <strong>parser model router</strong>. Not every AI task needs Gemini Pro — sometimes Gemini Flash is faster and 10x cheaper for the same quality. The router classifies incoming text by complexity and routes accordingly:</p>
