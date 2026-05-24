@@ -1608,57 +1608,82 @@
     // Initialize sliders on load
     initSliders();
 
-    // CMS Content Override — check localStorage for edited content
+    // ===== CMS Dynamic Render =====
     (function() {
       try {
-        const saved = localStorage.getItem('akhdan_cms_content_v2');
-        if (!saved) return;
-        const projects = JSON.parse(saved);
-        if (!Array.isArray(projects)) return;
+        const raw = localStorage.getItem('akhdan_cms_data');
+        if (!raw) return;
+        const cms = JSON.parse(raw);
+        if (!cms.projects || !Array.isArray(cms.projects) || cms.projects.length === 0) return;
 
-        // Map tab indices to project IDs
-        const tabMap = {
-          '6': 'arkaiv', '0': 'olist', '1': 'essential-oils',
-          '2': 'churn', '3': 'usaid', '4': 'maintenance', '5': 'mental-health'
-        };
-
-        // Simple markdown to HTML renderer
-        function mdToHTML(md) {
-          let html = md
+        function md2html(md) {
+          return md
             .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" loading="lazy" style="width:100%;border-radius:8px;margin:1rem 0;">')
-            .replace(/^#### (.*$)/gim, '<h4>$1</h4>')
-            .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-            .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-            .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-            .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
-            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-            .replace(/\*(.+?)\*/g, '<em>$1</em>')
-            .replace(/`([^`]+)`/g, '<code>$1</code>')
-            .replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>')
-            .replace(/^[\-\*] (.*$)/gim, '<li>$1</li>')
-            .replace(/^\d+\. (.*$)/gim, '<li>$1</li>')
-            .replace(/((?:<li>.*<\/li>\n?)+)/g, function(m) {
-              return m.match(/^\d+\./m) ? '<ol>\n' + m + '</ol>\n' : '<ul>\n' + m + '</ul>\n';
-            })
-            .replace(/^(?!<[houbl]|<img|<blockquote)(.+)/gim, '<p>$1</p>')
-            .replace(/<p>\s*<\/p>/g, '')
-            .replace(/<\/blockquote>\s*<blockquote>/g, '<br>');
-          return html;
+            .replace(/^#### (.*$)/gim, '<h4>$1</h4>').replace(/^### (.*$)/gim, '<h3>$1</h3>')
+            .replace(/^## (.*$)/gim, '<h2>$1</h2>').replace(/^# (.*$)/gim, '<h1>$1</h1>')
+            .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>')
+            .replace(/`([^`]+)`/g, '<code>$1</code>').replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
+            .replace(/^[\-\*] (.*$)/gim, '<li>$1</li>').replace(/^\d+\. (.*$)/gim, '<li>$1</li>')
+            .replace(/((?:<li>.*<\/li>\n?)+)/g, m => m.match(/^\d+\./m) ? '<ol>\n'+m+'</ol>\n' : '<ul>\n'+m+'</ul>\n')
+            .replace(/^(?!<[houbl]|<img|<blockquote)(.+)/gim, '<p>$1</p>').replace(/<p>\s*<\/p>/g, '').replace(/<\/blockquote>\s*<blockquote>/g, '<br>');
         }
 
-        // Override each project's article content
-        document.querySelectorAll('[data-tab-content]').forEach(pane => {
-          const tabId = pane.getAttribute('data-tab-content');
-          const projId = tabMap[tabId];
-          if (!projId) return;
-          const proj = projects.find(p => p.id === projId);
-          if (!proj || !proj.content) return;
-          const article = pane.querySelector('article.article');
-          if (article) {
-            article.innerHTML = mdToHTML(proj.content);
-          }
+        const tabNav = document.querySelector('.tab-nav');
+        const tabsContainer = tabNav.parentElement;
+
+        // Build tab nav buttons
+        tabNav.innerHTML = cms.projects.map((p, i) => `
+          <button class="tab-btn${i===0?' active':''}" role="tab" data-tab="${i}" aria-selected="${i===0}">
+            <div class="tab-avatar"><img src="${p.heroImage || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=150&h=150&fit=crop'}" alt="" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=150&h=150&fit=crop'"></div>
+            <div class="tab-info">
+              <span class="tab-title">${p.title.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</span>
+              <span class="tab-meta">${(p.subtitle||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')}</span>
+            </div>
+          </button>`).join('');
+
+        // Remove old tab panes
+        tabsContainer.querySelectorAll('.tab-content').forEach(p => p.remove());
+
+        // Build tab panes
+        const panesHTML = cms.projects.map((p, i) => `
+          <div class="tab-content${i===0?' active':''}" data-tab-content="${i}">
+            <img class="project-hero-image" src="${p.heroImage||''}" alt="${p.title.replace(/"/g,'')}" loading="lazy" onerror="this.style.display='none'">
+            <div class="project-header">
+              <h1>${p.title.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</h1>
+              <div class="project-author">
+                <div class="project-author-avatar"><img src="https://cdn.prod.website-files.com/687117f971cd518b166221a9/68720a9ce1c1fed237b49108_Foto%20non-formal%202.jpg" alt="" loading="lazy"></div>
+                <div class="project-author-info">
+                  <div class="project-author-name">${(p.author||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div>
+                  <div class="project-author-date">${(p.date||'').replace(/&/g,'&amp;')}</div>
+                </div>
+              </div>
+            </div>
+            <div class="meta-grid">
+              <div class="meta-item"><h5>Toolbox</h5><p>${(p.toolbox||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')}</p></div>
+              <div class="meta-item"><h5>Techniques</h5><p>${(p.techniques||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')}</p></div>
+              <div class="meta-item"><h5>Industries</h5><p>${(p.industries||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')}</p></div>
+              <div class="meta-item"><h5>Results</h5><p>${(p.results||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')}</p></div>
+            </div>
+            <article class="article">${md2html(p.content||'')}</article>
+          </div>`).join('');
+
+        tabsContainer.insertAdjacentHTML('beforeend', panesHTML);
+
+        // Re-bind tab switching
+        const newBtns = tabNav.querySelectorAll('.tab-btn');
+        const newPanes = tabsContainer.querySelectorAll('.tab-content');
+        newBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const idx = btn.dataset.tab;
+            newBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+            newPanes.forEach(c => c.classList.remove('active'));
+            btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+            const target = tabsContainer.querySelector('[data-tab-content="'+idx+'"]');
+            if (target) target.classList.add('active');
+            initSliders();
+          });
         });
-      } catch(e) { /* silently ignore */ }
+      } catch(e) { console.log('CMS render:', e); }
     })();
   </script>
 </body>

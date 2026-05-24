@@ -863,21 +863,48 @@
   </footer>
 
   <script>
+    // ===== CMS Dynamic Homepage Render =====
+    (function() {
+      try {
+        const raw = localStorage.getItem('akhdan_cms_data');
+        if (!raw) return;
+        const cms = JSON.parse(raw);
+        if (!cms.projects || !Array.isArray(cms.projects) || cms.projects.length === 0) return;
+
+        const grid = document.querySelector('.project-grid');
+        grid.innerHTML = cms.projects.map(p => `
+          <a href="projects/" class="project-card" data-categories="${(p.tags||[]).join(' ').toLowerCase()}">
+            <div class="card-image-wrap">
+              <img src="${p.heroImage||''}" alt="${p.title.replace(/"/g,'')}" loading="lazy">
+            </div>
+            <div class="tags">
+              ${(p.tags||[]).map(t => '<span class="tag">'+t.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</span>').join('')}
+            </div>
+            <h3 class="card-title">${p.title.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</h3>
+            <p class="card-desc">${(p.results||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').substring(0,180)}</p>
+            <div class="card-author">
+              <div>
+                <div class="card-author-name">${(p.author||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div>
+                <div class="card-author-year">${(p.date||'').replace(/&/g,'&amp;')}</div>
+              </div>
+            </div>
+          </a>`).join('');
+      } catch(e) {}
+    })();
+
     // Project filter tabs
     const tabs = document.querySelectorAll('.tab-btn');
-    const cards = document.querySelectorAll('.project-card');
+    const allCards = () => document.querySelectorAll('.project-card');
 
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
         const filter = tab.dataset.filter;
-
-        cards.forEach(card => {
-          if (filter === 'all') {
-            card.style.display = '';
-          } else {
-            const cats = card.dataset.categories.split(' ');
+        allCards().forEach(card => {
+          if (filter === 'all') { card.style.display = ''; }
+          else {
+            const cats = (card.dataset.categories || '').split(' ');
             card.style.display = cats.includes(filter) ? '' : 'none';
           }
         });
